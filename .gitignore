@@ -4,7 +4,7 @@
 # But not these files...
 !*.gitignore
 !*.R
-!*.pynb
+!*.ipynb
 # etc...
 
 # ...even if they are in subdirectories
