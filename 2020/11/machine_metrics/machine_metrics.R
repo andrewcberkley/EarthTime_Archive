@@ -1,0 +1,49 @@
+setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/11/machine_metrics/")
+
+library(dplyr)
+library(stringr)
+
+machine_metrics <- read.csv("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/11/machine_metrics/data.csv", header=FALSE, stringsAsFactors=FALSE)
+
+#r grep 'n' characters after and before match
+#https://stackoverflow.com/questions/48449812/r-grep-n-characters-after-and-before-match
+#x <- "rolling: NA<br />day: 2017-12-02<br />region: South"
+#stringr::str_extract(x, ".{0,0}day.{0,12}")
+
+#Replace all occurrences of a string in a data frame
+#https://stackoverflow.com/questions/29271549/replace-all-occurrences-of-a-string-in-a-data-frame
+get_date <-  function(x){
+  str_extract(x, ".{0,0}day.{0,12}")
+}
+
+just_dates <- mutate_all(machine_metrics, funs(get_date))
+
+#Deleting first few rows and change the header names to row values
+#https://stackoverflow.com/questions/46594937/deleting-first-few-rows-and-change-the-header-names-to-row-values
+names(machine_metrics) <- just_dates[1,]
+rm(just_dates)
+rm(get_date)
+
+colnames(machine_metrics) <- gsub("-", "", colnames(machine_metrics))
+colnames(machine_metrics) <- gsub("day: ", "", colnames(machine_metrics))
+
+rm(machine_metrics)
+
+rolling_df <- data.frame(lapply(machine_metrics, function(x) {
+  gsub("<.*","",x)
+  }))
+
+cleaner_df <- data.frame(lapply(rolling_df, function(x) {
+  gsub("rolling: ","",x)
+}))
+
+rm(rolling_df)
+
+colnames(cleaner_df)[1] <- "location"
+
+colnames(cleaner_df) <- gsub("X", "", colnames(cleaner_df))
+
+final_df <- cleaner_df[,-c(2:7)]
+rm(cleaner_df)
+
+write.csv(final_df, "machine_metrics_data_cleaned_wide.csv", row.names = FALSE, na = "")

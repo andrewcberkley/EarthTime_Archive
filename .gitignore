@@ -2,9 +2,9 @@
 *
 
 # But not these files...
-!.gitignore
-!.R
-!.pynb
+!*.gitignore
+!*.R
+!*.pynb
 # etc...
 
 # ...even if they are in subdirectories
