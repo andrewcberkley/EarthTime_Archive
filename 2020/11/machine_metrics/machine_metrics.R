@@ -27,7 +27,7 @@ rm(get_date)
 colnames(machine_metrics) <- gsub("-", "", colnames(machine_metrics))
 colnames(machine_metrics) <- gsub("day: ", "", colnames(machine_metrics))
 
-rm(machine_metrics)
+#rm(machine_metrics)
 
 rolling_df <- data.frame(lapply(machine_metrics, function(x) {
   gsub("<.*","",x)
