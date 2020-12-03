@@ -3,7 +3,7 @@ setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Arc
 library(dplyr)
 library(stringr)
 
-machine_metrics <- read.csv("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/11/machine_metrics/data.csv", header=FALSE, stringsAsFactors=FALSE)
+machine_metrics <- read.csv("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/11/machine_metrics/data_all_regions.csv", header=FALSE, stringsAsFactors=FALSE)
 
 #r grep 'n' characters after and before match
 #https://stackoverflow.com/questions/48449812/r-grep-n-characters-after-and-before-match
@@ -46,4 +46,4 @@ colnames(cleaner_df) <- gsub("X", "", colnames(cleaner_df))
 final_df <- cleaner_df[,-c(2:7)]
 rm(cleaner_df)
 
-write.csv(final_df, "machine_metrics_data_cleaned_wide.csv", row.names = FALSE, na = "")
+write.csv(final_df, "machine_metrics_data_cleaned_wide_v2.csv", row.names = FALSE, na = "")
