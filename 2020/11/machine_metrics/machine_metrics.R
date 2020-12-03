@@ -1,9 +1,9 @@
-setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/11/machine_metrics/")
+setwd(file.path(Sys.getenv('my_dir'),'2020/11/machine_metrics/'))
 
 library(dplyr)
 library(stringr)
 
-machine_metrics <- read.csv("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/11/machine_metrics/data_all_regions.csv", header=FALSE, stringsAsFactors=FALSE)
+machine_metrics <- read.csv("data_all_regions.csv", header=FALSE, stringsAsFactors=FALSE)
 
 #r grep 'n' characters after and before match
 #https://stackoverflow.com/questions/48449812/r-grep-n-characters-after-and-before-match
