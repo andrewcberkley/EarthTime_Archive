@@ -52,4 +52,8 @@ colnames(final_df)[1] <- "location"
 
 long <- melt(setDT(final_df), id.vars = c("location"), variable.name = "date")
 
+longer <- long %>%
+	group_by(location, date) %>%
+	summarise(value = mean(value, na.rm = TRUE))
+
 write.csv(final_df, "machine_metrics_data_cleaned_wide_v2.csv", row.names = FALSE, na = "")
