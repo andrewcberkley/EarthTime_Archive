@@ -52,6 +52,8 @@ colnames(final_df)[1] <- "location"
 
 long <- melt(setDT(final_df), id.vars = c("location"), variable.name = "date")
 
+long[,3] <- as.numeric(long[,3])
+
 longer <- long %>%
 	group_by(location, date) %>%
 	summarise(value = mean(value, na.rm = TRUE))
