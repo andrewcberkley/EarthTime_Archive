@@ -26,6 +26,7 @@ rm(get_date)
 
 colnames(machine_metrics) <- gsub("-", "", colnames(machine_metrics))
 colnames(machine_metrics) <- gsub("day: ", "", colnames(machine_metrics))
+names(machine_metrics) <- substring(names(machine_metrics),1,6) #remove day
 
 #rm(machine_metrics)
 
