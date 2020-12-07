@@ -63,8 +63,8 @@ colnames(longer)[3] <- "utilization"
 
 finalest_df <- longer %>% 
   group_by(location, date) %>% 
-  mutate(idx = row_number()) #%>% 
-  #spread(utilization) %>% 
-  #select(-idx)
+  mutate(idx = row_number()) %>% 
+  spread(utilization) %>% 
+  select(-idx)
 
 write.csv(final_df, "machine_metrics_data_cleaned_wide_v3.csv", row.names = FALSE, na = "")
