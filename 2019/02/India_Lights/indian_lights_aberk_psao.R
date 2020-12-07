@@ -1,3 +1,5 @@
+setwd(file.path(Sys.getenv('my_dir'),'2019/02/india_lights/'))
+
 library(data.table)
 library(indialights)
 
