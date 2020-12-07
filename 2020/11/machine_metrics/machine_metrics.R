@@ -26,7 +26,6 @@ rm(get_date)
 
 colnames(machine_metrics) <- gsub("-", "", colnames(machine_metrics))
 colnames(machine_metrics) <- gsub("day: ", "", colnames(machine_metrics))
-names(machine_metrics) <- substring(names(machine_metrics),1,6) #remove day
 
 #rm(machine_metrics)
 
@@ -46,5 +45,8 @@ colnames(cleaner_df) <- gsub("X", "", colnames(cleaner_df))
 
 final_df <- cleaner_df[,-c(2:7)]
 rm(cleaner_df)
+
+names(final_df) <- substring(names(final_df),1,6) #remove day
+colnames(final_df)[1] <- "location"
 
 write.csv(final_df, "machine_metrics_data_cleaned_wide_v2.csv", row.names = FALSE, na = "")
