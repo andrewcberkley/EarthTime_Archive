@@ -1,11 +1,11 @@
-
+setwd(file.path(Sys.getenv('my_dir'),'2018/10/benchmarking_data_project//WEF_IndexData/'))
 
 source("functions.R")
 
 update <- FALSE
-dirpath <- "/Users/psao/Box/Data_Science_Exploration/Common/WEF_IndexData/"
+dirpath <- getwd()
 
-dt_all <- XLConnect::loadWorkbook("/Users/psao/Box/Data_Science_Exploration/Common/WEF_IndexData/WEF_Dictionaries_20180314.xlsx")
+dt_all <- XLConnect::loadWorkbook("WEF_Dictionaries_20180314.xlsx")
 XLConnect::setMissingValue(dt_all, value = NA)
 lst_series <- XLConnect::readWorksheet(dt_all, sheet = "Series")
 lst_queries <- XLConnect::readWorksheet(dt_all, sheet = "ListQueries")
