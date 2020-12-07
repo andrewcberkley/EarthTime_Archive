@@ -2,6 +2,7 @@ setwd(file.path(Sys.getenv('my_dir'),'2020/11/machine_metrics/'))
 
 library(dplyr)
 library(stringr)
+library(data.table)
 
 machine_metrics <- read.csv("data_all_regions.csv", header=FALSE, stringsAsFactors=FALSE)
 
@@ -48,5 +49,7 @@ rm(cleaner_df)
 
 names(final_df) <- substring(names(final_df),1,6) #remove day
 colnames(final_df)[1] <- "location"
+
+long <- melt(setDT(final_df), id.vars = c("location"), variable.name = "date")
 
 write.csv(final_df, "machine_metrics_data_cleaned_wide_v2.csv", row.names = FALSE, na = "")
