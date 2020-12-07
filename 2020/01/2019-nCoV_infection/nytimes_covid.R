@@ -1,4 +1,4 @@
-setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/01/2019-nCoV_infection/nytimes_covid_data")
+setwd(file.path(Sys.getenv('my_dir'),'2020/01/2019-nCoV_infection/nytimes_covid_data/'))
 
 library(tibble)
 library(tidyverse)
@@ -8,7 +8,7 @@ library(googlesheets4)
 
 nytimes_covid <- read.csv("https://raw.githubusercontent.com/nytimes/covid-19-data/master/us-counties.csv")
 
-fips_centroids <- read.csv("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2020/01/2019-nCoV_infection/us_county_centroids.csv")
+fips_centroids <- read.csv(file.path(Sys.getenv('my_dir'),'2020/01/2019-nCoV_infection/us_county_centroids.csv'))
 
 nytimes_covid$fips[nytimes_covid$county == "New York City"] <- 36061
 nytimes_covid$fips[nytimes_covid$state == "Guam"] <- "GU"
