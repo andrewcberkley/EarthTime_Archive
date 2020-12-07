@@ -1,4 +1,6 @@
-Bench_with_NAs <- read.csv("C:/Users/ABERK/Desktop/Bench_with_NAs.csv", stringsAsFactors=FALSE)
+setwd(file.path(Sys.getenv('my_dir'),'2018/10/benchmarking_data_project/'))
+
+Bench_with_NAs <- read.csv("Bench_with_NAs.csv", stringsAsFactors=FALSE)
 
 #Group values with identical ID into columns without summerizing them in R
 #https://stackoverflow.com/questions/52394652
