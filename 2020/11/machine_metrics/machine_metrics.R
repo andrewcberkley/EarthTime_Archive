@@ -53,6 +53,8 @@ colnames(final_df)[1] <- "location"
 
 long <- melt(setDT(final_df), id.vars = c("location"), variable.name = "date")
 
+long <- as.data.frame(long)
+
 long[,3] <- as.numeric(long[,3])
 
 longer <- long %>%
@@ -61,9 +63,15 @@ longer <- long %>%
 
 colnames(longer)[3] <- "utilization"
 
+longer$idx <- 1:nrow(longer)
+
+longer <- as.data.frame(longer)
+
+longer <- longer[,c(4,1,2,3)]
+
 finalest_df <- longer %>% 
   group_by(location, date) %>% 
-  mutate(idx = row_number()) %>% 
+  #mutate(idx = row_number()) %>% 
   spread(utilization) %>% 
   select(-idx)
 
