@@ -3,6 +3,7 @@ setwd(file.path(Sys.getenv('my_dir'),'2020/11/machine_metrics/'))
 library(dplyr)
 library(stringr)
 library(data.table)
+library(tidyverse)
 
 machine_metrics <- read.csv("data_all_regions.csv", header=FALSE, stringsAsFactors=FALSE)
 
@@ -58,4 +59,12 @@ longer <- long %>%
 	group_by(location, date) %>%
 	summarise(value = mean(value, na.rm = TRUE))
 
-write.csv(final_df, "machine_metrics_data_cleaned_wide_v2.csv", row.names = FALSE, na = "")
+colnames(longer)[3] <- "utilization"
+
+finalest_df <- longer %>% 
+  group_by(location, date) %>% 
+  mutate(idx = row_number()) #%>% 
+  #spread(utilization) %>% 
+  #select(-idx)
+
+write.csv(final_df, "machine_metrics_data_cleaned_wide_v3.csv", row.names = FALSE, na = "")
