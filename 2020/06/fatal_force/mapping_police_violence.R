@@ -1,6 +1,6 @@
 setwd(file.path(Sys.getenv('my_dir'),'2020/06/fatal_force/'))
 
-zipcode_coordinates <- read.csv("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/06/fatal_force/us-zip-code-latitude-and-longitude.csv", sep=",", stringsAsFactors=FALSE)
+zipcode_coordinates <- read.csv("us-zip-code-latitude-and-longitude.csv", sep=",", stringsAsFactors=FALSE)
 city_state_coordinates <- zipcode_coordinates[,c(2,3,4,5)]
 rm(zipcode_coordinates)
 city_state_coordinates$city_state <- paste(city_state_coordinates$City,"-",city_state_coordinates$State)
@@ -21,7 +21,7 @@ fatal_shootings_wapo_clean <- fatal_shootings_wapo_clean[,c(1,2,3,4,7)]
 fatal_shootings_wapo_clean$latitude <- city_state_coordinates[match(fatal_shootings_wapo_clean$city_state, city_state_coordinates$city_state), 2]
 fatal_shootings_wapo_clean$longitude <- city_state_coordinates[match(fatal_shootings_wapo_clean$city_state, city_state_coordinates$city_state), 3]
 
-police_killings <- read.csv("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/06/fatal_force/police_killings_2013-2019.csv", stringsAsFactors=FALSE)
+police_killings <- read.csv("police_killings_2013-2019.csv", stringsAsFactors=FALSE)
 police_killings_clean <- police_killings[,c(24,1,4,6,8,9)]
 rm(police_killings)
 colnames(police_killings_clean) <- c("id", "name", "race", "date", "city", "state")
