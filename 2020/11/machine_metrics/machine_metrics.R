@@ -80,4 +80,4 @@ rownames(finalest_df) <- NULL
 
 finalest_df$location <- as.character(finalest_df$location)
 
-write.csv(finalest_df, "machine_metrics_data_cleaned_wide_v3.csv", row.names = FALSE, na = "")
+write.csv(finalest_df, "machine_metrics_data_cleaned_wide_v4.csv", row.names = FALSE, na = "")
