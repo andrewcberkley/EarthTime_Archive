@@ -1,4 +1,4 @@
-setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/06/fatal_force/")
+setwd(file.path(Sys.getenv('my_dir'),'2020/06/fatal_force/'))
 
 zipcode_coordinates <- read.csv("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/06/fatal_force/us-zip-code-latitude-and-longitude.csv", sep=",", stringsAsFactors=FALSE)
 city_state_coordinates <- zipcode_coordinates[,c(2,3,4,5)]
