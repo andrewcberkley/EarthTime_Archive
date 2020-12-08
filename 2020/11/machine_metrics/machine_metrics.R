@@ -76,4 +76,6 @@ longer <- as.data.frame(longer)
 finalest_df <- reshape(longer, idvar = "location", timevar = "date", direction = "wide")
 colnames(finalest_df) <- gsub("utilization.", "", colnames(finalest_df))
 
+rownames(finalest_df) <- NULL
+
 write.csv(finalest_df, "machine_metrics_data_cleaned_wide_v3.csv", row.names = FALSE, na = "")
