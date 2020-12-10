@@ -1,3 +1,5 @@
+setwd(file.path(Sys.getenv('my_dir'),'2019/09/plastics_in_indonesia/'))
+
 library(echarts4r)
 library(sp)
 library(raster)

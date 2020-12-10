@@ -1,4 +1,5 @@
 #THE OPIOID FILES
+setwd(file.path(Sys.getenv('my_dir'),'2019/09/arcos_opioids_washpo/'))
 
 #Drilling into the DEA’s pain pill database
 #By The Washington Post Updated July 21, 2019
@@ -10,7 +11,7 @@
 library(tidyverse)
 
 #Examining the preview file to see which columns will be needed to visualize in EarthTime
-arcos_500_washpo <- read.delim("./arcos_500_washpo.tsv", stringsAsFactors=FALSE)
+arcos_500_washpo <- read.delim("arcos_500_washpo.tsv", stringsAsFactors=FALSE)
 #arcos_500_washpo <- readr::read_tsv("SplitExamples/aa", col_types = readr::cols())
 df <- arcos_500_washpo[,c(7:10, 17:20, 24, 25, 31)]
 

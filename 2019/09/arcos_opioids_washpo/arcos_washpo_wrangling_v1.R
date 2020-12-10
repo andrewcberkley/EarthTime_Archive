@@ -1,4 +1,5 @@
 #THE OPIOID FILES
+setwd(file.path(Sys.getenv('my_dir'),'2019/09/arcos_opioids_washpo/'))
 
 #Drilling into the DEA’s pain pill database
 #By The Washington Post Updated July 21, 2019
