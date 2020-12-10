@@ -1,9 +1,9 @@
-setwd("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2019/10/California_Power_Outages/")
+setwd(file.path(Sys.getenv('my_dir'),'2019/10/California_Power_Outages/'))
 
 library(anytime)
 library(tidyverse)
 
-outages_expanded <- read.csv("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2019/10/California_Power_Outages/outages_expanded.csv", stringsAsFactors=FALSE)
+outages_expanded <- read.csv("outages_expanded.csv", stringsAsFactors=FALSE)
 
 outages_expanded$earliest <- anytime(outages_expanded$earliest)
 outages_expanded$latest <- anytime(outages_expanded$latest)
