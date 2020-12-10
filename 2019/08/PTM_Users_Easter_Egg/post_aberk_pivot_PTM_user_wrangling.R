@@ -1,3 +1,5 @@
+setwd(file.path(Sys.getenv('my_dir'),'2019/08/PTM_Users_Easter_Egg/'))
+
 library(readxl)
 library(dplyr)
 sheet <- read_excel("~/ptm_evolution_2019_bubble_map.xlsx")
