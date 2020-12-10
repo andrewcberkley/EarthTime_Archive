@@ -1,3 +1,5 @@
+setwd(file.path(Sys.getenv('my_dir'),'2019/10/Taxes/'))
+
 #library(data.table)
 library(tidyverse)
 
@@ -11,7 +13,7 @@ library(tidyverse)
 #     spread(year, rate) %>%
 #     select(-idx)
 
-REV_31102019112946759 <- read.csv("C:/Users/ABERK/Desktop/REV_31102019112946759.csv")
+REV_31102019112946759 <- read.csv("REV_31102019112946759.csv")
 
 df <- REV_31102019112946759[grep("TAXGDP", REV_31102019112946759[,"VAR"]),]
 df2 <- df[,c(7,9,17)]

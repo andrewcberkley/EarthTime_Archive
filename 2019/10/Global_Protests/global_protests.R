@@ -1,4 +1,4 @@
-setwd("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2019/10/Global_Protests/")
+setwd(file.path(Sys.getenv('my_dir'),'2019/10/Global_Protests/'))
 
 #A Word of Caution for using GDELT Data
 #Just because the number of events of a certain phenomenon increases as the years progress, does not mean that the phenomenon increases. It may just mean that more data has become available, or that more sources respond to the phenomenon.
