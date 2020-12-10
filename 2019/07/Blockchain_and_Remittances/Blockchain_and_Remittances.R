@@ -1,3 +1,5 @@
+setwd(file.path(Sys.getenv('my_dir'),'2019/07/Blockchain_and_Remittances/'))
+
 #Bitcoin Accepting Venues Data
 library(tidyverse)
 library(httr)
