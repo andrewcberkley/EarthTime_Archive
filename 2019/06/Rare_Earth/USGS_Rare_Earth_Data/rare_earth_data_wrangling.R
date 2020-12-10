@@ -1,4 +1,6 @@
-rare_earth <- read.csv("C:/Users/ABERK/Desktop/Global_REE_occurrence_database_aberk2.csv", stringsAsFactors=FALSE)
+setwd(file.path(Sys.getenv('my_dir'),'2019/06/Rare_Earth/USGS_Rare_Earth_Data/'))
+
+rare_earth <- read.csv("Global_REE_occurrence_database_aberk2.csv", stringsAsFactors=FALSE)
 
 library(dplyr)
 library(tidyverse)
@@ -17,7 +19,7 @@ df_plus <- df[,c(1:6)]
 final_df <- cbind(df_plus, df_test2)
 write.csv(final_df, "rare_earth2.csv", row.names = FALSE)
 
-rare_earth2 <- read.csv("C:/Users/ABERK/Desktop/rare_earth2.csv", stringsAsFactors=FALSE)
+rare_earth2 <- read.csv("rare_earth2.csv", stringsAsFactors=FALSE)
 colnames(rare_earth2) <- sub('X', '', colnames(rare_earth2))
 
 #coalesce_by_column <- function(df) {
