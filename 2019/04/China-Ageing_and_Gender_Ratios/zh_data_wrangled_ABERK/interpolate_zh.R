@@ -1,6 +1,7 @@
 #Inspired by PSAO's original interpolation functions for the migration EarthTime data
+setwd(file.path(Sys.getenv('my_dir'),'2019/04/China-Ageing_and_Gender_Ratios/zh_data_wrangled_ABERK/'))
 
-source("C:/Users/ABERK/Desktop/zh_data_wrangled_ABERK/utils_zh.R")
+source("utils_zh.R")
 
 rundataprocessing <- FALSE
 save <- FALSE
