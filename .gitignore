@@ -9,7 +9,6 @@
 # But not these files...
 !*.gitignore
 !*.R
-!*.rds
 !*.ipynb
 !*.py
 # etc...
