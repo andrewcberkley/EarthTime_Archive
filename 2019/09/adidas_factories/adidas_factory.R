@@ -1,6 +1,8 @@
-adidas <- read.csv("C:/Users/ABERK/Desktop/adidas_primary_suppliers_and_subcontractors_2017-2019.csv", stringsAsFactors=FALSE)
+setwd(file.path(Sys.getenv('my_dir'),'2019/09/adidas_factories/'))
+
+adidas <- read.csv("adidas_primary_suppliers_and_subcontractors_2017-2019.csv", stringsAsFactors=FALSE)
 View(adidas)
-adidas <- read.csv("C:/Users/ABERK/Desktop/adidas_primary_suppliers_and_subcontractors_2017-2019.csv", stringsAsFactors=FALSE)
+adidas <- read.csv("adidas_primary_suppliers_and_subcontractors_2017-2019.csv", stringsAsFactors=FALSE)
 View(adidas)
 three_million_cities <- readRDS("~/three_million_cities.rds")
 three_million_cities <- readRDS("~/three_million_cities.rds")
