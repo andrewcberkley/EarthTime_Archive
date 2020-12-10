@@ -1,10 +1,17 @@
 # Ignore everything
 *
 
+#"The following files are over 100MB. If you commit these files, you will no longer be able to push this repository to GitHub.com."
+*.corex_matched_noOAG.rds
+*.events_and_gkg_combined.rds
+*.raw_global_protests_from_gdelt_v3_gkg.rds
+
 # But not these files...
 !*.gitignore
 !*.R
+!*.rds
 !*.ipynb
+!*.py
 # etc...
 
 # ...even if they are in subdirectories
