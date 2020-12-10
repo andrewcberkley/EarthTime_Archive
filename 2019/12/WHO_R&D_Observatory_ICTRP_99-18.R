@@ -1,4 +1,4 @@
-#setwd("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2019/12")
+setwd(file.path(Sys.getenv('my_dir'),'2019/12/'))
 
 df <- read.csv("WHO R&D Observatory_ICTRP data_99-18.csv", stringsAsFactors=FALSE)
 
