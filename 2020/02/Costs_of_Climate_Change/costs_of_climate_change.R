@@ -1,4 +1,4 @@
-setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/02/Costs_of_Climate_Change")
+setwd(file.path(Sys.getenv('my_dir'),'2020/02/Costs_of_Climate_Change/'))
 
 #High-re-regions-simplified.topo.json contains the shapefile for Climate Impact Lab's 24,378 subnational regions, corresponding to ‘hierid’ column in each CSV file
 # library(geojsonio)
