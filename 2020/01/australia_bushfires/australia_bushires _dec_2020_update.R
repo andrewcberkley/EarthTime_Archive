@@ -30,8 +30,8 @@ fires_2020_v2 <- fires_2020_v1[,c(1:2,6,13)]
 
 fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$frp <= 0),]
 
-#fires_2020_v2$acq_date <- as.Date(fires_2020_v2$acq_date, "%d-%B-%Y")
-fires_2020_v2$acq_date <- format(fires_2020_v2$acq_date, "%d %B %Y")
+fires_2020_v2$acq_date <- as.Date(fires_2020_v2$acq_date)
+#fires_2020_v2$acq_date <- format(fires_2020_v2$acq_date, "%d %B %Y")
 
 #hist(log(fires_2020_v2$frp))
 
@@ -42,7 +42,7 @@ rownames(fires_2020_v2) <- NULL
 write.csv(fires_2020_v2, "fires_dec_2020_update.csv", na = "", row.names = FALSE)
 
 fires_2020_dec_update_scaled <- fires_2020_v2
-fires_2020_dec_update_scaled$frp <- (fires_2020_dec_update_scaled$frp/10000)
+fires_2020_dec_update_scaled$frp <- (fires_2020_dec_update_scaled$frp/1)
 #fires_2020_dec_update_scaled$acq_date <- as.Date(fires_2020_dec_update_scaled$acq_date)
 write.csv(fires_2020_dec_update_scaled, "fires_2020_v2_cmu_formatting_dec_2020_update.csv", na = "", row.names = FALSE)
 
@@ -51,26 +51,25 @@ use_python("C:/Program Files/Anaconda3/", required = TRUE)
 
 repl_python()
 
-import array, calendar, csv, math, time
+import array, csv, math, os, time
+from datetime import timedelta, date, datetime
 
-def LonLatToPixelXY(lonlat):
-  (lon, lat) = lonlat
-  x = (lon + 180.0) * 256.0 / 360.0
-  y = 128.0 - math.log(math.tan((lat + 90.0) * math.pi / 360.0)) * 128.0 / math.pi
-  return [x, y]
 
-def FormatEpoch(datestr, formatstr):
-  return calendar.timegm(time.strptime(datestr, formatstr))
-#FormatEpoch("%s-%s-%s" % (year0, month0, day0), '%Y-%m-%d')
+def FormatDateStr(date_str, format_str):
+    return time.mktime(time.strptime(date_str, format_str))
 
-def PackColor(color):    
-  return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
+def LngLatToWebMercator(lnglat):
+    (lng, lat) = lnglat
+    x = (lng + 180.0) * 256.0 / 360.0
+    y = 128.0 - math.log(math.tan((lat + 90.0) * math.pi / 360.0)) * 128.0 / math.pi
+    return [x, y]
 
-def hex2rgb(h):
-  return tuple(int(h.strip("#")[i:i+2], 16) for i in (0, 2 ,4))
+
+def PackColor(color):
+    return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
 
 raw_data = []
-with open("fires_2020_v2_cmu_formatting_dec_2020_update.csv", encoding="utf8") as f:
+with open("fires_2020_v2_cmu_formatting_dec_2020_update.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -79,19 +78,15 @@ len(raw_data)
 
 raw_data[0]
 
-# rev 1
-# x,y,size_value,epoch
-# show all points in same color. Initial date at full size. after n days begin to fade dot until a year as elapsed...
-# don't distinguish between events with 0 or > 0 number of events
-#This is for **ALL** events
+
+#format x,y,packed_color,epoch_0,epoch_1
 points = []
 for row in raw_data:
-  x,y = LonLatToPixelXY([float(row['longitude']), float(row['latitude'])])
-  points.append(x)
-  points.append(y)
-  points.append(math.sqrt(float(row['frp']) + 1.0))
-  points.append(PackColor([0.85,0.15,0.05]))    
-  points.append(FormatEpoch(row["acq_date"], '%d %B %Y'))
+  x,y = LngLatToWebMercator([float(row['longitude']), float(row['latitude'])])
+  packedColor = PackColor([0.85,0.15,0.05])
+  epoch_0 = FormatDateStr(row['acq_date'], '%Y-%m-%d')
+  epoch_1 = epoch_0 + 60*60*24*28
+  points += [x,y,packedColor,epoch_0,epoch_1]
 array.array('f', points).tofile(open('2020_australia_fire_december_update.bin', 'wb'))
 
 #Note that some people might think that backburning is causing 'ring fires' in the visuals, but these are are most likely due to detection hiatuses, probably caused by cloud cover.
