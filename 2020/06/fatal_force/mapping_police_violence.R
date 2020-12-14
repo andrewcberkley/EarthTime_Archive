@@ -105,7 +105,7 @@ def PackColor(color):
     return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
 
 raw_data = []
-with open("full_fatal_force_final.csv") as f:
+with open("full_fatal_force_final_14122020.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -123,7 +123,7 @@ for row in raw_data:
   epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_v1.bin', 'wb'))
+array.array('f', points).tofile(open('full_fatal_force_v1_14122020.bin', 'wb'))
 #If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
 
 # #The below is for **SPECIFIC** races
