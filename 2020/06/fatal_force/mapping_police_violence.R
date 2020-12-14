@@ -62,14 +62,23 @@ full_fatal_force_native_americans <- full_fatal_force_final[full_fatal_force_fin
 full_fatal_force_unknown_other <- subset(full_fatal_force_final , race == 'Unknown Race'|race == 'Other')
 
 
-write.csv(full_fatal_force_final, "full_fatal_force_final.csv", na = "", row.names = FALSE)
+# write.csv(full_fatal_force_final, "full_fatal_force_final.csv", na = "", row.names = FALSE)
 
-write.csv(full_fatal_force_white, "full_fatal_force_white.csv", na = "", row.names = FALSE)
-write.csv(full_fatal_force_black, "full_fatal_force_black.csv", na = "", row.names = FALSE)
-write.csv(full_fatal_force_asian_pacific_islander, "full_fatal_force_asian_pacific_islander.csv", na = "", row.names = FALSE)
-write.csv(full_fatal_force_hispanic, "full_fatal_force_hispanic.csv", na = "", row.names = FALSE)
-write.csv(full_fatal_force_native_americans, "full_fatal_force_native_americans.csv", na = "", row.names = FALSE)
-write.csv(full_fatal_force_unknown_other, "full_fatal_force_unknown_other.csv", na = "", row.names = FALSE)
+# write.csv(full_fatal_force_white, "full_fatal_force_white.csv", na = "", row.names = FALSE)
+# write.csv(full_fatal_force_black, "full_fatal_force_black.csv", na = "", row.names = FALSE)
+# write.csv(full_fatal_force_asian_pacific_islander, "full_fatal_force_asian_pacific_islander.csv", na = "", row.names = FALSE)
+# write.csv(full_fatal_force_hispanic, "full_fatal_force_hispanic.csv", na = "", row.names = FALSE)
+# write.csv(full_fatal_force_native_americans, "full_fatal_force_native_americans.csv", na = "", row.names = FALSE)
+# write.csv(full_fatal_force_unknown_other, "full_fatal_force_unknown_other.csv", na = "", row.names = FALSE)
+
+write.csv(full_fatal_force_final, "full_fatal_force_final_14122020.csv", na = "", row.names = FALSE)
+
+write.csv(full_fatal_force_white, "full_fatal_force_white_14122020.csv", na = "", row.names = FALSE)
+write.csv(full_fatal_force_black, "full_fatal_force_black_14122020.csv", na = "", row.names = FALSE)
+write.csv(full_fatal_force_asian_pacific_islander, "full_fatal_force_asian_pacific_islander_14122020.csv", na = "", row.names = FALSE)
+write.csv(full_fatal_force_hispanic, "full_fatal_force_hispanic_14122020.csv", na = "", row.names = FALSE)
+write.csv(full_fatal_force_native_americans, "full_fatal_force_native_americans_14122020.csv", na = "", row.names = FALSE)
+write.csv(full_fatal_force_unknown_other, "full_fatal_force_unknown_other_14122020.csv", na = "", row.names = FALSE)
 
 library(reticulate)
 use_python("C:/Program Files/Anaconda3/", required = TRUE)
@@ -133,7 +142,7 @@ array.array('f', points).tofile(open('full_fatal_force_v1.bin', 'wb'))
 
 #white
 raw_data = []
-with open("full_fatal_force_white.csv") as f:
+with open("full_fatal_force_white_14122020.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -146,11 +155,11 @@ for row in raw_data:
   epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_white.bin', 'wb'))
+array.array('f', points).tofile(open('full_fatal_force_white_14122020.bin', 'wb'))
 
 #black
 raw_data = []
-with open("full_fatal_force_black.csv") as f:
+with open("full_fatal_force_black_14122020.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -163,11 +172,11 @@ for row in raw_data:
   epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_black.bin', 'wb'))
+array.array('f', points).tofile(open('full_fatal_force_black_14122020.bin', 'wb'))
 
 #asian/pacific islander
 raw_data = []
-with open("full_fatal_force_asian_pacific_islander.csv") as f:
+with open("full_fatal_force_asian_pacific_islander_14122020.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -180,11 +189,11 @@ for row in raw_data:
   epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_asian_pacific_islander.bin', 'wb'))
+array.array('f', points).tofile(open('full_fatal_force_asian_pacific_islander_14122020.bin', 'wb'))
 
 #hispanic
 raw_data = []
-with open("full_fatal_force_hispanic.csv") as f:
+with open("full_fatal_force_hispanic_14122020.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -197,11 +206,11 @@ for row in raw_data:
   epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_hispanic.bin', 'wb'))
+array.array('f', points).tofile(open('full_fatal_force_hispanic_14122020.bin', 'wb'))
 
 #native americans
 raw_data = []
-with open("full_fatal_force_native_americans.csv") as f:
+with open("full_fatal_force_native_americans_14122020.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -214,11 +223,11 @@ for row in raw_data:
   epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_native_americans.bin', 'wb'))
+array.array('f', points).tofile(open('full_fatal_force_native_americans_14122020.bin', 'wb'))
 
 #unknown other
 raw_data = []
-with open("full_fatal_force_unknown_other.csv") as f:
+with open("full_fatal_force_unknown_other_14122020.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -231,4 +240,4 @@ for row in raw_data:
   epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_unknown_other.bin', 'wb'))
+array.array('f', points).tofile(open('full_fatal_force_unknown_other_14122020.bin', 'wb'))
