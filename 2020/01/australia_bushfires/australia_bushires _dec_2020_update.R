@@ -164,7 +164,7 @@ def hex2rgb(h):
 raw_data = []
 #with open("fires_2020_v2_cmu_formatting.csv", encoding="utf8") as f:
 #with open("fires_2020_v2_scaled_cmu_formatting.csv", encoding="utf8") as f:
-with open("fires_2020_v2_scaled_by_100_cmu_formatting.csv", encoding="utf8") as f:
+with open("fires_2020_v2_cmu_formatting_dec_2020_update.csv", encoding="utf8") as f:
 #with open("fires_2020_v2_scaled_by_10000_cmu_formatting.csv", encoding="utf8") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
@@ -189,7 +189,7 @@ for row in raw_data:
   points.append(FormatEpoch(row["acq_date"], '%d %B %Y'))
 #array.array('f', points).tofile(open('two_decades_of_australian_fires.bin', 'wb'))
 #array.array('f', points).tofile(open('two_decades_of_australian_fires_scaled.bin', 'wb'))
-array.array('f', points).tofile(open('two_decades_of_australian_fires_scaled_by_one_hundred_month_test.bin', 'wb'))
+array.array('f', points).tofile(open('2020_australia_fire_december_update.bin', 'wb'))
 #array.array('f', points).tofile(open('two_decades_of_australian_fires_scaled_by_ten_thousand.bin', 'wb'))
 
 
