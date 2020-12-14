@@ -20,7 +20,7 @@ setwd(file.path(Sys.getenv('my_dir'),'2020/01/australia_bushfires/'))
 
 # fires_modis <- read.csv("fire_nrt_M6_94462.csv", stringsAsFactors=FALSE)
 
-fires_modis <- read.csv("DL_FIRE_M6_14122020/fire_nrt_M6_170679.csv", stringsAsFactors=FALSE) #Dec 14th 2020 Update
+# fires_modis <- read.csv("DL_FIRE_M6_14122020/fire_archive_M6_170679.csv", stringsAsFactors=FALSE) #Dec 14th 2020 Update
 
 # fires_modis$acq_date <- gsub("-", "", fires_modis$acq_date)
 # fires_modis_v2 <- fires_modis[,c(1:3,6)]
@@ -31,7 +31,7 @@ fires_modis <- read.csv("DL_FIRE_M6_14122020/fire_nrt_M6_170679.csv", stringsAsF
 #     spread(acq_date, brightness) %>%
 #     select(-idx)
 
-#fires_transformed_modis[is.na(fires_transformed_modis)] <- 0
+# fires_transformed_modis[is.na(fires_transformed_modis)] <- 0
 
 # fires_transformed_modis$coordinates <- paste(fires_transformed_modis$latitude, fires_transformed_modis$longitude, sep = ",")
 
@@ -46,6 +46,7 @@ fires_modis <- read.csv("DL_FIRE_M6_14122020/fire_nrt_M6_170679.csv", stringsAsF
 # final_fires_modis <- cbind(fires_transformed_modis_lus_df, fires_transformed_modis_filled)
 
 #write.csv(fires_transformed_modis, "australia_bushfires_modis.csv", na = "", row.names = FALSE)
+# write.csv(fires_transformed_modis, "australia_bushfires_modis_14122020.csv", na = "", row.names = FALSE)
 
 
 #Making progress below:
@@ -53,8 +54,11 @@ fires_modis <- read.csv("DL_FIRE_M6_14122020/fire_nrt_M6_170679.csv", stringsAsF
 #fires_transformed_modis$`20191002`[is.na(fires_transformed_modis$`20191002`)] <- fires_transformed_modis$`20191001`[is.na(fires_transformed_modis$`20191002`)]
 
 #fires_20_years <- read.csv("fire_archive_M6_95032_january_2000-september_2019.csv", stringsAsFactors=FALSE)
-# #saveRDS(fires_20_years, file = "fire_archive_M6_95032_january_2000-september_2019.rds")
-fires_20_years <- readRDS("fire_archive_M6_95032_january_2000-september_2019.rds")
+#fires_2020 <- read.csv("fire_archive_M6_95032_january_2000-september_2019.csv", stringsAsFactors=FALSE)
+#saveRDS(fires_20_years, file = "fire_archive_M6_95032_january_2000-september_2019.rds")
+#saveRDS(fires_transformed_modis, file = "fires_2020.rds")
+#fires_20_years <- readRDS("fire_archive_M6_95032_january_2000-september_2019.rds")
+fires_2020 <- readRDS("fire_archive_M6_95032_january_2000-september_2019.rds")
 
 # as.data.frame(table(fires_20_years$daynight))
 
