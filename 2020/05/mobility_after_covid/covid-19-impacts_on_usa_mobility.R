@@ -33,7 +33,8 @@ final_df$fips <- as.character(final_df$fips)
 
 colnames(final_df)[1] <- "GEO_ID"
 
-long <- gather(final_df, "date", "index_measurement", 2:76)
+#long <- gather(final_df, "date", "index_measurement", 2:76)
+long <- gather(final_df, "date", "index_measurement", 2:283)
 long_v2 <- long[order(long[,"GEO_ID"]), ]
 rownames(long_v2) <- NULL
 
