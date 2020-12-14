@@ -1,68 +1,13 @@
 setwd(file.path(Sys.getenv('my_dir'),'2020/01/australia_bushfires/'))
 
-library(tidyverse)
-library(zoo)
+# library(tidyverse)
+# library(zoo)
 
-# fires_viirs <- read.csv("fire_nrt_V1_94463.csv", stringsAsFactors=FALSE)
+fires_nrt <- read.csv("DL_FIRE_M6_14122020/fire_nrt_M6_170679.csv", stringsAsFactors=FALSE) #Dec 14th 2020 Update
+fires_archived <- read.csv("DL_FIRE_M6_14122020/fire_archive_M6_170679.csv", stringsAsFactors=FALSE)
+fires_archived <- fires_archived[,-15]
 
-# fires_viirs$acq_date <- gsub("-", "", fires_viirs$acq_date)
-# fires_viirs_v2 <- fires_viirs[,c(1:3,6)]
-
-# fires_transformed <- fires_viirs_v2 %>%
-#     group_by(acq_date) %>%
-#     mutate(idx = row_number()) %>%
-#     spread(acq_date, bright_ti4) %>%
-#     select(-idx)
-
-# #fires_transformed_viirs[is.na(fires_transformed_viirs)] <- 0
-
-# write.csv(fires_transformed_modis, "australia_bushfires_viirs.csv", na = "", row.names = FALSE)
-
-# fires_modis <- read.csv("fire_nrt_M6_94462.csv", stringsAsFactors=FALSE)
-
-fires_modis <- read.csv("DL_FIRE_M6_14122020/fire_nrt_M6_170679.csv", stringsAsFactors=FALSE) #Dec 14th 2020 Update
-
-fires_modis$acq_date <- gsub("-", "", fires_modis$acq_date)
-fires_modis_v2 <- fires_modis[,c(1:3,6)]
-
-fires_transformed_modis <- fires_modis_v2 %>%
-    group_by(acq_date) %>%
-    mutate(idx = row_number()) %>%
-    spread(acq_date, brightness) %>%
-    select(-idx)
-
-fires_transformed_modis[is.na(fires_transformed_modis)] <- 0
-
-fires_transformed_modis$coordinates <- paste(fires_transformed_modis$latitude, fires_transformed_modis$longitude, sep = ",")
-
-fires_transformed_modis_v2 <- fires_transformed_modis[,c(78,3:77)]
-fires_transformed_modis_v3 <- cbind(coordinates = rownames(fires_modis_v2), fires_transformed_modis_v2)
-
-fires_transformed_modis_minus_df <- fires_transformed_modis[,-c(1:2)]
-fires_transformed_modis <- fires_transformed_modis[,-c(96)]
-fires_transformed_modis_minus_df <- fires_transformed_modis[,-c(1:2)]
-fires_transformed_modis_filled <- t(apply(fires_transformed_modis_minus_df, 1, function(x) na.locf(x, fromLast = F, na.rm = F)))
-fires_transformed_modis_lus_df<- fires_transformed_modis[,c(1:2)]
-final_fires_modis <- cbind(fires_transformed_modis_lus_df, fires_transformed_modis_filled)
-
-write.csv(fires_transformed_modis_2020, "australia_bushfires_modis_2020.csv", na = "", row.names = FALSE)
-
-
-#Making progress below:
-#https://stackoverflow.com/questions/15629885/replace-na-in-column-with-value-in-adjacent-column
-fires_transformed_modis$`20191002`[is.na(fires_transformed_modis$`20191002`)] <- fires_transformed_modis$`20191001`[is.na(fires_transformed_modis$`20191002`)]
-
-fires_2020 <- read.csv("australia_bushfires_modis_2020.csv", stringsAsFactors=FALSE)
-saveRDS(fires_2020, file = "australia_bushfires_modis_2020.rds")
-fires_2020 <- readRDS("fires_2020.rds")
-
-as.data.frame(table(fires_20_years$daynight))
-
-appended_df <- read.csv("fire_nrt_M6_95412_recent.csv", stringsAsFactors=FALSE)
-
-appended_df$type <- NA
-
-fires_2020_v1 <- rbind(fires_2020, appended_df)
+fires_2020_v1 <- rbind(fires_nrt, fires_archived)
 
 #For MODIS, the confidence value ranges from 0% and 100% and can be used to assign one of the three fire classes (low-confidence fire, nominal-confidence fire, or high-confidence fire) to all fire pixels within the fire mask. In some applications errors of commission (or false alarms) are particularly undesirable, and for these applications one might be willing to trade a lower detection rate to gain a lower false alarm rate. Conversely, for other applications missing any fire might be especially undesirable, and one might then be willing to tolerate a higher false alarm rate to ensure that fewer true fires are missed. Users requiring fewer false alarms may wish to retain only nominal- and high-confidence fire pixels, and treat low-confidence fire pixels as clear, non-fire, land pixels. Users requiring maximum fire detectability who are able to tolerate a higher incidence of false alarms should consider all three classes of fire pixels.
 
@@ -77,7 +22,7 @@ fires_2020_v1 <- rbind(fires_2020, appended_df)
 
 #The parallax effect causes the tall/superheated plume detection pixel(s) to be displaced laterally when projected onto the surface. Displaced pixels will be located on the fire perimeter’s side further away from the image center and closer to the swath’s edge. If those conditions apply, look for alternative observations (previous/next observation) acquired closer to nadir and try and prioritize the use of the fire detection data accordingly. Unfortunately, the VNP14IMG isn’t currently able to distinguish nighttime surface fire pixels from the isolated plume detections due to strong similarities between their radiometric signatures
 
-fires_2020_v1 <- fires_2020_v1[-which(fires_20_years$confidence <= 66),]
+fires_2020_v1 <- fires_2020_v1[-which(fires_2020_v1$confidence <= 66),]
 
 fires_2020_v1 <- fires_2020_v1[-which(fires_2020_v1$daynight == "N"),]
 
@@ -113,28 +58,9 @@ rownames(fires_2020_v2) <- NULL
 
 write.csv(fires_2020_v2, "fires_2020_v2_cmu_formatting_dec_2020_update.csv", na = "", row.names = FALSE)
 
-# fires_2020_v2_scaled <- fires_2020_v2
-# fires_2020_v2_scaled$frp <- (fires_2020_v2_scaled$frp/10)
-#write.csv(fires_2020_v2, "fires_2020_v2_scaled_cmu_formatting.csv", na = "", row.names = FALSE)
-
-# fires_2020_v2_scaled_by_one_hundred <- fires_2020_v2
-# fires_2020_v2_scaled_by_one_hundred$frp <- (fires_2020_v2_scaled_by_one_hundred$frp/100)
-# write.csv(fires_2020_v2_scaled_by_one_hundred, "fires_2020_v2_scaled_by_100_cmu_formatting.csv", na = "", row.names = FALSE)
-
 fires_2020_v2_scaled_by_ten_thousand <- fires_2020_v2
 fires_2020_v2_scaled_by_ten_thousand$frp <- (fires_2020_v2_scaled_by_ten_thousand$frp/10000)
 write.csv(fires_2020_v2_scaled_by_ten_thousand, "fires_2020_v2_cmu_formatting_dec_2020_update.csv", na = "", row.names = FALSE)
-
-# dfx <- fires_2020_v2_scaled_by_ten_thousand[order(as.Date(fires_2020_v2_scaled_by_ten_thousand$acq_date)),]
-
-# dfx[dfx$acq_date=="2010-01-01",]
-# dfx[dfx$acq_date=="2009-12-31",]
-
-# fires_2000_2009_v2_scaled_by_ten_thousand <- fires_2020_v2_scaled_by_ten_thousand[1:1092551,]
-# write.csv(fires_2000_2009_v2_scaled_by_ten_thousand, "fires_2000_2009_v2_map_scaled_10000x_cmu_formatting.csv", na = "", row.names = FALSE)
-
-# fires_2010_2019_v2_scaled_by_ten_thousand <- fires_2020_v2_scaled_by_ten_thousand[1092552:2453344,]
-# write.csv(fires_2010_2019_v2_scaled_by_ten_thousand, "fires_2010_2019_v2_map_scaled_10000x_cmu_formatting.csv", na = "", row.names = FALSE)
 
 library(reticulate)
 use_python("C:/Program Files/Anaconda3/", required = TRUE)
@@ -162,10 +88,7 @@ def hex2rgb(h):
   return tuple(int(h.strip("#")[i:i+2], 16) for i in (0, 2 ,4))
 
 raw_data = []
-#with open("fires_2020_v2_cmu_formatting.csv", encoding="utf8") as f:
-#with open("fires_2020_v2_scaled_cmu_formatting.csv", encoding="utf8") as f:
 with open("fires_2020_v2_cmu_formatting_dec_2020_update.csv", encoding="utf8") as f:
-#with open("fires_2020_v2_scaled_by_10000_cmu_formatting.csv", encoding="utf8") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
