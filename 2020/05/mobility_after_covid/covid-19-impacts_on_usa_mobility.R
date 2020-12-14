@@ -68,8 +68,8 @@ partial_midwest_and_rust_belt_counties <- dplyr::filter(wide_final_final, grepl(
 # write.csv(partial_south_and_west_counties, "descartes_labs_mobility_partial_south_and_west_counties.csv", row.names = FALSE, na = "")
 # write.csv(partial_midwest_and_rust_belt_counties, "descartes_labs_mobility_partial_midwest_and_rust_belt_counties.csv", row.names = FALSE, na = "")
 
-write.csv(wide_final_final, "descartes_labs_mobility.csv", row.names = FALSE, na = "")
-write.csv(california_counties, "descartes_labs_mobility_california_counties.csv", row.names = FALSE, na = "")
-write.csv(tri_state_area_counties, "descartes_labs_mobility_tri_state_area_counties.csv", row.names = FALSE, na = "")
-write.csv(partial_south_and_west_counties, "descartes_labs_mobility_partial_south_and_west_counties.csv", row.names = FALSE, na = "")
-write.csv(partial_midwest_and_rust_belt_counties, "descartes_labs_mobility_partial_midwest_and_rust_belt_counties.csv", row.names = FALSE, na = "")
+write.csv(wide_final_final, "descartes_labs_mobility_14122020.csv", row.names = FALSE, na = "")
+write.csv(california_counties, "descartes_labs_mobility_california_counties_14122020.csv", row.names = FALSE, na = "")
+write.csv(tri_state_area_counties, "descartes_labs_mobility_tri_state_area_counties_14122020.csv", row.names = FALSE, na = "")
+write.csv(partial_south_and_west_counties, "descartes_labs_mobility_partial_south_and_west_counties_14122020.csv", row.names = FALSE, na = "")
+write.csv(partial_midwest_and_rust_belt_counties, "descartes_labs_mobility_partial_midwest_and_rust_belt_counties_14122020.csv", row.names = FALSE, na = "")
