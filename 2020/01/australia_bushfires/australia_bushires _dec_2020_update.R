@@ -7,7 +7,7 @@ fires_nrt <- read.csv("DL_FIRE_M6_14122020/fire_nrt_M6_170679.csv", stringsAsFac
 fires_archived <- read.csv("DL_FIRE_M6_14122020/fire_archive_M6_170679.csv", stringsAsFactors=FALSE)
 fires_archived <- fires_archived[,-15]
 
-fires_2020_v1 <- rbind(fires_nrt, fires_archived)
+fires_2020_v1 <- rbind(fires_archived,fires_nrt)
 
 #For MODIS, the confidence value ranges from 0% and 100% and can be used to assign one of the three fire classes (low-confidence fire, nominal-confidence fire, or high-confidence fire) to all fire pixels within the fire mask. In some applications errors of commission (or false alarms) are particularly undesirable, and for these applications one might be willing to trade a lower detection rate to gain a lower false alarm rate. Conversely, for other applications missing any fire might be especially undesirable, and one might then be willing to tolerate a higher false alarm rate to ensure that fewer true fires are missed. Users requiring fewer false alarms may wish to retain only nominal- and high-confidence fire pixels, and treat low-confidence fire pixels as clear, non-fire, land pixels. Users requiring maximum fire detectability who are able to tolerate a higher incidence of false alarms should consider all three classes of fire pixels.
 
@@ -30,29 +30,21 @@ fires_2020_v2 <- fires_2020_v1[,c(1:2,6,13)]
 
 fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$frp <= 0),]
 
-fires_2020_v2$acq_date <- as.Date(fires_2020_v2$acq_date)
-#fires_2020_v2$acq_date <- format(fires_2020_v2$acq_date, "%d %B %Y")
+#fires_2020_v2$acq_date <- as.Date(fires_2020_v2$acq_date, "%d-%B-%Y")
+fires_2020_v2$acq_date <- format(fires_2020_v2$acq_date, "%d %B %Y")
 
-fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "2020-01-07"),]
-fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "2020-01-06"),]
-fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "2020-01-05"),]
-fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "2020-01-04"),]
-fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "2020-01-03"),]
-fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "2020-01-02"),]
-fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "2020-01-01"),]
-
-
-hist(log(fires_2020_v2$frp))
+#hist(log(fires_2020_v2$frp))
 
 saveRDS(fires_2020_v2, file = "fires_cleaned_2020.rds")
 fires_2020_v2 <- readRDS("fires_cleaned_2020.rds")
 rownames(fires_2020_v2) <- NULL
 
-write.csv(fires_2020_v2, "fires_2020_v2_cmu_formatting_dec_2020_update.csv", na = "", row.names = FALSE)
+write.csv(fires_2020_v2, "fires_dec_2020_update.csv", na = "", row.names = FALSE)
 
-fires_2020_v2_scaled_by_ten_thousand <- fires_2020_v2
-fires_2020_v2_scaled_by_ten_thousand$frp <- (fires_2020_v2_scaled_by_ten_thousand$frp/10000)
-write.csv(fires_2020_v2_scaled_by_ten_thousand, "fires_2020_v2_cmu_formatting_dec_2020_update.csv", na = "", row.names = FALSE)
+fires_2020_dec_update_scaled <- fires_2020_v2
+fires_2020_dec_update_scaled$frp <- (fires_2020_dec_update_scaled$frp/10000)
+#fires_2020_dec_update_scaled$acq_date <- as.Date(fires_2020_dec_update_scaled$acq_date)
+write.csv(fires_2020_dec_update_scaled, "fires_2020_v2_cmu_formatting_dec_2020_update.csv", na = "", row.names = FALSE)
 
 library(reticulate)
 use_python("C:/Program Files/Anaconda3/", required = TRUE)
