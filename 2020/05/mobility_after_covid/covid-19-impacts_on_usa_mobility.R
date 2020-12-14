@@ -3,8 +3,10 @@ setwd(file.path(Sys.getenv('my_dir'),'2020/05/mobility_after_covid/'))
 library(tidyverse)
 library(zoo)
 
-DL_us_m50_index <- read.csv("Descartes_Labs-COVID-19-master/DL-us-m50_index.csv", stringsAsFactors=FALSE)
+#DL_us_m50_index <- read.csv("Descartes_Labs-COVID-19-master/DL-us-m50_index.csv", stringsAsFactors=FALSE)
 #View(DL_us_m50_index)
+
+DL_us_m50_index <- read.csv("https://raw.githubusercontent.com/descarteslabs/DL-COVID-19/master/DL-us-m50_index.csv", stringsAsFactors=FALSE)
 
 destroyX = function(df) {
   #https://stackoverflow.com/questions/10441437/why-am-i-getting-x-in-my-column-names-when-reading-a-data-frame
@@ -59,6 +61,12 @@ tri_state_area_counties <- dplyr::filter(wide_final_final, grepl("0500000US42|05
 
 partial_south_and_west_counties <- dplyr::filter(wide_final_final, grepl("0500000US01|0500000US04|0500000US05|0500000US12|0500000US13|0500000US20|0500000US21|0500000US22|0500000US28|0500000US29|0500000US35|0500000US40|0500000US47|0500000US48",GEO_ID))
 partial_midwest_and_rust_belt_counties <- dplyr::filter(wide_final_final, grepl("0500000US55|0500000US19|0500000US17|0500000US18|0500000US39|0500000US26|0500000US42|0500000US29|0500000US21|0500000US54|0500000US27",GEO_ID))
+
+# write.csv(wide_final_final, "descartes_labs_mobility.csv", row.names = FALSE, na = "")
+# write.csv(california_counties, "descartes_labs_mobility_california_counties.csv", row.names = FALSE, na = "")
+# write.csv(tri_state_area_counties, "descartes_labs_mobility_tri_state_area_counties.csv", row.names = FALSE, na = "")
+# write.csv(partial_south_and_west_counties, "descartes_labs_mobility_partial_south_and_west_counties.csv", row.names = FALSE, na = "")
+# write.csv(partial_midwest_and_rust_belt_counties, "descartes_labs_mobility_partial_midwest_and_rust_belt_counties.csv", row.names = FALSE, na = "")
 
 write.csv(wide_final_final, "descartes_labs_mobility.csv", row.names = FALSE, na = "")
 write.csv(california_counties, "descartes_labs_mobility_california_counties.csv", row.names = FALSE, na = "")
