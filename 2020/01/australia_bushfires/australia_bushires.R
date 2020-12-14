@@ -1,4 +1,4 @@
-setwd("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2020/01/australia_bushfires/")
+setwd(file.path(Sys.getenv('my_dir'),'2020/01/australia_bushfires/'))
 
 # library(tidyverse)
 # library(zoo)
