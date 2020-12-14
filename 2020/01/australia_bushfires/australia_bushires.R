@@ -3,7 +3,7 @@ setwd(file.path(Sys.getenv('my_dir'),'2020/01/australia_bushfires/'))
 # library(tidyverse)
 # library(zoo)
 
-# fires_viirs <- read.csv("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2020/01/australia_bushfires/fire_nrt_V1_94463.csv", stringsAsFactors=FALSE)
+# fires_viirs <- read.csv("fire_nrt_V1_94463.csv", stringsAsFactors=FALSE)
 
 # fires_viirs$acq_date <- gsub("-", "", fires_viirs$acq_date)
 # fires_viirs_v2 <- fires_viirs[,c(1:3,6)]
@@ -18,7 +18,7 @@ setwd(file.path(Sys.getenv('my_dir'),'2020/01/australia_bushfires/'))
 
 # write.csv(fires_transformed_modis, "australia_bushfires_viirs.csv", na = "", row.names = FALSE)
 
-# fires_modis <- read.csv("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2020/01/australia_bushfires/fire_nrt_M6_94462.csv", stringsAsFactors=FALSE)
+# fires_modis <- read.csv("fire_nrt_M6_94462.csv", stringsAsFactors=FALSE)
 
 # fires_modis$acq_date <- gsub("-", "", fires_modis$acq_date)
 # fires_modis_v2 <- fires_modis[,c(1:3,6)]
@@ -50,13 +50,13 @@ setwd(file.path(Sys.getenv('my_dir'),'2020/01/australia_bushfires/'))
 #https://stackoverflow.com/questions/15629885/replace-na-in-column-with-value-in-adjacent-column
 #fires_transformed_modis$`20191002`[is.na(fires_transformed_modis$`20191002`)] <- fires_transformed_modis$`20191001`[is.na(fires_transformed_modis$`20191002`)]
 
-#fires_20_years <- read.csv("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2020/01/australia_bushfires/fire_archive_M6_95032_january_2000-september_2019.csv", stringsAsFactors=FALSE)
+#fires_20_years <- read.csv("fire_archive_M6_95032_january_2000-september_2019.csv", stringsAsFactors=FALSE)
 # #saveRDS(fires_20_years, file = "fire_archive_M6_95032_january_2000-september_2019.rds")
 fires_20_years <- readRDS("fire_archive_M6_95032_january_2000-september_2019.rds")
 
 # as.data.frame(table(fires_20_years$daynight))
 
-# appended_df <- read.csv("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2020/01/australia_bushfires/fire_nrt_M6_95412_october_2019-january_2020.csv", stringsAsFactors=FALSE)
+# appended_df <- read.csv("fire_nrt_M6_95412_october_2019-january_2020.csv", stringsAsFactors=FALSE)
 
 # appended_df$type <- NA
 
