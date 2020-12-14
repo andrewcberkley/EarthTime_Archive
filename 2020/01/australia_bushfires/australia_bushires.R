@@ -20,6 +20,8 @@ setwd(file.path(Sys.getenv('my_dir'),'2020/01/australia_bushfires/'))
 
 # fires_modis <- read.csv("fire_nrt_M6_94462.csv", stringsAsFactors=FALSE)
 
+fires_modis <- read.csv("DL_FIRE_M6_14122020/fire_nrt_M6_170679.csv", stringsAsFactors=FALSE) #Dec 14th 2020 Update
+
 # fires_modis$acq_date <- gsub("-", "", fires_modis$acq_date)
 # fires_modis_v2 <- fires_modis[,c(1:3,6)]
 
