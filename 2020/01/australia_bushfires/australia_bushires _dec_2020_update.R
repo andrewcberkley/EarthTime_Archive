@@ -1,7 +1,7 @@
 setwd(file.path(Sys.getenv('my_dir'),'2020/01/australia_bushfires/'))
 
-# library(tidyverse)
-# library(zoo)
+library(tidyverse)
+library(zoo)
 
 # fires_viirs <- read.csv("fire_nrt_V1_94463.csv", stringsAsFactors=FALSE)
 
@@ -35,7 +35,7 @@ fires_transformed_modis[is.na(fires_transformed_modis)] <- 0
 
 fires_transformed_modis$coordinates <- paste(fires_transformed_modis$latitude, fires_transformed_modis$longitude, sep = ",")
 
-fires_transformed_modis_v2 <- fires_transformed_modis[,c(96,3:95)]
+fires_transformed_modis_v2 <- fires_transformed_modis[,c(78,3:77)]
 fires_transformed_modis_v3 <- cbind(coordinates = rownames(fires_modis_v2), fires_transformed_modis_v2)
 
 fires_transformed_modis_minus_df <- fires_transformed_modis[,-c(1:2)]
