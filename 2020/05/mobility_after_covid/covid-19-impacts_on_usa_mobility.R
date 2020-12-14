@@ -1,9 +1,9 @@
-setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/05/mobility_after_covid/")
+setwd(file.path(Sys.getenv('my_dir'),'2020/05/mobility_after_covid/'))
 
 library(tidyverse)
 library(zoo)
 
-DL_us_m50_index <- read.csv("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/05/mobility_after_covid/Descartes_Labs-COVID-19-master/DL-us-m50_index.csv", stringsAsFactors=FALSE)
+DL_us_m50_index <- read.csv("Descartes_Labs-COVID-19-master/DL-us-m50_index.csv", stringsAsFactors=FALSE)
 #View(DL_us_m50_index)
 
 destroyX = function(df) {
