@@ -31,15 +31,7 @@ fires_2020_v2 <- fires_2020_v1[,c(1:2,6,13)]
 fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$frp <= 0),]
 
 fires_2020_v2$acq_date <- as.Date(fires_2020_v2$acq_date)
-# fires_2020_v2$acq_date <- format(fires_2020_v2$acq_date, "%d %B %Y")
-
-# # fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "07 January 2020"),]
-# # fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "06 January 2020"),]
-# # fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "05 January 2020"),]
-# # fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "04 January 2020"),]
-# # fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "03 January 2020"),]
-# # fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "02 January 2020"),]
-# # fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "01 January 2020"),]
+#fires_2020_v2$acq_date <- format(fires_2020_v2$acq_date, "%d %B %Y")
 
 fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "2020-01-07"),]
 fires_2020_v2 <- fires_2020_v2[-which(fires_2020_v2$acq_date == "2020-01-06"),]
@@ -64,8 +56,6 @@ write.csv(fires_2020_v2_scaled_by_ten_thousand, "fires_2020_v2_cmu_formatting_de
 
 library(reticulate)
 use_python("C:/Program Files/Anaconda3/", required = TRUE)
-#py_config()
-#py_install("pandas")
 
 repl_python()
 
@@ -110,10 +100,6 @@ for row in raw_data:
   points.append(math.sqrt(float(row['frp']) + 1.0))
   points.append(PackColor([0.85,0.15,0.05]))    
   points.append(FormatEpoch(row["acq_date"], '%d %B %Y'))
-#array.array('f', points).tofile(open('two_decades_of_australian_fires.bin', 'wb'))
-#array.array('f', points).tofile(open('two_decades_of_australian_fires_scaled.bin', 'wb'))
 array.array('f', points).tofile(open('2020_australia_fire_december_update.bin', 'wb'))
-#array.array('f', points).tofile(open('two_decades_of_australian_fires_scaled_by_ten_thousand.bin', 'wb'))
-
 
 #Note that some people might think that backburning is causing 'ring fires' in the visuals, but these are are most likely due to detection hiatuses, probably caused by cloud cover.
