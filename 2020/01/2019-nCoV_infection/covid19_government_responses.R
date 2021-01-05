@@ -10,6 +10,7 @@ library(dplyr)
 library(zoo)
 library(googledrive)
 library(googlesheets4)
+library(data.table)
 
 path <- paste0("https://covidtrackerapi.bsg.ox.ac.uk/api/stringency/date-range/2020-01-21/", format(Sys.time(), paste0("%Y", "-", "%m", "-", "%d")))
 request <- GET(url = path)
@@ -17,7 +18,9 @@ response <- content(request, as = "text", encoding = "UTF-8")
 jsondata <- fromJSON(response, flatten = TRUE) #%>% data.frame()
 lst <- purrr::reduce(jsondata[3], dplyr::bind_rows)
 df <- rbindlist(lst, fill = TRUE, idcol = "date")
-long <- reshape2::melt(df, id.vars = c("date"))
+#long <- reshape2::melt(df, id.vars = c("date"))
+setDT(df)
+long <- data.table::melt(df, id.vars = c("date"))
 long$variable <- as.character(long$variable) #https://stackoverflow.com/questions/44927537/meltreshape2-in-r-returning-values-as-factors/46774077
 long$category <- rep_len(c("date_value", "country_code", "confirmed", "deaths", "stringency_actual", "stringency", "stringency_legacy", "stringency_legacy_disp"), length.out = nrow(long)) 
 stringency <- long[grepl("stringency_actual", long$category),]
