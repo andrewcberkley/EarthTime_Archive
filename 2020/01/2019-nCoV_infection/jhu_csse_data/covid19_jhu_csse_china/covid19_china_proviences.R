@@ -20,7 +20,9 @@ destroyX = function(df) {
 
 destroyX(covid19_jhu_china)
 
-covid19_china_proviences <- dplyr::filter(covid19_jhu_china, grepl("China", Country.Region))
+covid19_china_proviences <- dplyr::filter(covid19_jhu_china, grepl("China|Taiwan*", Country.Region))
+
+covid19_china_proviences[34,1] <- "Taiwan"
 
 covid19_china_proviences <- covid19_china_proviences[,-c(2:4)]
 
