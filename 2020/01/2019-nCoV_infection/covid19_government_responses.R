@@ -10,7 +10,6 @@ library(dplyr)
 library(zoo)
 library(googledrive)
 library(googlesheets4)
-library(data.table)
 
 path <- paste0("https://covidtrackerapi.bsg.ox.ac.uk/api/stringency/date-range/2020-01-21/", format(Sys.time(), paste0("%Y", "-", "%m", "-", "%d")))
 request <- GET(url = path)
