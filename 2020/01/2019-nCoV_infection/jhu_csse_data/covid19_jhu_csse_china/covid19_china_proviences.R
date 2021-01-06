@@ -45,6 +45,8 @@ covid19_china_proviences$NAME_1[covid19_china_proviences$NAME_1 == "Xinjiang"] <
 
 covid19_china_proviences <- covid19_china_proviences[order(covid19_china_proviences$NAME_1),]
 
+covid19_china_proviences[covid19_china_proviences==0] <- NA
+
 write.csv(covid19_china_proviences, paste0("covid19_china_jhu_csse_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
 
 #drive_update(as_id("https://docs.google.com/spreadsheets/d/1l5YMJv8ZTEYc53n-cJuLYM4xDERLC-mEudNNQgbt-tM/edit#gid=182512028"), paste0("covid_nytimes_", format(Sys.time(), "%Y%m%d"), ".csv"))
