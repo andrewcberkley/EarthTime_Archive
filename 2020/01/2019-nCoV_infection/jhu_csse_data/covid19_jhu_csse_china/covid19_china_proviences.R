@@ -46,6 +46,7 @@ covid19_china_proviences$NAME_1[covid19_china_proviences$NAME_1 == "Xinjiang"] <
 covid19_china_proviences <- covid19_china_proviences[order(covid19_china_proviences$NAME_1),]
 
 covid19_china_proviences[covid19_china_proviences==0] <- NA
+covid19_china_proviences[14,2] <- 347
 
 write.csv(covid19_china_proviences, paste0("covid19_china_jhu_csse_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
 
