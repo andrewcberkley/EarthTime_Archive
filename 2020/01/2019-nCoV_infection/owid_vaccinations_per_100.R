@@ -46,3 +46,13 @@ wide_plus <- cleaner_df[,c(1)]
 wide_final <- cbind(wide_plus, wide_filled_over)
 
 write.csv(wide_final, paste0("owid_vaccinations_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
+
+ss <- as_sheets_id("https://docs.google.com/spreadsheets/d/1a_GBckfFUWN209D7wiXVUvtSy44-wXIE7BjbHB7lv3E/edit#gid=1175349253")
+
+sheet_write(wide_final, ss = ss, sheet = "Sheet1")
+
+1
+
+#The number "1" above in this code is meant to automatically respond to the following prompt:
+# The googlesheets4 package is requesting access to your Google account. Select a pre-authorised account or enter '0' to obtain a new token. Press Esc/Ctrl + C to abort.
+# 1: andrewcberkley@gmail.com
