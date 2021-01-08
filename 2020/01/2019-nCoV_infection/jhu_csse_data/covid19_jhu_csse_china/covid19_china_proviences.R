@@ -34,6 +34,8 @@ colnames(covid19_china_proviences) <- strptime(colnames(covid19_china_proviences
 
 colnames(covid19_china_proviences) <- gsub("0020-", "2020-", colnames(covid19_china_proviences))
 
+colnames(covid19_china_proviences) <- gsub("0021-", "2021-", colnames(covid19_china_proviences)) #new year update
+
 colnames(covid19_china_proviences) <- gsub("\\-", "", colnames(covid19_china_proviences))
 
 colnames(covid19_china_proviences)[1] <- "NAME_1"
