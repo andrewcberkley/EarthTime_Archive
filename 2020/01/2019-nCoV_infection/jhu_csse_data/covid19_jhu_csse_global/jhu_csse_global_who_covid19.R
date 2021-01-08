@@ -37,7 +37,7 @@ colnames(covid19_global_ts_v2) <- gsub("_sum", "", colnames(covid19_global_ts_v2
 colnames(covid19_global_ts_v2) <- gsub("\\.", "/", colnames(covid19_global_ts_v2))
 colnames(covid19_global_ts_v2) <- strptime(colnames(covid19_global_ts_v2), "%m/%d/%Y")
 colnames(covid19_global_ts_v2) <- gsub("0020-", "2020-", colnames(covid19_global_ts_v2))
-colnames(covid19_global_ts_v2) <- gsub("0020-", "2020-", colnames(covid19_global_ts_v2)) #update for 2021
+colnames(covid19_global_ts_v2) <- gsub("0021-", "2021-", colnames(covid19_global_ts_v2)) #update for 2021
 colnames(covid19_global_ts_v2) <- gsub("\\-", "", colnames(covid19_global_ts_v2))
 colnames(covid19_global_ts_v2)[1] <- "Country_Region"
 
