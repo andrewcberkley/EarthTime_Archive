@@ -18,7 +18,7 @@ owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Ireland"] <- 
 owid_vaccinations$iso_code[owid_vaccinations$location == "Scotland"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Wales"] <- "GBR"
 
-owid_vaccinations <- owid_vaccinations[,c(2,3,6)]
+owid_vaccinations <- owid_vaccinations[,c(2,3,9)]
 
 wide <- owid_vaccinations %>%
   group_by(date) %>%
