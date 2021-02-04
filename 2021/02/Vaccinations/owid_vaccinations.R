@@ -13,7 +13,7 @@ library(googlesheets4)
 
 owid_vaccinations <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv", stringsAsFactors = FALSE)
 
-vaccinations_attitudes <- read.csv("https://github.com/YouGov-Data/covid-19-tracker/tree/master/data", stringsAsFactors = FALSE)
+#vaccinations_attitudes <- read.csv("https://github.com/YouGov-Data/covid-19-tracker/tree/master/data", stringsAsFactors = FALSE)
 
 
 owid_vaccinations$iso_code[owid_vaccinations$location == "England"] <- "GBR"
@@ -27,19 +27,23 @@ owid_list[[1]] <- owid_vaccinations[,c(2,3,9)] #total_vaccinations_per_100
 owid_list[[2]] <- owid_vaccinations[,c(2,3,12)] #daily_vaccinations_per_million
 owid_list[[3]] <- owid_vaccinations[,c(2,3,6)] #full_vaccination_percentage
 
-for (i in seq_along(owid_list)) {
-  try({
-    owid_list[[i]] <- owid_list[i] %>%
-      group_by(date) %>%
-      mutate(idx = row_number()) %>%
-      spread(date, total_vaccinations_per_hundred) %>%
-      select(-idx)
-  })
+#total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,9)]
+#daily_vaccinations_per_million <- owid_vaccinations[,c(2,3,12)]
+#full_vaccination_percentage <- owid_vaccinations[,c(2,3,6)]
+
+make_wide <- function(df, date, col){
+  wide <- df %>%
+    group_by(date) %>%
+    mutate(idx = row_number()) %>%
+    spread(date, col) %>%
+    select(-idx)
 }
 
-
-
-
+wide <- owid_vaccinations %>%
+  group_by(date) %>%
+  mutate(idx = row_number()) %>%
+  spread(date, total_vaccinations_per_hundred) %>%
+  select(-idx)
 
 cleaner_df <- setDT(wide)[, lapply(.SD, mean, na.rm=TRUE), by=iso_code]
 
