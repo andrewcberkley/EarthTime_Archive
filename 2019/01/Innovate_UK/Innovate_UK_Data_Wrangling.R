@@ -1,8 +1,10 @@
+setwd(file.path(Sys.getenv('my_dir'),'2019/01/Innovate_UK/'))
+
 library(dplyr)
 library(tidyverse)
 library(data.table)
 
-UK <- read.csv("C:/Users/ABERK/Desktop/Innovate UK/innovate_UK_clean_14-01-2019.csv", stringsAsFactors=FALSE)
+UK <- read.csv("innovate_UK_clean_14-01-2019.csv", stringsAsFactors=FALSE)
 UK <- UK[, -c(1:2, 6)]
 
 df <- UK %>%
