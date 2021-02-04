@@ -58,15 +58,35 @@ create_df <- function (i) {
 
 owid_list <- lapply(owid_list, function(y) create_df(y))
 
+destroyX = function(df) {
+  #https://stackoverflow.com/questions/10441437/why-am-i-getting-x-in-my-column-names-when-reading-a-data-frame
+  f = df
+  for (col in c(1:ncol(f))){ #for each column in dataframe
+    if (startsWith(colnames(f)[col], "X") == TRUE)  { #if starts with 'X' ..
+      colnames(f)[col] <- substr(colnames(f)[col], 2, 100) #get rid of it
+    }
+  }
+  assign(deparse(substitute(df)), f, inherits = TRUE) #assign corrected data to original name
+}
 
+total_vaccinations_per_100 <- as.data.frame(owid_list[1])
+daily_vaccinations_per_million <- as.data.frame(owid_list[2])
+full_vaccination_percentage <- as.data.frame(owid_list[3])
 
-#wide_final <- cbind(wide_plus, wide_filled_over)
+rm(owid_list)
 
+destroyX(total_vaccinations_per_100)
+destroyX(daily_vaccinations_per_million)
+destroyX(full_vaccination_percentage)
 
+rm(create_df)
+rm(destroyX)
 
+files <- mget(ls())
 
-
-#write.csv(wide_final, paste0("owid_vaccinations_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
+for (i in 1:length(files)){
+  write.csv(files[[i]], paste(names(files[i]), "- ",format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
+}
 
 #Data Citations:
 #Hasell, J., Mathieu, E., Beltekian, D. et al. A cross-country database of COVID-19 testing. Sci Data 7, 345 (2020). https://doi.org/10.1038/s41597-020-00688-8
