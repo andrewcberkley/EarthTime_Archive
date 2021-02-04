@@ -29,14 +29,20 @@ owid_vaccinations$iso_code[owid_vaccinations$location == "Wales"] <- "GBR"
 
 total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,9)]
 daily_vaccinations_per_million <- owid_vaccinations[,c(2,3,12)]
-full_vaccination_percentage <- owid_vaccinations[,c(2,3,6)]
+full_vaccination_percentage <- owid_vaccinations[,c(2,3,11)]
 
 
-wide <- owid_vaccinations %>%
-  group_by(date) %>%
-  mutate(idx = row_number()) %>%
-  spread(date, total_vaccinations_per_hundred) %>%
-  select(-idx)
+total_vaccinations_per_100_v2 <- owid_vaccinations %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, total_vaccinations_per_hundred) %>% select(-idx)
+
+daily_vaccinations_per_million_v2 <- owid_vaccinations %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, daily_vaccinations_per_million) %>% select(-idx)
+
+full_vaccination_percentage_v2 <- owid_vaccinations %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, people_fully_vaccinated_per_hundred) %>% select(-idx)
+
+rm(total_vaccinations_per_100)
+rm(daily_vaccinations_per_million)
+rm(full_vaccination_percentage)
+
+rm(owid_vaccinations)
 
 cleaner_df <- setDT(wide)[, lapply(.SD, mean, na.rm=TRUE), by=iso_code]
 
