@@ -1,7 +1,7 @@
 #Tracking COVID-19 vaccination rates is crucial to understand the scale of protection against the virus, and how this is distributed across the global population.
 #The following map and chart show the number of COVID-19 vaccination doses administered per 100 people within a given population. Note that this is counted as a single dose, and may not equal the total number of people vaccinated, depending on the specific dose regime (e.g. people receive multiple doses).
 
-setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/01/2019-nCoV_infection/owid_vaccinations_data/")
+setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2021/02/Vaccinations/")
 
 library(tidyverse)
 library(data.table)
