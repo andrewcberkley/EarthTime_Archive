@@ -21,23 +21,16 @@ owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Ireland"] <- 
 owid_vaccinations$iso_code[owid_vaccinations$location == "Scotland"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Wales"] <- "GBR"
 
-owid_list <- list()
+#owid_list <- list()
 
-owid_list[[1]] <- owid_vaccinations[,c(2,3,9)] #total_vaccinations_per_100
-owid_list[[2]] <- owid_vaccinations[,c(2,3,12)] #daily_vaccinations_per_million
-owid_list[[3]] <- owid_vaccinations[,c(2,3,6)] #full_vaccination_percentage
+#owid_list[[1]] <- owid_vaccinations[,c(2,3,9)] #total_vaccinations_per_100
+#owid_list[[2]] <- owid_vaccinations[,c(2,3,12)] #daily_vaccinations_per_million
+#owid_list[[3]] <- owid_vaccinations[,c(2,3,6)] #full_vaccination_percentage
 
-#total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,9)]
-#daily_vaccinations_per_million <- owid_vaccinations[,c(2,3,12)]
-#full_vaccination_percentage <- owid_vaccinations[,c(2,3,6)]
+total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,9)]
+daily_vaccinations_per_million <- owid_vaccinations[,c(2,3,12)]
+full_vaccination_percentage <- owid_vaccinations[,c(2,3,6)]
 
-make_wide <- function(df, date, col){
-  wide <- df %>%
-    group_by(date) %>%
-    mutate(idx = row_number()) %>%
-    spread(date, col) %>%
-    select(-idx)
-}
 
 wide <- owid_vaccinations %>%
   group_by(date) %>%
@@ -46,13 +39,6 @@ wide <- owid_vaccinations %>%
   select(-idx)
 
 cleaner_df <- setDT(wide)[, lapply(.SD, mean, na.rm=TRUE), by=iso_code]
-
-#cleaner_df <- setDT(wide)[, lapply(.SD, function(x)
-#  {x <- unique(x[!is.na(x)])
-#  if(length(x) == 1) as.character(x)
-#    else if(length(x) == 0) NA_character_
-#    else "multiple"}),
-#  by=iso_code]
 
 colnames(cleaner_df) <- gsub("-", "", colnames(cleaner_df))
 
