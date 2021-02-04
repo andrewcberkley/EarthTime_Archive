@@ -20,23 +20,20 @@ owid_vaccinations$iso_code[owid_vaccinations$location == "England"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Ireland"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Scotland"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Wales"] <- "GBR"
-
-#owid_list <- list()
-
-#owid_list[[1]] <- owid_vaccinations[,c(2,3,9)] #total_vaccinations_per_100
-#owid_list[[2]] <- owid_vaccinations[,c(2,3,12)] #daily_vaccinations_per_million
-#owid_list[[3]] <- owid_vaccinations[,c(2,3,6)] #full_vaccination_percentage
+owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Cyprus"] <- "CYP"
+owid_vaccinations$iso_code[owid_vaccinations$location == "European Union"] <- "EU"
 
 total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,9)]
 daily_vaccinations_per_million <- owid_vaccinations[,c(2,3,12)]
 full_vaccination_percentage <- owid_vaccinations[,c(2,3,11)]
 
+owid_list <- list()
 
-total_vaccinations_per_100_v2 <- owid_vaccinations %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, total_vaccinations_per_hundred) %>% select(-idx)
+owid_list[[1]] <- total_vaccinations_per_100 %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, total_vaccinations_per_hundred) %>% select(-idx)
 
-daily_vaccinations_per_million_v2 <- owid_vaccinations %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, daily_vaccinations_per_million) %>% select(-idx)
+owid_list[[2]]  <- daily_vaccinations_per_million %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, daily_vaccinations_per_million) %>% select(-idx)
 
-full_vaccination_percentage_v2 <- owid_vaccinations %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, people_fully_vaccinated_per_hundred) %>% select(-idx)
+owid_list[[3]]  <- full_vaccination_percentage %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, people_fully_vaccinated_per_hundred) %>% select(-idx)
 
 rm(total_vaccinations_per_100)
 rm(daily_vaccinations_per_million)
@@ -44,17 +41,30 @@ rm(full_vaccination_percentage)
 
 rm(owid_vaccinations)
 
-cleaner_df <- setDT(wide)[, lapply(.SD, mean, na.rm=TRUE), by=iso_code]
+create_df <- function (i) {
+    i <- setDT(i)[, lapply(.SD, mean, na.rm=TRUE), by=iso_code]
+    
+    colnames(i) <- gsub("-", "", colnames(i))
+    
+    i[i=="NaN"] <- NA
+    i[i==0] <- NA
+    
+    x <- i[,-c(1)]
+    y <- t(apply(x, 1, function(x) na.locf(x, fromLast = F, na.rm = F)))
+    z <- i[,c(1)]
+    #assign(paste0("DF", i), as.data.frame(cbind(z, y)), envir = .GlobalEnv)
+    cbind(z, y)
+}
 
-colnames(cleaner_df) <- gsub("-", "", colnames(cleaner_df))
+owid_list <- lapply(owid_list, function(y) create_df(y))
 
-cleaner_df[cleaner_df=="NaN"] <- NA
-cleaner_df[cleaner_df==0] <- NA
 
-wide_minus <- cleaner_df[,-c(1)]
-wide_filled_over <- t(apply(wide_minus, 1, function(x) na.locf(x, fromLast = F, na.rm = F)))
-wide_plus <- cleaner_df[,c(1)]
-wide_final <- cbind(wide_plus, wide_filled_over)
+
+#wide_final <- cbind(wide_plus, wide_filled_over)
+
+
+
+
 
 #write.csv(wide_final, paste0("owid_vaccinations_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
 
