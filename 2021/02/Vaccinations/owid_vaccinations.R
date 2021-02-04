@@ -18,7 +18,7 @@ owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Ireland"] <- 
 owid_vaccinations$iso_code[owid_vaccinations$location == "Scotland"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Wales"] <- "GBR"
 
-vaccinations_per_100 <- owid_vaccinations[,c(2,3,9)]
+total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,9)]
 
 
 wide <- owid_vaccinations %>%
