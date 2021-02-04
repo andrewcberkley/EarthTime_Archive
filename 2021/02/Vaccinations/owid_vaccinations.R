@@ -13,6 +13,9 @@ library(googlesheets4)
 
 owid_vaccinations <- read.csv("https://raw.githubusercontent.com/owid/covid-19-data/master/public/data/vaccinations/vaccinations.csv", stringsAsFactors = FALSE)
 
+vaccinations_attitudes <- read.csv("https://github.com/YouGov-Data/covid-19-tracker/tree/master/data", stringsAsFactors = FALSE)
+
+
 owid_vaccinations$iso_code[owid_vaccinations$location == "England"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Ireland"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Scotland"] <- "GBR"
@@ -20,6 +23,7 @@ owid_vaccinations$iso_code[owid_vaccinations$location == "Wales"] <- "GBR"
 
 total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,9)]
 daily_vaccinations_per_million <- owid_vaccinations[,c(2,3,12)]
+full_vaccination_percentage <- owid_vaccinations[,c(2,3,6)]
 
 
 wide <- owid_vaccinations %>%
@@ -49,8 +53,9 @@ wide_final <- cbind(wide_plus, wide_filled_over)
 
 #write.csv(wide_final, paste0("owid_vaccinations_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
 
-#Data Citation:
+#Data Citations:
 #Hasell, J., Mathieu, E., Beltekian, D. et al. A cross-country database of COVID-19 testing. Sci Data 7, 345 (2020). https://doi.org/10.1038/s41597-020-00688-8
+#Jones, Sarah P., Imperial College London Big Data Analytical Unit and YouGov Plc. 2020, Imperial College London YouGov Covid Data Hub, v1.0, YouGov Plc, April 2020
 
 #ss <- as_sheets_id("https://docs.google.com/spreadsheets/d/1a_GBckfFUWN209D7wiXVUvtSy44-wXIE7BjbHB7lv3E/edit#gid=1175349253")
 
