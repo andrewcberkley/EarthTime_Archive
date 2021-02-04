@@ -48,6 +48,9 @@ wide_final <- cbind(wide_plus, wide_filled_over)
 
 #write.csv(wide_final, paste0("owid_vaccinations_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
 
+#Data Citation:
+#Hasell, J., Mathieu, E., Beltekian, D. et al. A cross-country database of COVID-19 testing. Sci Data 7, 345 (2020). https://doi.org/10.1038/s41597-020-00688-8
+
 #ss <- as_sheets_id("https://docs.google.com/spreadsheets/d/1a_GBckfFUWN209D7wiXVUvtSy44-wXIE7BjbHB7lv3E/edit#gid=1175349253")
 
 #sheet_write(wide_final, ss = ss, sheet = "Sheet1")
