@@ -45,11 +45,11 @@ wide_filled_over <- t(apply(wide_minus, 1, function(x) na.locf(x, fromLast = F, 
 wide_plus <- cleaner_df[,c(1)]
 wide_final <- cbind(wide_plus, wide_filled_over)
 
-write.csv(wide_final, paste0("owid_vaccinations_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
+#write.csv(wide_final, paste0("owid_vaccinations_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
 
-ss <- as_sheets_id("https://docs.google.com/spreadsheets/d/1a_GBckfFUWN209D7wiXVUvtSy44-wXIE7BjbHB7lv3E/edit#gid=1175349253")
+#ss <- as_sheets_id("https://docs.google.com/spreadsheets/d/1a_GBckfFUWN209D7wiXVUvtSy44-wXIE7BjbHB7lv3E/edit#gid=1175349253")
 
-sheet_write(wide_final, ss = ss, sheet = "Sheet1")
+#sheet_write(wide_final, ss = ss, sheet = "Sheet1")
 
 1
 
