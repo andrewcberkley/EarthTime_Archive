@@ -7,6 +7,7 @@ library(dplyr)
 library(zoo)
 library(googledrive)
 library(googlesheets4)
+#library(plyr)
 
 # download a .zip file of the repository
 # from the "Clone or download - Download ZIP" button
@@ -17,6 +18,12 @@ download.file(url = "https://github.com/YouGov-Data/covid-19-tracker/archive/mas
 # unzip the .zip file
 unzip(zipfile = "YouGov-Data-covid-19-tracker.zip")
 
+# get all the zip files
+zipF <- list.files(path = file.path(Sys.getenv('my_dir'),'2021/02/Vaccinations/attitudes/covid-19-tracker-master/data/'), pattern = "*.zip", full.names = TRUE)
+
+# unzip all your files
+plyr::ldply(.data = zipF, .fun = unzip, exdir = file.path(Sys.getenv('my_dir'),'2021/02/Vaccinations/attitudes/covid-19-tracker-master/data/'))
+
 # set the working directory
 # to be inside the newly unzipped 
 # GitHub repository of interest
@@ -26,3 +33,5 @@ list.files()
 
 temp = list.files(pattern="*.csv")
 for (i in 1:length(temp)) assign(temp[i], read.csv(temp[i]))
+
+
