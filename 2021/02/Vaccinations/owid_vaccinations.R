@@ -92,12 +92,22 @@ for (i in 1:length(files)){
 #Hasell, J., Mathieu, E., Beltekian, D. et al. A cross-country database of COVID-19 testing. Sci Data 7, 345 (2020). https://doi.org/10.1038/s41597-020-00688-8
 #Jones, Sarah P., Imperial College London Big Data Analytical Unit and YouGov Plc. 2020, Imperial College London YouGov Covid Data Hub, v1.0, YouGov Plc, April 2020
 
-#ss <- as_sheets_id("https://docs.google.com/spreadsheets/d/1a_GBckfFUWN209D7wiXVUvtSy44-wXIE7BjbHB7lv3E/edit#gid=1175349253")
+ss_per_100 <- as_sheets_id("https://docs.google.com/spreadsheets/d/1a_GBckfFUWN209D7wiXVUvtSy44-wXIE7BjbHB7lv3E/edit#gid=1175349253")
+ss_per_million <- as_sheets_id("https://docs.google.com/spreadsheets/d/1PMlicFyjtEA9yCY7YhkqDgQbuOAp5_KTZW23fdjof0Q/edit#gid=1358095190")
+ss_full_percent <- as_sheets_id("https://docs.google.com/spreadsheets/d/1GYZTUpUhkcnXRBj9IwLqGzxL6Mq_Ne-Qejyk_JAqCgc/edit#gid=1336920075")
 
-#sheet_write(wide_final, ss = ss, sheet = "Sheet1")
+sheet_write(total_vaccinations_per_100, ss = ss_per_100, sheet = "Sheet1")
 
 1
 
 #The number "1" above in this code is meant to automatically respond to the following prompt:
 # The googlesheets4 package is requesting access to your Google account. Select a pre-authorised account or enter '0' to obtain a new token. Press Esc/Ctrl + C to abort.
 # 1: andrewcberkley@gmail.com
+
+sheet_write(daily_vaccinations_per_million, ss = ss_per_million, sheet = "Sheet1")
+
+1
+
+sheet_write(full_vaccination_percentage, ss = ss_full_percent, sheet = "Sheet1")
+
+1
