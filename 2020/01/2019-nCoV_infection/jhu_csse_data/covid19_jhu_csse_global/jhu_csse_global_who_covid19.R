@@ -1,4 +1,4 @@
-setwd("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2020/01/2019-nCoV_infection/jhu_csse_data/covid19_jhu_csse_global/")
+setwd(file.path(Sys.getenv('my_dir'),'2020/01/2019-nCoV_infection/jhu_csse_data/covid19_jhu_csse_global/'))
 
 library(tibble)
 library(tidyverse)
