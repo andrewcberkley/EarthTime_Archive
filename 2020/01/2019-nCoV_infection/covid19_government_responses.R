@@ -1,5 +1,6 @@
 #Covid-19 Country Lockdown Data from Oxford
-setwd("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2020/01/2019-nCoV_infection/oxford_covid-19_government_response_tracker")
+
+setwd(file.path(Sys.getenv('my_dir'),'2020/01/2019-nCoV_infection/oxford_covid-19_government_response_tracker/'))
 
 library(tidyverse)
 library(httr)
