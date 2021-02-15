@@ -1,4 +1,4 @@
-#setwd("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK")
+#setwd(file.path(Sys.getenv('my_dir')))
 #setwd("C:/Users/ABERK/Box/Internal_ Strategic Intelligence/EarthTime/")
 
 library(DBI)
