@@ -1,6 +1,8 @@
 #setwd("C:/Users/ABERK/Box/Data_Science_Exploration/ABERK")
 #setwd("C:/Users/ABERK/Box/Internal_ Strategic Intelligence/EarthTime/")
 
+library(DBI)
+
 Rwefsigapi::set_si_db_credentials("aberk", "password")
 #con <- Rwefsigapi::open_si_db_connection("DBI", "earthtime")
 
