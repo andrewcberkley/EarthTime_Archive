@@ -71,12 +71,16 @@ data2$country <- gsub(".csv", "", data2$country)
 
 data2$vac_1 <- gsub("1 - Strongly agree", "1", data2$vac_1)
 data2$vac_1 <- gsub("5 â???" Strongly disagree", "5", data2$vac_1)
+data2$vac_1 <- as.numeric(data2$vac_1)
+
 
 data2$date <- stringr::str_extract(data2$date, ".{0,0}.{0,10}")
 
 data2 <- data2[,-2] #removal of 'record_number'
 
-data2$vac_1 <- as.numeric(data2$vac_1)
+data2point1 <- data2 %>%
+  group_by(country, date, vac_1) %>%
+  mutate(count = n())
 
 #Calculating mean values based on two different groupings in a data frame [duplicate]
 #https://stackoverflow.com/questions/23553407/calculating-mean-values-based-on-two-different-groupings-in-a-data-frame
