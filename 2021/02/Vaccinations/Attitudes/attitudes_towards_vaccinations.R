@@ -71,7 +71,13 @@ data2$country <- gsub(".csv", "", data2$country)
 
 data2$vac_1 <- gsub("1 - Strongly agree", "1", data2$vac_1)
 data2$vac_1 <- gsub("5 â???" Strongly disagree", "5", data2$vac_1)
-data2$vac_1 <- as.numeric(data2$vac_1)
+#data2$vac_1 <- as.numeric(data2$vac_1)
+data2$vac_1 <- gsub("1", "Strongly agree", data2$vac_1)
+data2$vac_1 <- gsub("2", "Agree", data2$vac_1)
+data2$vac_1 <- gsub("3", "Neutral", data2$vac_1)
+data2$vac_1 <- gsub("4", "Disagree", data2$vac_1)
+data2$vac_1 <- gsub("5", "Strongly disagree", data2$vac_1)
+
 
 
 data2$date <- stringr::str_extract(data2$date, ".{0,0}.{0,10}")
@@ -80,7 +86,16 @@ data2 <- data2[,-2] #removal of 'record_number'
 
 data2point1 <- data2 %>%
   group_by(country, date, vac_1) %>%
-  mutate(count = n())
+  mutate(response_count = n())
+
+data2point2 <- data2point1 %>%
+  group_by(country, date) %>%
+  mutate(response_total = n())
+
+#https://stackoverflow.com/questions/40300918/calculate-percentage-of-each-category-in-each-group-in-r/40301041
+data2point2 <- data2point1 %>% 
+  group_by(country, date, vac_1) %>% 
+  mutate(percentage = (Freq/sum(Freq) * 100))
 
 #Calculating mean values based on two different groupings in a data frame [duplicate]
 #https://stackoverflow.com/questions/23553407/calculating-mean-values-based-on-two-different-groupings-in-a-data-frame
