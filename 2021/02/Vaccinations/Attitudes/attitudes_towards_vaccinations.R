@@ -100,30 +100,26 @@ data3 <- deduped_data %>% group_by(country, date, response_total) %>%
   summarize(attitude_sum = sum(response_count))
 
 
-#https://stackoverflow.com/questions/40300918/calculate-percentage-of-each-category-in-each-group-in-r/40301041
-data2point2 <- data2point1 %>% 
-  group_by(country, date, vac_1) %>% 
-  mutate(percentage = (Freq/sum(Freq) * 100))
+data3$response_attiude <- (data3$attitude_sum/data3$response_total)*100
 
 #Calculating mean values based on two different groupings in a data frame [duplicate]
 #https://stackoverflow.com/questions/23553407/calculating-mean-values-based-on-two-different-groupings-in-a-data-frame
-data3 <- aggregate(x=data2$vac_1,
-                   by=list(data2$country,data2$date),
-                   FUN=mean)
+#data3 <- aggregate(x=data2$vac_1,
+#                   by=list(data2$country,data2$date),
+#                   FUN=mean)
 
+data3$response_attiude <- format(round(data3$response_attiude, 2), nsmall = 2)
+data3 <- data3[,c("country", "date", "response_attiude")]
 colnames(data3) <- c("name", "date", "value")
 
 data3$date <- as.Date(parse_date_time(data3$date, c('dmy', 'ymd_hms')))
 
 data3 <- data3[complete.cases(data3), ]
 
-#Populating Missing Dates with Complete and Fill Functions in R and Exploratory
-#https://blog.exploratory.io/populating-missing-dates-with-complete-and-fill-functions-in-r-and-exploratory-79f2a321e6b5
-data4 <- data3 %>%
-  mutate(date = as.Date(date)) %>%
-  complete(date = seq.Date(min(date), max(date), by="day"))
-
-
+#How to add only missing Dates in Dataframe
+#https://stackoverflow.com/questions/50192024/how-to-add-only-missing-dates-in-dataframe
+data4<-merge(data.frame(date= as.Date(min(data3$date):max(data3$date),"1970-1-1")),
+             data3, by = "date", all = TRUE)
 data4$date <- gsub("-", "", data4$date)
 
 
