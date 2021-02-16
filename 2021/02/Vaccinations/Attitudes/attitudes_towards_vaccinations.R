@@ -65,4 +65,4 @@ rm(list=setdiff(ls(), "data2"))
 
 colnames(data2) <- c("country", "record_number", "date", "vac_1")
 
-data2$.id <- gsub(".csv", "", data2$.id)
+data2$country <- gsub(".csv", "", data2$country)
