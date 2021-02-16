@@ -92,6 +92,9 @@ data2point2 <- data2point1 %>%
   group_by(country, date) %>%
   mutate(response_total = n())
 
+#Filter "Strongly agree" or "Agree"
+
+
 #https://stackoverflow.com/questions/40300918/calculate-percentage-of-each-category-in-each-group-in-r/40301041
 data2point2 <- data2point1 %>% 
   group_by(country, date, vac_1) %>% 
