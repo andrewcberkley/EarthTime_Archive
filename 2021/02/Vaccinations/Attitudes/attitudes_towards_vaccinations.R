@@ -76,9 +76,13 @@ data2 <- data2[,-2] #removal of 'record_number'
 
 data2$vac_1 <- as.numeric(data2$vac_1)
 
+#Calculating mean values based on two different groupings in a data frame [duplicate]
+#https://stackoverflow.com/questions/23553407/calculating-mean-values-based-on-two-different-groupings-in-a-data-frame
 data3 <- aggregate(x=data2$vac_1,
                    by=list(data2$country,data2$date),
                    FUN=mean)
+
+colnames(data3) <- c("name", "date", "value")
 
 wide <- data2 %>%
   group_by(date) %>%
