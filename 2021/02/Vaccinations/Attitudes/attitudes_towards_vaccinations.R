@@ -44,7 +44,8 @@ rm(zipF)
 #Standard Attributes	Label	If a Covid-19 vaccine were made available to me this week, I would definitely get it:
 #  Type	Numeric
 #Measurement	Nominal
-#Valid Values	1	1 - Strongly agree
+#Valid Values	
+#1	1 - Strongly agree
 #2	2
 #3	3
 #4	4
