@@ -53,6 +53,13 @@ rm(zipF)
 #https://stackoverflow.com/questions/45670564/calling-a-data-frame-from-global-env-and-adding-a-column-with-the-data-frame-nam
 l_df <- Filter(function(x) is(x, "data.frame"), mget(ls()))
 
+
+
+#https://www.edureka.co/community/1310/how-to-convert-list-dataframes-in-to-single-dataframe-using
+data <- plyr::ldply(l_df, data.frame)
+data2 <- data[,c(".id","ï..RecordNo","endtime","vac_1")]
+
+
 #https://stackoverflow.com/questions/24195109/extract-columns-with-same-names-from-multiple-data-frames-r
 #test <- lapply(l_df, function(x) x$vac_1)
 #test <- lapply(l_df, function(x) x[, c("ï..RecordNo","endtime","vac_1")])
@@ -60,9 +67,19 @@ simple_dfs <- lapply(l_df, function(x) c(x$ï..RecordNo, x$endtime, x$vac_1))
 
 
 #rm(list=setdiff(ls(), "simple_dfs"))
-rm(list=setdiff(ls(), c("l_dfs","simple_dfs")))
+rm(list=setdiff(ls(), c("l_df","simple_dfs")))
+
+
+
+library(purrr)
+library(dplyr)
+
+my_df <- reduce(simple_dfs, bind_rows)
+
 
 list2env(simple_dfs,envir = .GlobalEnv)
+#list2env(lapply(simple_dfs, as.data.frame.list), .GlobalEnv)
+
 
 
 #Conditionally remove data frames from environment
