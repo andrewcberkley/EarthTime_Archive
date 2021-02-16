@@ -8,6 +8,7 @@ library(zoo)
 library(googledrive)
 library(googlesheets4)
 #library(plyr)
+library(lubridate)
 
 # download a .zip file of the repository
 # from the "Clone or download - Download ZIP" button
@@ -84,9 +85,18 @@ data3 <- aggregate(x=data2$vac_1,
 
 colnames(data3) <- c("name", "date", "value")
 
-wide <- data2 %>%
-  group_by(date) %>%
+data3$date <- as.Date(parse_date_time(data3$date, c('mdy', 'ymd_hms')))
+data3$date <- gsub("-", "", data3$date)
+
+decent_df <- data3 %>%
+  group_by(name) %>%
   mutate(idx = row_number()) %>%
-  spread(date, vac_1) %>%
+  spread(date, value) %>%
   select(-idx)
 
+collapsed_df <- setDT(decent_df)[, lapply(.SD, function(x)
+  {x <- unique(x[!is.na(x)])
+  if(length(x) == 1) as.character(x)
+  else if(length(x) == 0) NA_character_
+  else "multiple"}),
+  by=name]
