@@ -78,8 +78,6 @@ data2$vac_1 <- gsub("3", "Neutral", data2$vac_1)
 data2$vac_1 <- gsub("4", "Disagree", data2$vac_1)
 data2$vac_1 <- gsub("5", "Strongly disagree", data2$vac_1)
 
-
-
 data2$date <- stringr::str_extract(data2$date, ".{0,0}.{0,10}")
 
 data2 <- data2[,-2] #removal of 'record_number'
@@ -122,8 +120,6 @@ data4<-merge(data.frame(date= as.Date(min(data3$date):max(data3$date),"1970-1-1"
              data3, by = "date", all = TRUE)
 data4$date <- gsub("-", "", data4$date)
 
-
-
 decent_df <- data4 %>%
   group_by(name) %>%
   mutate(idx = row_number()) %>%
@@ -136,3 +132,14 @@ collapsed_df <- setDT(decent_df)[, lapply(.SD, function(x)
   else if(length(x) == 0) NA_character_
   else "multiple"}),
   by=name]
+
+wide_minus <- collapsed_df[,-c(1)]
+wide_filled_over <- t(apply(wide_minus, 1, function(x) na.locf(x, fromLast = F, na.rm = F)))
+wide_plus <- collapsed_df[,c(1)]
+wide_final <- cbind(wide_plus, wide_filled_over)
+
+final_df <- wide_final[complete.cases(wide_final), ]
+
+setwd(file.path(Sys.getenv('my_dir'),'2021/02/Vaccinations/attitudes/'))
+
+write.csv(final_df, paste0("vaccination_attitudes", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
