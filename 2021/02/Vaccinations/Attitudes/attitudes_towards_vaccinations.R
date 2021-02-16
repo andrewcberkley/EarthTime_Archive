@@ -60,36 +60,9 @@ data <- plyr::ldply(l_df, data.frame)
 data2 <- data[,c(".id","ï..RecordNo","endtime","vac_1")]
 
 
-#https://stackoverflow.com/questions/24195109/extract-columns-with-same-names-from-multiple-data-frames-r
-#test <- lapply(l_df, function(x) x$vac_1)
-#test <- lapply(l_df, function(x) x[, c("ï..RecordNo","endtime","vac_1")])
-simple_dfs <- lapply(l_df, function(x) c(x$ï..RecordNo, x$endtime, x$vac_1))
+#rm(list=setdiff(ls(), c("l_df","simple_dfs")))
+rm(list=setdiff(ls(), "data2"))
 
+colnames(data2) <- c("country", "record_number", "date", "vac_1")
 
-#rm(list=setdiff(ls(), "simple_dfs"))
-rm(list=setdiff(ls(), c("l_df","simple_dfs")))
-
-
-
-library(purrr)
-library(dplyr)
-
-my_df <- reduce(simple_dfs, bind_rows)
-
-
-list2env(simple_dfs,envir = .GlobalEnv)
-#list2env(lapply(simple_dfs, as.data.frame.list), .GlobalEnv)
-
-
-
-#Conditionally remove data frames from environment
-#https://stackoverflow.com/questions/28195504/conditionally-remove-data-frames-from-environment
-to.rm <- unlist(eapply(.GlobalEnv, function(x) is.data.frame(x) && ncol(x) < 3))
-rm(list = names(to.rm)[to.rm], envir = .GlobalEnv)
-
-
-
-#https://stackoverflow.com/questions/36923182/r-remove-a-row-from-all-data-frames-in-global-environment
-dfs = sapply(ls(), is.data.frame) 
-#https://stackoverflow.com/questions/62274164/remove-same-column-from-multiple-dataframes-in-r
-dfs <- lapply(dfs, function(x) x[names(x) != "vac_1"])
+data2$.id <- gsub(".csv", "", data2$.id)
