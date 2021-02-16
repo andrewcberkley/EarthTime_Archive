@@ -55,6 +55,8 @@ l_df <- Filter(function(x) is(x, "data.frame"), mget(ls()))
 
 #https://stackoverflow.com/questions/24195109/extract-columns-with-same-names-from-multiple-data-frames-r
 test <- lapply(l_df, function(x) x$vac_1)
+test <- lapply(l_df, function(x) x[, c("ï..RecordNo","endtime","vac_1")])
+
 
 
 
