@@ -71,9 +71,8 @@ data2$vac_1 <- gsub("1 - Strongly agree", "1", data2$vac_1)
 data2$vac_1 <- gsub("5 â???" Strongly disagree", "5", data2$vac_1)
 
 data2$date <- stringr::str_extract(data2$date, ".{0,0}.{0,10}")
-#data2$date <- gsub("-", "", data2$date)
 
-data2 <- data2[,-c("record_number")]
+data2 <- data2[,-2] #removal of 'record_number'
 
 wide <- data2 %>%
   group_by(date) %>%
