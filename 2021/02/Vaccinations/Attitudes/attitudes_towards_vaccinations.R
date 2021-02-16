@@ -86,9 +86,21 @@ data3 <- aggregate(x=data2$vac_1,
 colnames(data3) <- c("name", "date", "value")
 
 data3$date <- as.Date(parse_date_time(data3$date, c('mdy', 'ymd_hms')))
-data3$date <- gsub("-", "", data3$date)
 
-decent_df <- data3 %>%
+data3 <- data3[complete.cases(data3), ]
+
+#Populating Missing Dates with Complete and Fill Functions in R and Exploratory
+#https://blog.exploratory.io/populating-missing-dates-with-complete-and-fill-functions-in-r-and-exploratory-79f2a321e6b5
+data4 <- data3 %>%
+  mutate(date = as.Date(date)) %>%
+  complete(date = seq.Date(min(date), max(date), by="day"))
+
+
+data4$date <- gsub("-", "", data4$date)
+
+
+
+decent_df <- data4 %>%
   group_by(name) %>%
   mutate(idx = row_number()) %>%
   spread(date, value) %>%
