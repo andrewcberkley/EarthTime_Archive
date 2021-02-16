@@ -4,7 +4,8 @@ library(rvest)
 library(tidyverse)
 library(data.table)
 
-nodes <- "C:/Users/ABERK/Box/Data_Science_Exploration/ABERK/ABERK_Archive/EarthTime_Archive/2020/01/2019-nCoV_infection/coronavirus_1point3acres_26-03-2020.html" %>% #March 26
+nodes <- file.path(Sys.getenv('my_dir'),'2020/01/2019-nCoV_infection/coronavirus_1point3acres_26-03-2020.html') %>% #March 26
+
 	read_html %>%
 	#html_nodes("div.jsx-522312921.state-table") #March 14
 	#html_nodes("div.jsx-1168542486.state-table") #March 15, 16, 17, 18, 19, 20, 21
