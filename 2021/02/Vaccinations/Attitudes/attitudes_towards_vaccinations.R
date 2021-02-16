@@ -54,11 +54,15 @@ rm(zipF)
 l_df <- Filter(function(x) is(x, "data.frame"), mget(ls()))
 
 #https://stackoverflow.com/questions/24195109/extract-columns-with-same-names-from-multiple-data-frames-r
-test <- lapply(l_df, function(x) x$vac_1)
-test <- lapply(l_df, function(x) x[, c("ï..RecordNo","endtime","vac_1")])
+#test <- lapply(l_df, function(x) x$vac_1)
+#test <- lapply(l_df, function(x) x[, c("ï..RecordNo","endtime","vac_1")])
+simple_dfs <- lapply(l_df, function(x) c(x$ï..RecordNo, x$endtime, x$vac_1))
 
 
+#rm(list=setdiff(ls(), "simple_dfs"))
+rm(list=setdiff(ls(), c("l_dfs","simple_dfs")))
 
+list2env(simple_dfs,envir = .GlobalEnv)
 
 
 #Conditionally remove data frames from environment
