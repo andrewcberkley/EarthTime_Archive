@@ -86,7 +86,7 @@ data3 <- aggregate(x=data2$vac_1,
 
 colnames(data3) <- c("name", "date", "value")
 
-data3$date <- as.Date(parse_date_time(data3$date, c('mdy', 'ymd_hms')))
+data3$date <- as.Date(parse_date_time(data3$date, c('dmy', 'ymd_hms')))
 
 data3 <- data3[complete.cases(data3), ]
 
