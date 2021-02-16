@@ -60,9 +60,19 @@ data <- plyr::ldply(l_df, data.frame)
 data2 <- data[,c(".id","ï..RecordNo","endtime","vac_1")]
 
 
-#rm(list=setdiff(ls(), c("l_df","simple_dfs")))
-rm(list=setdiff(ls(), "data2"))
+rm(list=setdiff(ls(), c("l_df","data", "data2")))
+#rm(list=setdiff(ls(), "data2"))
 
 colnames(data2) <- c("country", "record_number", "date", "vac_1")
 
 data2$country <- gsub(".csv", "", data2$country)
+
+data2$date <- stringr::str_extract(data2$date, ".{0,0}.{0,10}")
+#data2$date <- gsub("-", "", data2$date)
+
+wide <- data2 %>%
+  group_by(date) %>%
+  mutate(idx = row_number()) %>%
+  spread(date, vac_1) %>%
+  select(-idx)
+
