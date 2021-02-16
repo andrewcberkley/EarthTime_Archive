@@ -93,6 +93,11 @@ data2point2 <- data2point1 %>%
   mutate(response_total = n())
 
 #Filter "Strongly agree" or "Agree"
+sub_data2 <- data2point2[data2point2$vac_1 %in% c("Strongly agree", "Agree") ,]
+deduped_data <- unique( sub_data2[ , 1:5 ] )
+
+data3 <- deduped_data %>% group_by(country, date, response_total) %>%
+  summarize(attitude_sum = sum(response_count))
 
 
 #https://stackoverflow.com/questions/40300918/calculate-percentage-of-each-category-in-each-group-in-r/40301041
