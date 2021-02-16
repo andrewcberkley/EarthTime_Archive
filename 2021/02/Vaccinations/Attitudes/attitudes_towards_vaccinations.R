@@ -74,6 +74,12 @@ data2$date <- stringr::str_extract(data2$date, ".{0,0}.{0,10}")
 
 data2 <- data2[,-2] #removal of 'record_number'
 
+data2$vac_1 <- as.numeric(data2$vac_1)
+
+data3 <- aggregate(x=data2$vac_1,
+                   by=list(data2$country,data2$date),
+                   FUN=mean)
+
 wide <- data2 %>%
   group_by(date) %>%
   mutate(idx = row_number()) %>%
