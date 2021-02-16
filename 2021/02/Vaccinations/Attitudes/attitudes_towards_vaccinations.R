@@ -49,6 +49,16 @@ rm(zipF)
 #4	4
 #5	5 - Strongly disagree
 
+
+#https://stackoverflow.com/questions/45670564/calling-a-data-frame-from-global-env-and-adding-a-column-with-the-data-frame-nam
+l_df <- Filter(function(x) is(x, "data.frame"), mget(ls()))
+
+#https://stackoverflow.com/questions/24195109/extract-columns-with-same-names-from-multiple-data-frames-r
+test <- lapply(l_df, function(x) x$vac_1)
+
+
+
+
 #Conditionally remove data frames from environment
 #https://stackoverflow.com/questions/28195504/conditionally-remove-data-frames-from-environment
 to.rm <- unlist(eapply(.GlobalEnv, function(x) is.data.frame(x) && ncol(x) < 3))
