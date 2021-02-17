@@ -138,6 +138,23 @@ wide_filled_over <- t(apply(wide_minus, 1, function(x) na.locf(x, fromLast = F, 
 wide_plus <- collapsed_df[,c(1)]
 wide_final <- cbind(wide_plus, wide_filled_over)
 
+colnames(wide_final)[1] <- "iso3"
+
+wide_final$iso3[wide_final$iso3 == "australia"] <- "AUS"
+wide_final$iso3[wide_final$iso3 == "canada"] <- "CAN"
+wide_final$iso3[wide_final$iso3 == "finland"] <- "FIN"
+wide_final$iso3[wide_final$iso3 == "france"] <- "FRA"
+wide_final$iso3[wide_final$iso3 == "germany"] <- "DEU"
+wide_final$iso3[wide_final$iso3 == "italy"] <- "ITA"
+wide_final$iso3[wide_final$iso3 == "japan"] <- "JPN"
+wide_final$iso3[wide_final$iso3 == "netherlands"] <- "NLD"
+wide_final$iso3[wide_final$iso3 == "norway"] <- "NOR"
+wide_final$iso3[wide_final$iso3 == "singapore"] <- "SGP"
+wide_final$iso3[wide_final$iso3 == "south-korea"] <- "KOR"
+wide_final$iso3[wide_final$iso3 == "spain"] <- "ESP"
+wide_final$iso3[wide_final$iso3 == "sweden"] <- "SWE"
+wide_final$iso3[wide_final$iso3 == "united-kingdom"] <- "GBR"
+
 final_df <- wide_final[complete.cases(wide_final), ]
 
 setwd(file.path(Sys.getenv('my_dir'),'2021/02/Vaccinations/attitudes/'))
