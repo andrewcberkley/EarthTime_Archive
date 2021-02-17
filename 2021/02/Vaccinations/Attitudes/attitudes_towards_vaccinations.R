@@ -110,13 +110,17 @@ data3$response_attiude <- format(round(data3$response_attiude, 2), nsmall = 2)
 data3 <- data3[,c("country", "date", "response_attiude")]
 colnames(data3) <- c("name", "date", "value")
 
+#Today - Need a dummy date to fill over wide dataframe up to present day
+data3[nrow(data3) + 1,] <- list(name = "NA", date = format(Sys.time(), "%d/%m/%Y"), value = "0")
+
+
 data3$date <- as.Date(parse_date_time(data3$date, c('dmy', 'ymd_hms')))
 
 data3 <- data3[complete.cases(data3), ]
 
 #How to add only missing Dates in Dataframe
 #https://stackoverflow.com/questions/50192024/how-to-add-only-missing-dates-in-dataframe
-data4<-merge(data.frame(date= as.Date(min(data3$date):max(format(Sys.time(), "%Y%m%d")),"1970-1-1")),
+data4<-merge(data.frame(date= as.Date(min(data3$date):max(data3$date),"1970-1-1")),
              data3, by = "date", all = TRUE)
 data4$date <- gsub("-", "", data4$date)
 
