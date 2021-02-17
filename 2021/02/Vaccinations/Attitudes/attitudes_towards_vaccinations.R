@@ -116,7 +116,7 @@ data3 <- data3[complete.cases(data3), ]
 
 #How to add only missing Dates in Dataframe
 #https://stackoverflow.com/questions/50192024/how-to-add-only-missing-dates-in-dataframe
-data4<-merge(data.frame(date= as.Date(min(data3$date):max(data3$date),"1970-1-1")),
+data4<-merge(data.frame(date= as.Date(min(data3$date):max(format(Sys.time(), "%Y%m%d")),"1970-1-1")),
              data3, by = "date", all = TRUE)
 data4$date <- gsub("-", "", data4$date)
 
