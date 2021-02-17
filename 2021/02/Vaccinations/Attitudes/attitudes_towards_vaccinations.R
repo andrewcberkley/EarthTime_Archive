@@ -164,3 +164,13 @@ final_df <- wide_final[complete.cases(wide_final), ]
 setwd(file.path(Sys.getenv('my_dir'),'2021/02/Vaccinations/attitudes/'))
 
 write.csv(final_df, paste0("vaccination_attitudes", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
+
+ss <- as_sheets_id("https://docs.google.com/spreadsheets/d/19ihCP0_UfapfCwyx_7ynVVlGOIPqIxtEUHQ-hnQIMcI/edit#gid=64073220")
+
+sheet_write(final_df, ss = ss, sheet = "vaccination_attitudes")
+
+1
+
+#The number "1" above in this code is meant to automatically respond to the following prompt:
+# The googlesheets4 package is requesting access to your Google account. Select a pre-authorised account or enter '0' to obtain a new token. Press Esc/Ctrl + C to abort.
+# 1: andrewcberkley@gmail.com
