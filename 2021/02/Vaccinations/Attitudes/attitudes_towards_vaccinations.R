@@ -59,7 +59,7 @@ l_df <- Filter(function(x) is(x, "data.frame"), mget(ls()))
 
 #https://www.edureka.co/community/1310/how-to-convert-list-dataframes-in-to-single-dataframe-using
 data <- plyr::ldply(l_df, data.frame)
-data2 <- data[,c(".id","�..RecordNo","endtime","vac_1")]
+data2 <- data[,c(".id","ï..RecordNo","endtime","vac_1")]
 
 
 rm(list=setdiff(ls(), c("l_df","data", "data2")))
@@ -70,7 +70,7 @@ colnames(data2) <- c("country", "record_number", "date", "vac_1")
 data2$country <- gsub(".csv", "", data2$country)
 
 data2$vac_1 <- gsub("1 - Strongly agree", "1", data2$vac_1)
-data2$vac_1 <- gsub("5 �???" Strongly disagree", "5", data2$vac_1)
+data2$vac_1 <- gsub("5 â€“ Strongly disagree", "5", data2$vac_1)
 #data2$vac_1 <- as.numeric(data2$vac_1)
 data2$vac_1 <- gsub("1", "Strongly agree", data2$vac_1)
 data2$vac_1 <- gsub("2", "Agree", data2$vac_1)
