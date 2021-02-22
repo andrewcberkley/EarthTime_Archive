@@ -59,7 +59,7 @@ l_df <- Filter(function(x) is(x, "data.frame"), mget(ls()))
 
 #https://www.edureka.co/community/1310/how-to-convert-list-dataframes-in-to-single-dataframe-using
 data <- plyr::ldply(l_df, data.frame)
-data2 <- data[,c(".id","Ã¯..RecordNo","endtime","vac_1")]
+data2 <- data[,c(".id","ï..RecordNo","endtime","vac_1")]
 
 
 rm(list=setdiff(ls(), c("l_df","data", "data2")))
