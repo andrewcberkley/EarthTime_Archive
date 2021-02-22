@@ -49,7 +49,8 @@ covid_final <- as.data.frame(covid_final)
 
 covid_final$today <- covid_final[,ncol(covid_final)]
 
-colnames(covid_final)[ncol(covid_final)] <- paste0(format(Sys.Date()-1, "%Y%m%d"))
+#colnames(covid_final)[ncol(covid_final)] <- paste0(format(Sys.Date()-1, "%Y%m%d"))
+colnames(covid_final)[ncol(covid_final)] <- paste0(format(Sys.Date(), "%Y%m%d"))
 
 write.csv(covid_final, paste0("covid_nytimes_", format(Sys.time(), "%Y%m%d"), ".csv"), row.names = FALSE, na = "")
 
