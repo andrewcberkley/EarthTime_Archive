@@ -160,6 +160,7 @@ wide_final$iso3[wide_final$iso3 == "sweden"] <- "SWE"
 wide_final$iso3[wide_final$iso3 == "united-kingdom"] <- "GBR"
 wide_final$iso3[wide_final$iso3 == "denmark"] <- "DNK"
 wide_final$iso3[wide_final$iso3 == "israel"] <- "ISR"
+wide_final$iso3[wide_final$iso3 == "united-states"] <- "USA"
 
 final_df <- wide_final[complete.cases(wide_final), ]
 
