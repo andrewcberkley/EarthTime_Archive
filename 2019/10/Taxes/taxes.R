@@ -3,7 +3,7 @@ setwd(file.path(Sys.getenv('my_dir'),'2019/10/Taxes/'))
 #library(data.table)
 library(tidyverse)
 
-# TID_full_comments <- read.csv("C:/Users/ABERK/Desktop/TID_full_comments_20191006/TID_full_comments.csv", header = TRUE, sep = "|", comment.char="#", stringsAsFactors=FALSE)
+# TID_full_comments <- read.csv("TID_full_comments_20191006/TID_full_comments.csv", header = TRUE, sep = "|", comment.char="#", stringsAsFactors=FALSE)
 
 # TID_full_comments_clean <- TID_full_comments[,c(2,3,6,8)]
 
