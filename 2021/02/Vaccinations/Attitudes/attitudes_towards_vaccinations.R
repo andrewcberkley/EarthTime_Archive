@@ -162,7 +162,8 @@ wide_final$iso3[wide_final$iso3 == "denmark"] <- "DNK"
 wide_final$iso3[wide_final$iso3 == "israel"] <- "ISR"
 wide_final$iso3[wide_final$iso3 == "united-states"] <- "USA"
 
-final_df <- wide_final[complete.cases(wide_final), ]
+#final_df <- wide_final[complete.cases(wide_final), ]
+final_df <- wide_final %>% filter(!str_detect(iso3, 'NA'))
 
 setwd(file.path(Sys.getenv('my_dir'),'2021/02/Vaccinations/attitudes/'))
 
