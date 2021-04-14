@@ -63,3 +63,6 @@ sheet_write(covid19_china_proviences, ss = ss, sheet = "covid-19_china_ provinci
 #The number "1" above in this code is meant to automatically respond to the following prompt:
 # The googlesheets4 package is requesting access to your Google account. Select a pre-authorised account or enter '0' to obtain a new token. Press Esc/Ctrl + C to abort.
 # 1: andrewcberkley@gmail.com
+
+rm(list = ls())
+.rs.restartR()
