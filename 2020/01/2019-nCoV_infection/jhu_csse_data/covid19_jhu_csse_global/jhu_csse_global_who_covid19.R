@@ -62,4 +62,5 @@ sheet_write(covid19_global_ts_v3, ss = ss, sheet = "Copy of Sheet1")
 # The googlesheets4 package is requesting access to your Google account. Select a pre-authorised account or enter '0' to obtain a new token. Press Esc/Ctrl + C to abort.
 # 1: andrewcberkley@gmail.com
 
+rm(list = ls())
 .rs.restartR()
