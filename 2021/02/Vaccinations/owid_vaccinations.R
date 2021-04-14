@@ -110,3 +110,6 @@ sheet_write(daily_vaccinations_per_million, ss = ss_per_million, sheet = "Sheet1
 sheet_write(full_vaccination_percentage, ss = ss_full_percent, sheet = "Sheet1")
 
 1
+
+rm(list = ls())
+.rs.restartR()
