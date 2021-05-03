@@ -112,4 +112,4 @@ sheet_write(full_vaccination_percentage, ss = ss_full_percent, sheet = "Sheet1")
 1
 
 rm(list = ls())
-.rs.restartR()
+#.rs.restartR()
