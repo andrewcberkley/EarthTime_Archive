@@ -63,4 +63,4 @@ sheet_write(covid19_global_ts_v3, ss = ss, sheet = "Copy of Sheet1")
 # 1: andrewcberkley@gmail.com
 
 rm(list = ls())
-.rs.restartR()
+#.rs.restartR()
