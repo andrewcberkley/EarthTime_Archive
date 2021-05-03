@@ -180,4 +180,4 @@ sheet_write(final_df, ss = ss, sheet = "vaccination_attitudes")
 # 1: andrewcberkley@gmail.com
 
 rm(list = ls())
-.rs.restartR()
+#.rs.restartR()
