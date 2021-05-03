@@ -65,4 +65,4 @@ sheet_write(covid19_china_proviences, ss = ss, sheet = "covid-19_china_ provinci
 # 1: andrewcberkley@gmail.com
 
 rm(list = ls())
-.rs.restartR()
+#.rs.restartR()
