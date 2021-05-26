@@ -61,6 +61,7 @@ lat_long$city_state <- paste0(lat_long$City," ",lat_long$State)
 df$Loc_Plot_City1 <- trimws(df$Loc_Plot_City1, "right")
 df$city_state <- paste0(df$Loc_Plot_City1," ",df$Loc_Plot_State1)
 
-
+df$lat <- lat_long[match(df$city_state, lat_long$city_state), 4]
+df$long <- lat_long[match(df$city_state, lat_long$city_state), 5]
 
 
