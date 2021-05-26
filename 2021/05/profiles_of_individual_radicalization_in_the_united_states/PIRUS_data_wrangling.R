@@ -55,7 +55,11 @@ lat_long$State[lat_long$State == "WV"] <- "West Virginia"
 lat_long$State[lat_long$State == "WI"] <- "Wisconsin"
 lat_long$State[lat_long$State == "WY"] <- "Wyoming"
 
+lat_long$City <- trimws(lat_long$City, "right")
+lat_long$city_state <- paste0(lat_long$City," ",lat_long$State)
 
+df$Loc_Plot_City1 <- trimws(df$Loc_Plot_City1, "right")
+df$city_state <- paste0(df$Loc_Plot_City1," ",df$Loc_Plot_State1)
 
 
 
