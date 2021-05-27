@@ -71,16 +71,16 @@ df2 <- df[,c(1,2,3,147,148,6,22,36,38,40,45,101,107,108,127)]
 df2$Internet_Radicalization[df2$Internet_Radicalization==0] <- "No known role of the internet in individual's radicalization"
 df2$Internet_Radicalization[df2$Internet_Radicalization==1] <- "Internet played a role but was not the primary means of radicalization (e.g. internet resources were used to reaffirm or advance pre-existing radical beliefs)"
 df2$Internet_Radicalization[df2$Internet_Radicalization==2] <- "Internet was the primary means of radicalization for the individual (e.g. initial exposure to ideology and subsequent radicalization occurred online"
-df2$Internet_Radicalization[df2$Internet_Radicalization==99] <- "Unknown"
+df2$Internet_Radicalization[df2$Internet_Radicalization==-99] <- "Unknown"
 df2$Internet_Radicalization[df2$Internet_Radicalization==-88] <- "Not Applicable (radicalization occurred before 1995)"
 
 #Social_Media
 #Description: Is there evidence that online social media played a role in the individual's radicalization and/or mobilization? Online social media is defined as any form of electronic communication through which users create online communities to share information, ideas, personal messages, and other content, such as videos and images. This variable is distinct from Internet_Radicalization in that it emphasizes online user-to-user communication, rather than passively viewing content hosted by an online domain.
-df2$Social_Media1[df2$Social_Media1==0] <- "No"
-df2$Social_Media1[df2$Social_Media1==1] <- "Yes, it played a role but was not the primary means of radicalization or mobilization"
-df2$Social_Media1[df2$Social_Media1==2] <- "Yes, it was the primary means of radicalization for the individual (e.g., initial exposure to ideology and subsequent radicalization occurred over online social media)"
-df2$Social_Media1[df2$Social_Media1==-99] <- "Unknown"
-df2$Social_Media1[df2$Social_Media1==-88] <- "Not Applicable (radicalization/mobilization occurred before 2005)"
+df2$Social_Media[df2$Social_Media==0] <- "No"
+df2$Social_Media[df2$Social_Media==1] <- "Yes, it played a role but was not the primary means of radicalization or mobilization"
+df2$Social_Media[df2$Social_Media==2] <- "Yes, it was the primary means of radicalization for the individual (e.g., initial exposure to ideology and subsequent radicalization occurred over online social media)"
+df2$Social_Media[df2$Social_Media==-99] <- "Unknown"
+df2$Social_Media[df2$Social_Media==-88] <- "Not Applicable (radicalization/mobilization occurred before 2005)"
 
 #Social_Media_Platform
 #Description: If there is evidence that online social media played a role in the individual's radicalization and/or mobilization, which social media platforms did he/she use?
@@ -158,3 +158,9 @@ df2$Aspirations[df2$Aspirations==-99] <- "Unknown"
 df2$Relationship_Troubles[df2$Relationship_Troubles==0] <- "No"
 df2$Relationship_Troubles[df2$Relationship_Troubles==1] <- "Yes"
 df2$Relationship_Troubles[df2$Relationship_Troubles==-99] <- "Unknown"
+
+#Other Cleaning
+df2$Terrorist_Group_Name1[df2$Terrorist_Group_Name1 == -99] <- "Unknown"
+df2$Terrorist_Group_Name1[df2$Terrorist_Group_Name1 == -88] <- NA
+df2$Loc_Plot_State1[df2$Loc_Plot_State1 == -99] <- "Unknown"
+df2$Loc_Plot_City1[df2$Loc_Plot_City1 == -99] <- "Unknown"
