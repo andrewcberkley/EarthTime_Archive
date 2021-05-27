@@ -66,7 +66,32 @@ df$city_state <- paste0(df$Loc_Plot_City1," ",df$Loc_Plot_State1)
 df$lat <- lat_long[match(df$city_state, lat_long$city_state), 4]
 df$long <- lat_long[match(df$city_state, lat_long$city_state), 5]
 
-df2 <- df[,c(1,2,3,147,148,6,22,36,38,40,45,52,53,54101,107,108,127)]
+df2 <- df[,c(1,2,3,7,147,148,6,22,36,38,40,45,52,53,54,101,107,108,127)]
+
+#Plot_Target
+#Description: If the individual's first publically known extremist activity included a violent plot, enter the target type or intended target type of the plot. Select up to three target types. If unknown, list -99. If there is no violent plot or no specific plot target, list -88.
+df2$Plot_Target[df2$Plot_Target==1] <- "Businesses"
+df2$Plot_Target[df2$Plot_Target==2] <- "Government (general)"
+df2$Plot_Target[df2$Plot_Target==3] <- "Police"
+df2$Plot_Target[df2$Plot_Target==4] <- "Military"
+df2$Plot_Target[df2$Plot_Target==5] <- "Abortion related"
+df2$Plot_Target[df2$Plot_Target==6] <- "Airports & aircraft"
+df2$Plot_Target[df2$Plot_Target==7] <- "Government (diplomatic)"
+df2$Plot_Target[df2$Plot_Target==8] <- "Educational institution"
+df2$Plot_Target[df2$Plot_Target==9] <- "Food or water supply"
+df2$Plot_Target[df2$Plot_Target==10] <- "Journalists & media"
+df2$Plot_Target[df2$Plot_Target==11] <- "Maritime (includes ports and maritime facilities)"
+df2$Plot_Target[df2$Plot_Target==12] <- "Non-governmental organization"
+df2$Plot_Target[df2$Plot_Target==13] <- "Other (e.g., ambulances, firefighters)"
+df2$Plot_Target[df2$Plot_Target==14] <- "Private citizens & property"
+df2$Plot_Target[df2$Plot_Target==15] <- "Religious figures/institutions"
+df2$Plot_Target[df2$Plot_Target==16] <- "Telecommunication"
+df2$Plot_Target[df2$Plot_Target==17] <- "Terrorists/non-state militia"
+df2$Plot_Target[df2$Plot_Target==18] <- "Tourists"
+df2$Plot_Target[df2$Plot_Target==19] <- "Transportation"
+df2$Plot_Target[df2$Plot_Target==20] <- "Utilities"
+df2$Plot_Target[df2$Plot_Target==-99] <- "Unknown"
+df2$Plot_Target[df2$Plot_Target==-88] <- "Not Applicable (i.e., no plot)"
 
 #Internet_Radicalization
 #Description: What role did the internet play in the individual's radicalization?
