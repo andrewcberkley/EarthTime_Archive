@@ -154,6 +154,24 @@ df2$Social_Media_Activities1[df2$Social_Media_Activities1==7] <- "Directly commu
 df2$Social_Media_Activities1[df2$Social_Media_Activities1==-99] <- "Unknown"
 df2$Social_Media_Activities1[df2$Social_Media_Activities1==-88] <- "Not Applicable (radicalization/mobilization occurred before 2005)"
 
+#Radicalization_Islamist
+#Description: Did the individual become radicalized as part of an Islamist or jihadist movement?
+df2$Radicalization_Islamist[df2$Radicalization_Islamist==0] <- "No"
+df2$Radicalization_Islamist[df2$Radicalization_Islamist==1] <- "Yes"
+df2$Radicalization_Islamist[df2$Radicalization_Islamist==-99] <- "Unknown"
+
+#Radicalization_Far_Right
+#Description: Did the individual become radicalized as part of a right-wing movement?
+df2$Radicalization_Far_Right[df2$Radicalization_Far_Right==0] <- "No"
+df2$Radicalization_Far_Right[df2$Radicalization_Far_Right==1] <- "Yes"
+df2$Radicalization_Far_Right[df2$Radicalization_Far_Right==-99] <- "Unknown"
+
+#Radicalization_Far_Left
+#Description: Did the individual become radicalized as part of a left-wing movement?
+df2$Radicalization_Far_Left[df2$Radicalization_Far_Left==0] <- "No"
+df2$Radicalization_Far_Left[df2$Radicalization_Far_Left==1] <- "Yes"
+df2$Radicalization_Far_Left[df2$Radicalization_Far_Left==-99] <- "Unknown"
+
 #Employment_Status
 #Description: What was the subject's employment status at the time of exposure?
 df2$Employment_Status[df2$Employment_Status==1] <- "Employed"
