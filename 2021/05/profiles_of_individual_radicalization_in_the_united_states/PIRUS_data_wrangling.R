@@ -2,6 +2,13 @@ setwd(file.path(Sys.getenv('my_dir'),'2021/05/profiles_of_individual_radicalizat
 
 library(tidyverse)
 
+#Omit rows containing specific column of NA
+#https://stackoverflow.com/questions/11254524/omit-rows-containing-specific-column-of-na
+completeFun <- function(data, desiredCols) {
+  completeVec <- complete.cases(data[, desiredCols])
+  return(data[completeVec, ])
+}
+
 df <- readxl::read_excel("PIRUS_Public_May2020.xlsx")
 lat_long <- read.csv("us-zip-code-latitude-and-longitude.csv", sep=";")
 
@@ -212,6 +219,9 @@ df2$Loc_Plot_City1[df2$Loc_Plot_City1 == -99] <- "Unknown"
 
 df2$Date_Exposure <- gsub("\\-.*","",df2$Date_Exposure)
 df2$Date_Exposure <- as.numeric(df2$Date_Exposure)
+
+#Remove rows without coordiantes
+df3 <- completeFun(df2, "lat")
 
 df2_cleaned <- df2 %>%
   group_by(Date_Exposure) %>%
