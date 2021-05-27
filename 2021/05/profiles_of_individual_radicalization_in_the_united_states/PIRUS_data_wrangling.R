@@ -167,3 +167,9 @@ df2$Loc_Plot_City1[df2$Loc_Plot_City1 == -99] <- "Unknown"
 
 df2$Date_Exposure <- gsub("\\-.*","",df2$Date_Exposure)
 df2$Date_Exposure <- as.numeric(df2$Date_Exposure)
+
+df2_cleaned <- df2 %>%
+  group_by(Date_Exposure) %>%
+  mutate(idx = row_number()) %>%
+  spread(Date_Exposure, Social_Media_Platform1) %>%
+  select(-idx)
