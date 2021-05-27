@@ -164,3 +164,5 @@ df2$Terrorist_Group_Name1[df2$Terrorist_Group_Name1 == -99] <- "Unknown"
 df2$Terrorist_Group_Name1[df2$Terrorist_Group_Name1 == -88] <- NA
 df2$Loc_Plot_State1[df2$Loc_Plot_State1 == -99] <- "Unknown"
 df2$Loc_Plot_City1[df2$Loc_Plot_City1 == -99] <- "Unknown"
+
+df2$Date_Exposure <- gsub("\\-.*","",df2$Date_Exposure)
