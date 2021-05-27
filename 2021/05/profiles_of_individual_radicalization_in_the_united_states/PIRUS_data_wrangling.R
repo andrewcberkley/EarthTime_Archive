@@ -77,28 +77,28 @@ df2 <- df[,c(1,2,3,7,147,148,6,22,36,38,40,45,52,53,54,101,107,108,127)]
 
 #Plot_Target
 #Description: If the individual's first publically known extremist activity included a violent plot, enter the target type or intended target type of the plot. Select up to three target types. If unknown, list -99. If there is no violent plot or no specific plot target, list -88.
-df2$Plot_Target[df2$Plot_Target==1] <- "Businesses"
-df2$Plot_Target[df2$Plot_Target==2] <- "Government (general)"
-df2$Plot_Target[df2$Plot_Target==3] <- "Police"
-df2$Plot_Target[df2$Plot_Target==4] <- "Military"
-df2$Plot_Target[df2$Plot_Target==5] <- "Abortion related"
-df2$Plot_Target[df2$Plot_Target==6] <- "Airports & aircraft"
-df2$Plot_Target[df2$Plot_Target==7] <- "Government (diplomatic)"
-df2$Plot_Target[df2$Plot_Target==8] <- "Educational institution"
-df2$Plot_Target[df2$Plot_Target==9] <- "Food or water supply"
-df2$Plot_Target[df2$Plot_Target==10] <- "Journalists & media"
-df2$Plot_Target[df2$Plot_Target==11] <- "Maritime (includes ports and maritime facilities)"
-df2$Plot_Target[df2$Plot_Target==12] <- "Non-governmental organization"
-df2$Plot_Target[df2$Plot_Target==13] <- "Other (e.g., ambulances, firefighters)"
-df2$Plot_Target[df2$Plot_Target==14] <- "Private citizens & property"
-df2$Plot_Target[df2$Plot_Target==15] <- "Religious figures/institutions"
-df2$Plot_Target[df2$Plot_Target==16] <- "Telecommunication"
-df2$Plot_Target[df2$Plot_Target==17] <- "Terrorists/non-state militia"
-df2$Plot_Target[df2$Plot_Target==18] <- "Tourists"
-df2$Plot_Target[df2$Plot_Target==19] <- "Transportation"
-df2$Plot_Target[df2$Plot_Target==20] <- "Utilities"
-df2$Plot_Target[df2$Plot_Target==-99] <- "Unknown"
-df2$Plot_Target[df2$Plot_Target==-88] <- "Not Applicable (i.e., no plot)"
+df2$Plot_Target1[df2$Plot_Target1==1] <- "Businesses"
+df2$Plot_Target1[df2$Plot_Target1==2] <- "Government (general)"
+df2$Plot_Target1[df2$Plot_Target1==3] <- "Police"
+df2$Plot_Target1[df2$Plot_Target1==4] <- "Military"
+df2$Plot_Target1[df2$Plot_Target1==5] <- "Abortion related"
+df2$Plot_Target1[df2$Plot_Target1==6] <- "Airports & aircraft"
+df2$Plot_Target1[df2$Plot_Target1==7] <- "Government (diplomatic)"
+df2$Plot_Target1[df2$Plot_Target1==8] <- "Educational institution"
+df2$Plot_Target1[df2$Plot_Target1==9] <- "Food or water supply"
+df2$Plot_Target1[df2$Plot_Target1==10] <- "Journalists & media"
+df2$Plot_Target1[df2$Plot_Target1==11] <- "Maritime (includes ports and maritime facilities)"
+df2$Plot_Target1[df2$Plot_Target1==12] <- "Non-governmental organization"
+df2$Plot_Target1[df2$Plot_Target1==13] <- "Other (e.g., ambulances, firefighters)"
+df2$Plot_Target1[df2$Plot_Target1==14] <- "Private citizens & property"
+df2$Plot_Target1[df2$Plot_Target1==15] <- "Religious figures/institutions"
+df2$Plot_Target1[df2$Plot_Target1==16] <- "Telecommunication"
+df2$Plot_Target1[df2$Plot_Target1==17] <- "Terrorists/non-state militia"
+df2$Plot_Target1[df2$Plot_Target1==18] <- "Tourists"
+df2$Plot_Target1[df2$Plot_Target1==19] <- "Transportation"
+df2$Plot_Target1[df2$Plot_Target1==20] <- "Utilities"
+df2$Plot_Target1[df2$Plot_Target1==-99] <- "Unknown"
+df2$Plot_Target1[df2$Plot_Target1==-88] <- "Not Applicable (i.e., no plot)"
 
 #Internet_Radicalization
 #Description: What role did the internet play in the individual's radicalization?
@@ -220,15 +220,15 @@ df2$Loc_Plot_City1[df2$Loc_Plot_City1 == -99] <- "Unknown"
 df2$Date_Exposure <- gsub("\\-.*","",df2$Date_Exposure)
 df2$Date_Exposure <- as.numeric(df2$Date_Exposure)
 
-#Remove rows without coordiantes
+#Remove rows without latitude or longitude coordinates
 df3 <- completeFun(df2, "lat")
 
-df2_cleaned <- df2 %>%
+clean_df <- df3 %>%
   group_by(Date_Exposure) %>%
   mutate(idx = row_number()) %>%
   spread(Date_Exposure, Social_Media_Platform1) %>%
   select(-idx)
 
-Radicalization_Islamist <- df2[grep("Yes",df2$Radicalization_Islamist),]
-Radicalization_Far_Right <- df2[grep("Yes",df2$Radicalization_Far_Right),]
-Radicalization_Far_Left <- df2[grep("Yes",df2$Radicalization_Far_Left),]
+Radicalization_Islamist <- df3[grep("Yes",df2$Radicalization_Islamist),]
+Radicalization_Far_Right <- df3[grep("Yes",df2$Radicalization_Far_Right),]
+Radicalization_Far_Left <- df3[grep("Yes",df2$Radicalization_Far_Left),]
