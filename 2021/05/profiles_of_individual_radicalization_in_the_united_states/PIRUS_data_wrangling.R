@@ -229,6 +229,6 @@ clean_df <- df3 %>%
   spread(Date_Exposure, Social_Media_Platform1) %>%
   select(-idx)
 
-Radicalization_Islamist <- df3[grep("Yes",df2$Radicalization_Islamist),]
-Radicalization_Far_Right <- df3[grep("Yes",df2$Radicalization_Far_Right),]
-Radicalization_Far_Left <- df3[grep("Yes",df2$Radicalization_Far_Left),]
+Radicalization_Islamist <- df3[grep("Yes",df3$Radicalization_Islamist),]
+Radicalization_Far_Right <- df3[grep("Yes",df3$Radicalization_Far_Right),]
+Radicalization_Far_Left <- df3[grep("Yes",df3$Radicalization_Far_Left),]
