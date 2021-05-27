@@ -66,7 +66,7 @@ df$city_state <- paste0(df$Loc_Plot_City1," ",df$Loc_Plot_State1)
 df$lat <- lat_long[match(df$city_state, lat_long$city_state), 4]
 df$long <- lat_long[match(df$city_state, lat_long$city_state), 5]
 
-df2 <- df[,c(1,2,3,147,148,6,22,36,38,40,45,101,107,108,127)]
+df2 <- df[,c(1,2,3,147,148,6,22,36,38,40,45,52,53,54101,107,108,127)]
 
 #Internet_Radicalization
 #Description: What role did the internet play in the individual's radicalization?
