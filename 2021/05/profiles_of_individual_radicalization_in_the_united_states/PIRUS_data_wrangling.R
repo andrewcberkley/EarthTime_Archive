@@ -1,6 +1,7 @@
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/profiles_of_individual_radicalization_in_the_united_states'))
 
 library(tidyverse)
+library(data.table)
 
 #Omit rows containing specific column of NA
 #https://stackoverflow.com/questions/11254524/omit-rows-containing-specific-column-of-na
@@ -239,3 +240,7 @@ clean_df <- social_media_platform %>%
   mutate(idx = row_number()) %>%
   spread(Date_Exposure, Social_Media_Platform1) %>%
   select(-idx)
+
+cleaner_df <- as.data.table(clean_df)
+
+final_df <- cleaner_df[, lapply(.SD, paste0, collapse=""), by=c("Loc_Plot_State1","Loc_Plot_City1", "lat", "long")]
