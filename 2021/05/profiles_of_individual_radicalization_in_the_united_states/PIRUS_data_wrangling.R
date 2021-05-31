@@ -228,8 +228,7 @@ Radicalization_Islamist <- df3[grep("Yes",df3$Radicalization_Islamist),]
 Radicalization_Far_Right <- df3[grep("Yes",df3$Radicalization_Far_Right),]
 Radicalization_Far_Left <- df3[grep("Yes",df3$Radicalization_Far_Left),]
 
-#Social Media Platform
-df4 <- df[,c(2,3,5:7,11)]
+independent_variable <- function(df, variable_name){}
 
 clean_df <- df3 %>%
   group_by(Date_Exposure) %>%
