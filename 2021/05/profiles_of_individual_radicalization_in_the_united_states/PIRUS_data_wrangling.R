@@ -241,6 +241,12 @@ clean_df <- social_media_platform %>%
   spread(Date_Exposure, Social_Media_Platform1) %>%
   select(-idx)
 
-cleaner_df <- as.data.table(clean_df)
+#Merge rows in a dataframe where the rows are disjoint and contain NAs
+#https://stackoverflow.com/questions/14268814/merge-rows-in-a-dataframe-where-the-rows-are-disjoint-and-contain-nas
+coalesce_by_column <- function(df) {
+  return(dplyr::coalesce(!!! as.list(df)))
+}
 
-final_df <- cleaner_df[, lapply(.SD, paste0, collapse=""), by=c("Loc_Plot_State1","Loc_Plot_City1", "lat", "long")]
+final_df <- clean_df %>% 
+  group_by(Loc_Plot_State1, Loc_Plot_City1, lat, long) %>% 
+  summarise_all(coalesce_by_column)
