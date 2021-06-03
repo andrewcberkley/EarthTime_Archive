@@ -35,3 +35,4 @@ for (fileNumber in fileNumbers)
 
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/implicit_bias_project_implicit_harvard_university/race_iat_public/'))
 test <- read.spss("Race IAT.public.2002-2003.sav", to.data.frame=TRUE)
+df <- test[,c("D_biep.White_Good_all","country","ethnic")]
