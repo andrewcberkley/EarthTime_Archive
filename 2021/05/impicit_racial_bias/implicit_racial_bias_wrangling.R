@@ -34,7 +34,7 @@ library(dplyr)
 ###### cleaning the csv files for unwanted entries in countrycit ######
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_datea_race_iat_public/'))
 
-fileNames <- Sys.glob(paste(dataloc,"/cleansed/*.", "csv", sep = ""))
+fileNames <- list.files(path = file.path(getwd()), pattern = "*.csv")
 fileNumbers <- seq(fileNames)
 
 for (fileNumber in fileNumbers)
@@ -51,3 +51,16 @@ for (fileNumber in fileNumbers)
   #xx <- paste(dataloc,"/cleansed/",tail(strsplit(fileNames[fileNumber],"/")[[1]],1),sep="")
   write.csv(df3, xx, row.names=FALSE, quote=FALSE)
 }
+
+###### Additional processing for 2015 file ######
+## Seperating 2015 file to new format and old format files ##
+
+df <- read.csv(file.path(dataloc,'cleansed',"RaceIAT_public_2015.csv"), header=TRUE)
+df2 <- df[grepl(pattern="[[:digit:]]", df$countrycit)|grepl(pattern="[[:digit:]]", df$countryres), ]
+dfdig <- df2[!grepl(pattern="-9", df2$countrycit), ]
+dfalp <- df[grepl(pattern="[[:alpha:]]", df$countrycit) & !grepl(pattern="[[:digit:]]", df$countryres), ]
+write.csv(dfdig, file.path(dataloc,"cleansed","RaceIAT_public_2015_digit.csv"), row.names=FALSE, quote=FALSE)
+write.csv(dfalp, file.path(dataloc,"cleansed","RaceIAT_public_2015_alpha.csv"), row.names=FALSE, quote=FALSE)
+#Deleting the old file to replace with the processed file
+fn <- file.path(dataloc,"cleansed","Race IAT.public.2015.csv")
+if (file.exists(fn)) file.remove(fn)
