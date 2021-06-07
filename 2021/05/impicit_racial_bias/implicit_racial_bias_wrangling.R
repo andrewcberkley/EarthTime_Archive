@@ -24,15 +24,15 @@ for (fileNumber in fileNumbers)
   #Getting raceomb from 2007 file onwards # 2006 have some issues ie if fileNumber>2
   #Ignoring "raceombmulti","ethnicityomb" for now as these fields are not present in all files
   #dd <- dataset1[,c("d_biep.white_good_all","countrycit","countryres","raceomb","raceombmulti","ethnicityomb")]
-  if(fileNumber>3) {
+  #if(fileNumber>3) {
     df <- dataset1[,c("D_biep.White_Good_all","country","ethnic")]
     colnames(df)[which(names(df) == "raceomb")] <- "ethnic"
-  } else { 
-    df <- dataset1[,c("D_biep.White_Good_all","countrycit","countryres","ethnic")]
-  }
-  write.csv(df, file=file.path(csvFileName))
+  #} else { 
+    #df <- dataset1[,c("D_biep.White_Good_all","countrycit","countryres","ethnicityomb")]
+  #}
+  write.csv(df, file.path(csvFileName))
 }
 
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/implicit_bias_project_implicit_harvard_university/race_iat_public/'))
-test <- read.spss("Race IAT.public.2002-2003.sav", to.data.frame=TRUE)
+test <- read.spss("Race IAT.public.2007.sav", to.data.frame=TRUE)
 df <- test[,c("D_biep.White_Good_all","country","ethnic")]
