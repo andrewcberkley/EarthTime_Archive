@@ -64,3 +64,19 @@ write.csv(dfalp, file.path("RaceIAT_public_2015_alpha.csv"), row.names=FALSE, qu
 #Deleting the old file to replace with the processed file
 fn <- file.path("Race IAT.public.2015.csv")
 if (file.exists(fn)) file.remove(fn)
+
+###### Merging or mapping the files ######
+## Processing the new format files
+#
+datafile2015="RaceIAT_public_2015_digit.csv"
+df1 <- read.csv(file.path('Data',"Mapper.txt"),header=T,sep="\t")
+df11 <- read.csv(file.path('Data',"Ethnic.txt"),header=T,sep="\t")
+dfdig <- read.csv(file.path(dataloc, 'cleansed',datafile2015), header=TRUE)
+(map <- setNames(df1$countrycitcode, df1$countrycit))
+if (file.exists(fn)) file.remove(datafile2015)
+dfdig[c("countrycit", "countryres")] <- lapply(dfdig[c("countrycit", "countryres")],function(x) map[as.character(x)])
+#race = White:6, ethnicity = White:5
+(map1 <- setNames(df11$ethniccode, df11$ethnic))
+dfdig[c("ethnic")] <- lapply(dfdig[c("ethnic")],function(x) map1[as.character(x)])
+fn<-file.path(dataloc,'cleansed',datafile2015)
+if (file.exists(fn)) file.remove(fn)
