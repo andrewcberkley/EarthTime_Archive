@@ -55,12 +55,12 @@ for (fileNumber in fileNumbers)
 ###### Additional processing for 2015 file ######
 ## Seperating 2015 file to new format and old format files ##
 
-df <- read.csv(file.path(dataloc,'cleansed',"RaceIAT_public_2015.csv"), header=TRUE)
+df <- read.csv("Race IAT.public.2015.csv")
 df2 <- df[grepl(pattern="[[:digit:]]", df$countrycit)|grepl(pattern="[[:digit:]]", df$countryres), ]
 dfdig <- df2[!grepl(pattern="-9", df2$countrycit), ]
 dfalp <- df[grepl(pattern="[[:alpha:]]", df$countrycit) & !grepl(pattern="[[:digit:]]", df$countryres), ]
-write.csv(dfdig, file.path(dataloc,"cleansed","RaceIAT_public_2015_digit.csv"), row.names=FALSE, quote=FALSE)
-write.csv(dfalp, file.path(dataloc,"cleansed","RaceIAT_public_2015_alpha.csv"), row.names=FALSE, quote=FALSE)
+write.csv(dfdig, file.path("RaceIAT_public_2015_digit.csv"), row.names=FALSE, quote=FALSE)
+write.csv(dfalp, file.path("RaceIAT_public_2015_alpha.csv"), row.names=FALSE, quote=FALSE)
 #Deleting the old file to replace with the processed file
-fn <- file.path(dataloc,"cleansed","Race IAT.public.2015.csv")
+fn <- file.path("Race IAT.public.2015.csv")
 if (file.exists(fn)) file.remove(fn)
