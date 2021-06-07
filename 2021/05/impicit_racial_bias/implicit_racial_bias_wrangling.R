@@ -31,6 +31,7 @@ library(dplyr)
 #  write.csv(df, csvFileName)
 #}
 
+##race = White:6, ethnicity = White:5
 ###### cleaning the csv files for unwanted entries in countrycit ######
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_datea_race_iat_public/'))
 
@@ -52,31 +53,32 @@ for (fileNumber in fileNumbers)
   write.csv(df3, xx, row.names=FALSE, quote=FALSE)
 }
 
-###### Additional processing for 2015 file ######
-## Seperating 2015 file to new format and old format files ##
-
-df <- read.csv("Race IAT.public.2015.csv")
+###### Additional processing for 2015 files and later ######
+## Separating 2015 files and later to new format and old format files ##
+IAT_modern_format <- function(year){
+df <- read.csv(paste0("Race IAT.public.",year,".csv"))
 df2 <- df[grepl(pattern="[[:digit:]]", df$countrycit)|grepl(pattern="[[:digit:]]", df$countryres), ]
 dfdig <- df2[!grepl(pattern="-9", df2$countrycit), ]
 dfalp <- df[grepl(pattern="[[:alpha:]]", df$countrycit) & !grepl(pattern="[[:digit:]]", df$countryres), ]
-write.csv(dfdig, file.path("RaceIAT_public_2015_digit.csv"), row.names=FALSE, quote=FALSE)
-write.csv(dfalp, file.path("RaceIAT_public_2015_alpha.csv"), row.names=FALSE, quote=FALSE)
+write.csv(dfdig, file.path(paste0("RaceIAT_public_",year,"_digit.csv")), row.names=FALSE, quote=FALSE)
+write.csv(dfalp, file.path(paste0("RaceIAT_public_",year,"_alpha.csv")), row.names=FALSE, quote=FALSE)
 #Deleting the old file to replace with the processed file
-fn <- file.path("Race IAT.public.2015.csv")
+fn <- file.path(paste0("Race IAT.public.",year,".csv"))
 if (file.exists(fn)) file.remove(fn)
 
 ###### Merging or mapping the files ######
 ## Processing the new format files
 #
-datafile2015="RaceIAT_public_2015_digit.csv"
-df1 <- read.csv(file.path('Data',"Mapper.txt"),header=T,sep="\t")
-df11 <- read.csv(file.path('Data',"Ethnic.txt"),header=T,sep="\t")
-dfdig <- read.csv(file.path(dataloc, 'cleansed',datafile2015), header=TRUE)
+datafile_year=paste0("RaceIAT_public_",year,"_digit.csv")
+df1 <- read.delim(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/original_european_map_of_implicit_racial_bias/data/Mapper.txt'))
+df11 <- read.delim(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/original_european_map_of_implicit_racial_bias/data/Ethnic.txt'))
+dfdig <- read.csv(datafile_year, header=TRUE)
 (map <- setNames(df1$countrycitcode, df1$countrycit))
-if (file.exists(fn)) file.remove(datafile2015)
+if (file.exists(fn)) file.remove(datafile_year)
 dfdig[c("countrycit", "countryres")] <- lapply(dfdig[c("countrycit", "countryres")],function(x) map[as.character(x)])
-#race = White:6, ethnicity = White:5
+##race = White:6, ethnicity = White:5
 (map1 <- setNames(df11$ethniccode, df11$ethnic))
-dfdig[c("ethnic")] <- lapply(dfdig[c("ethnic")],function(x) map1[as.character(x)])
-fn<-file.path(dataloc,'cleansed',datafile2015)
+dfdig[c("ethnicityomb")] <- lapply(dfdig[c("ethnicityomb")],function(x) map1[as.character(x)])
+fn<-file.path(datafile_year)
 if (file.exists(fn)) file.remove(fn)
+}
