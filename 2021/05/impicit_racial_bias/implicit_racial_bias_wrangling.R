@@ -33,7 +33,7 @@ library(dplyr)
 
 ##race = White:6, ethnicity = White:5
 ###### cleaning the csv files for unwanted entries in countrycit ######
-setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_datea_race_iat_public/'))
+setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_data_race_iat_public/'))
 
 fileNames <- list.files(path = file.path(getwd()), pattern = "*.csv")
 fileNumbers <- seq(fileNames)
@@ -55,7 +55,7 @@ for (fileNumber in fileNumbers)
 
 ###### Additional processing for 2015 files and later ######
 ## Separating 2015 files and later to new format and old format files ##
-IAT_modern_format <- function(year){
+IAT_modern_format_part_i <- function(year){
 df <- read.csv(paste0("Race IAT.public.",year,".csv"))
 df2 <- df[grepl(pattern="[[:digit:]]", df$countrycit)|grepl(pattern="[[:digit:]]", df$countryres), ]
 dfdig <- df2[!grepl(pattern="-9", df2$countrycit), ]
@@ -65,10 +65,11 @@ write.csv(dfalp, file.path(paste0("RaceIAT_public_",year,"_alpha.csv")), row.nam
 #Deleting the old file to replace with the processed file
 fn <- file.path(paste0("Race IAT.public.",year,".csv"))
 if (file.exists(fn)) file.remove(fn)
+}
 
+IAT_modern_format_part_ii <- function(year){
 ###### Merging or mapping the files ######
 ## Processing the new format files
-#
 datafile_year=paste0("RaceIAT_public_",year,"_digit.csv")
 df1 <- read.delim(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/original_european_map_of_implicit_racial_bias/data/Mapper.txt'))
 df11 <- read.delim(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/original_european_map_of_implicit_racial_bias/data/Ethnic.txt'))
