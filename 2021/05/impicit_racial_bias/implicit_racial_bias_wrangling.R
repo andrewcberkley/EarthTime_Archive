@@ -1129,7 +1129,7 @@ df$ethnicityomb[df$ethnicityomb == "Not Hispanic or Latino"] <-  "White-Not of H
 #write.csv(df, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
 saveRDS(df, "Race.IAT.2003-2020.rds")
 
-#filter the data by white respondants only
+#filter the data by white respondents only
 #Make more sense, allowing better comparison x-country
 
 df <- readRDS("Race.IAT.2003-2020.rds")
