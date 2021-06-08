@@ -1127,3 +1127,44 @@ df$ethnicityomb[df$ethnicityomb == "Not Hispanic or Latino"] <-  "White-Not of H
 
 #write.csv(df, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
 saveRDS(df, "Race.IAT.2003-2020.rds")
+
+###### filter the data by white respondants only ######
+# Make more sense, allowing better comparison x-country
+
+df <- readRDS("Race.IAT.2003-2020.rds")
+#df2 <- df[grep("White-Not of Hispanic Origin|Black", df$raceomb), ]
+dfwhite <- df[which(df$ethnicityomb == "White-Not of Hispanic Origin"|df$ethnicityomb == "White"), ]
+#write.csv(dfwhite, "Race.IAT.2003-2020-white.csv" row.names=FALSE, quote=FALSE)
+saveRDS(dfwhite, "Race.IAT.2003-2020-white.rds")
+
+###### Filter the Europe Data ######
+df <- readRDS("Race.IAT.2003-2020-white.rds")
+dfeurope <- df[grep("AL|AD|AT|BY|BE|BA|BG|HR|CZ|DK|EE|FI|FR|DE|GR|HU|IS|IE|IT|LV|LI|LT|LU|MT|MD|MC|ME|MK|AN|NL|NO|PL|PT|RO|RU|SM|RS|SK|SI|ES|SE|CH|UA|GB", df$countrycit), ]
+#write.csv(dfeurope, file.path(dataloc,"Race.IAT.2004-2015-white-europe.csv"), row.names=FALSE, quote=FALSE)
+saveRDS(dfeurope, "Race.IAT.2003-2020-white-europe.rds")
+
+###### Finding the stats ######
+df <- readRDS("Race.IAT.2003-2020-white-europe.rds")
+dfstats <- dplyr::count(df,countrycit)
+#write.csv(dfstats, file.path(dataloc,"Race.IAT.2004-2015-white-europe-stats.csv"), row.names=FALSE, quote=FALSE)
+
+###### Finding aggregate in Europe ######
+gtd <- read.csv(file.path(dataloc,"Race.IAT.2004-2015-white-europe.csv"), header=TRUE)
+#dfagg <- aggregate(D_biep.White_Good_all~countrycit,gtd,mean)
+#write.csv(dfagg, file.path(dataloc,"Race.IAT.2004-2015-white-europe-aggregate.csv"), row.names=FALSE, quote=FALSE)
+
+# Create a DF with mean IAT and SD for respective country
+ag <- aggregate(D_biep.White_Good_all~countrycit, gtd, function(x) c(mean = mean(x), sd = sd(x)))
+
+# Join the stats df and ag df
+constat <- join(ag, dfstats,
+                type = "inner")
+
+# Calculate the standard error field
+constat$err <- constat$D_biep.White_Good_all[,c("sd")]/sqrt(constat$n)
+
+# Taking out countries with n< 100
+#constat <- constat[-c(42,27,23,3,29,1,25), ] #hardcoding exceptions is terrible practice!
+constat <- constat[!(constat$n<100),]
+# Write the consolidated file with Mean IAT score, country code, SD, SE and sample size (Good file to get Idea of data points)
+write.csv(constat, file.path(dataloc,"Consolidatedstat.2004-2015-white-europe.csv"), row.names=FALSE, quote=FALSE)
