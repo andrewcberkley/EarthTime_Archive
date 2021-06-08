@@ -55,7 +55,7 @@ for (fileNumber in fileNumbers)
 
 ###### Additional processing for 2015 files and later ######
 ## Separating 2015 files and later to new format and old format files ##
-IAT_modern_format_2015<- function(year){
+IAT_2015_format_exception<- function(year){
 df <- read.csv(paste0("Race IAT.public.",year,".csv"))
 df2 <- df[grepl(pattern="[[:digit:]]", df$countrycit)|grepl(pattern="[[:digit:]]", df$countryres), ]
 dfdig <- df2[!grepl(pattern="-9", df2$countrycit), ]
@@ -593,3 +593,10 @@ IAT_modern_format_2016_and_later<- function(year){
   if (file.exists(fn)) file.remove(fn)
 }
 
+IAT_2015_format_exception(2015)
+
+new_format_years <- c(2016,2017,2018,2019,2020)
+
+for (i in new_format_years) {
+  IAT_modern_format_2016_and_later(i)
+}
