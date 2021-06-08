@@ -1115,7 +1115,6 @@ for (i in new_format_years) {
 ###### Combining ######
 # This code is for merging the csv file ABERK style that will be easily wrangled into EarthTime
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_data_race_iat_public/'))
-files <- list.files(path = file.path(getwd()), pattern = "*.csv")
-DF <-  read.csv(files[1])
-for (f in files[-1]) DF <- rbind(DF, read.csv(f))   
+file_names <- dir(getwd())
+df <- do.call(rbind, lapply(file_names, function(x) cbind(read.csv(x), name=strsplit(x,'\\.')[[1]][1])))
 write.csv(DF, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
