@@ -1121,5 +1121,9 @@ setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_data_r
 file_names <- dir(getwd())
 df <- do.call(rbind, lapply(file_names, function(x) cbind(read.csv(x), name=strsplit(x,'\\.')[[1]][1])))
 df$name <- as.numeric(gsub("\\D", "", df$name))
-colnames(df) <- c("Overall_IAT_D_score", "Country_of_Citizenship", "Country_of_Residence", "Ethnicity_Hispanic_or_not", "Year")
+#colnames(df) <- c("Overall_IAT_D_score", "Country_of_Citizenship", "Country_of_Residence", "Ethnicity_Hispanic_or_Not", "Year")
+colnames(df)[5] <- "year"
+
+saveRDS(df, "Race.IAT.2003-2020.rds")
+
 write.csv(df, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
