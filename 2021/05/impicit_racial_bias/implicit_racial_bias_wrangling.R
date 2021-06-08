@@ -4,6 +4,9 @@ library(foreign)
 library(memisc)
 library(plyr)
 library(dplyr)
+library(data.table)
+
+memory.limit(size=407070)
 
 ## Loop for..
 ## 1) Iteratively get all the raw statistical file from 'raw' folder 
@@ -1117,4 +1120,6 @@ for (i in new_format_years) {
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_data_race_iat_public/'))
 file_names <- dir(getwd())
 df <- do.call(rbind, lapply(file_names, function(x) cbind(read.csv(x), name=strsplit(x,'\\.')[[1]][1])))
-write.csv(DF, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
+df$name <- as.numeric(gsub("\\D", "", df$name))
+colnames(df) <- c("Overall_IAT_D_score", "Country_of_Citizenship", "Country_of_Residence", "Ethnicity_Hispanic_or_not", "Year")
+write.csv(df, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
