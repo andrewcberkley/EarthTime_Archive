@@ -1139,6 +1139,8 @@ saveRDS(dfwhite, "Race.IAT.2003-2020-white.rds")
 
 #Filter the Europe Data
 df <- readRDS("Race.IAT.2003-2020-white.rds")
+df$countrycit[df$countrycit == "UK"] <-  "GB"
+df$countryres[df$countryres == "UK"] <-  "GB"
 dfeurope <- df[grep("AL|AD|AT|BY|BE|BA|BG|HR|CZ|DK|EE|FI|FR|DE|GR|HU|IS|IE|IT|LV|LI|LT|LU|MT|MD|MC|ME|MK|AN|NL|NO|PL|PT|RO|RU|SM|RS|SK|SI|ES|SE|CH|UA|GB", df$countrycit), ]
 #write.csv(dfeurope, file.path(dataloc,"Race.IAT.2004-2015-white-europe.csv"), row.names=FALSE, quote=FALSE)
 saveRDS(dfeurope, "Race.IAT.2003-2020-white-europe.rds")
@@ -1151,15 +1153,28 @@ saveRDS(dfstats, "Race.IAT.2003-2020-white-europe-stats.rds")
 
 #Finding aggregate in Europe
 gtd <- readRDS("Race.IAT.2003-2020-white-europe.rds")
-#gtd2 <- na.omit(gtd)
+gtd2 <- na.omit(gtd)
+gtd3 <- gtd2[,c(1,2,5)]
+rownames(gtd3) <- NULL
+
 #df_agg <- aggregate(D_biep.White_Good_all~countrycit, gtd2, FUN=mean, na.rm=TRUE)
 #write.csv(dfagg, file.path(dataloc,"Race.IAT.2004-2015-white-europe-aggregate.csv"), row.names=FALSE, quote=FALSE)
 
 # Create a DF with mean IAT and SD for respective country
 #ag <- aggregate(D_biep.White_Good_all~countrycit, gtd, function(x) c(mean = mean(x), sd = sd(x)))
-ag <- gtd %>%
-  group_by(year, countrycit) %>%
-  summarise(mean(D_biep.White_Good_all, na.rm = TRUE))
+gtd3$D_biep.White_Good_all <- as.numeric(as.character(gtd3$D_biep.White_Good_all))
+ag <- gtd2 %>%
+  group_by(countrycit, year) %>%
+  summarise(mean("D_biep.White_Good_all", na.rm=TRUE))
+
+ag <- gtd3 %>% group_by(countrycit, year) %>% 
+  summarise(D_biep.White_Good_all = mean(D_biep.White_Good_all)) %>%
+  mutate(idx = row_number()) %>%
+  spread(year, D_biep.White_Good_all)%>%
+  select(-idx)
+
+Consolidated_DF <- aggregate(x=ag[c(2:19)], by=list(iso2=ag$countrycit), min, na.rm = TRUE)
+
 write.csv(ag,"Consolidatedstat.2003-2020-white-europe.csv", row.names=FALSE)
 
 # Join the stats df and ag df
