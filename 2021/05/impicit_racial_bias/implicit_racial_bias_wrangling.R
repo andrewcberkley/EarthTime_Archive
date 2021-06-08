@@ -65,9 +65,7 @@ write.csv(dfalp, file.path(paste0("RaceIAT_public_",year,"_alpha.csv")), row.nam
 #Deleting the old file to replace with the processed file
 fn <- file.path(paste0("Race IAT.public.",year,".csv"))
 if (file.exists(fn)) file.remove(fn)
-}
 
-IAT_modern_format_part_ii <- function(year){
 ###### Merging or mapping the files ######
 ## Processing the new format files
 datafile_year=paste0("RaceIAT_public_",year,"_digit.csv")
