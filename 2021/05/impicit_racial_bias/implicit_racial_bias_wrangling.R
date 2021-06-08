@@ -596,7 +596,7 @@ IAT_2015_format_exception(2015)
 IAT_2016_format_exception(2016)
 
 IAT_modern_format_2017_and_later<- function(year){
-  df <- read.csv(paste0("Race IAT.public.",year,".csv"))
+  df <- read.csv(paste0("Race_IAT.public.",year,".csv"))
   df2 <- df[grepl(pattern="[[:digit:]]", df$countrycit_num)|grepl(pattern="[[:digit:]]", df$countryres_num), ]
   dfdig <- df2[!grepl(pattern="-9", df2$countrycit_num), ]
   ###Start Matching Values from Codebook
@@ -1111,3 +1111,4 @@ new_format_years <- c(2017,2018,2019,2020)
 for (i in new_format_years) {
   IAT_modern_format_2017_and_later(i)
 }
+
