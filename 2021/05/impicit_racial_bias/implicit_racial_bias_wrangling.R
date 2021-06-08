@@ -55,7 +55,7 @@ for (fileNumber in fileNumbers)
 
 ###### Additional processing for 2015 files and later ######
 ## Separating 2015 files and later to new format and old format files ##
-IAT_modern_format_part_i <- function(year){
+IAT_modern_format_2015<- function(year){
 df <- read.csv(paste0("Race IAT.public.",year,".csv"))
 df2 <- df[grepl(pattern="[[:digit:]]", df$countrycit)|grepl(pattern="[[:digit:]]", df$countryres), ]
 dfdig <- df2[!grepl(pattern="-9", df2$countrycit), ]
@@ -80,4 +80,34 @@ dfdig[c("countrycit", "countryres")] <- lapply(dfdig[c("countrycit", "countryres
 dfdig[c("ethnicityomb")] <- lapply(dfdig[c("ethnicityomb")],function(x) map1[as.character(x)])
 fn<-file.path(datafile_year)
 if (file.exists(fn)) file.remove(fn)
+}
+
+IAT_modern_format_2016_and_later<- function(year){
+  df <- read.csv(paste0("Race IAT.public.",year,".csv"))
+  df2 <- df[grepl(pattern="[[:digit:]]", df$countrycit)|grepl(pattern="[[:digit:]]", df$countryres), ]
+  dfdig <- df2[!grepl(pattern="-9", df2$countrycit), ]
+  ###Start Matching Values from Codebook
+  
+  ###End Matching Values from Codebook
+  dfalp <- df[grepl(pattern="[[:alpha:]]", df$countrycit) & !grepl(pattern="[[:digit:]]", df$countryres), ]
+  write.csv(dfdig, file.path(paste0("RaceIAT_public_",year,"_digit.csv")), row.names=FALSE, quote=FALSE)
+  write.csv(dfalp, file.path(paste0("RaceIAT_public_",year,"_alpha.csv")), row.names=FALSE, quote=FALSE)
+  #Deleting the old file to replace with the processed file
+  fn <- file.path(paste0("Race IAT.public.",year,".csv"))
+  if (file.exists(fn)) file.remove(fn)
+  
+  ###### Merging or mapping the files ######
+  ## Processing the new format files
+  datafile_year=paste0("RaceIAT_public_",year,"_digit.csv")
+  df1 <- read.delim(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/original_european_map_of_implicit_racial_bias/data/Mapper.txt'))
+  df11 <- read.delim(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/original_european_map_of_implicit_racial_bias/data/Ethnic.txt'))
+  dfdig <- read.csv(datafile_year, header=TRUE)
+  (map <- setNames(df1$countrycitcode, df1$countrycit))
+  if (file.exists(fn)) file.remove(datafile_year)
+  dfdig[c("countrycit", "countryres")] <- lapply(dfdig[c("countrycit", "countryres")],function(x) map[as.character(x)])
+  ##race = White:6, ethnicity = White:5
+  (map1 <- setNames(df11$ethniccode, df11$ethnic))
+  dfdig[c("ethnicityomb")] <- lapply(dfdig[c("ethnicityomb")],function(x) map1[as.character(x)])
+  fn<-file.path(datafile_year)
+  if (file.exists(fn)) file.remove(fn)
 }
