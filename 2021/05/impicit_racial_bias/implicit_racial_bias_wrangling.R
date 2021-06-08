@@ -6,6 +6,7 @@ library(plyr)
 library(dplyr)
 library(data.table)
 library(tidyverse)
+library(zoo)
 
 memory.limit(size=407070)
 
@@ -1173,9 +1174,16 @@ ag <- gtd3 %>% group_by(countrycit, year) %>%
   spread(year, D_biep.White_Good_all)%>%
   select(-idx)
 
-Consolidated_DF <- aggregate(x=ag[c(2:19)], by=list(iso2=ag$countrycit), min, na.rm = TRUE)
+collapsed_df <- aggregate(x=ag[c(2:19)], by=list(iso2=ag$countrycit), min, na.rm = TRUE)
+is.na(collapsed_df)<-sapply(collapsed_df, is.infinite)
 
-write.csv(ag,"Consolidatedstat.2003-2020-white-europe.csv", row.names=FALSE)
+wide_minus <- collapsed_df[,-c(1)]
+wide_filled_over <- as.data.frame(t(apply(wide_minus, 1, function(x) na.locf(x, fromLast = F, na.rm = F))))
+wide_plus <- as.data.frame(collapsed_df[,c(1)])
+wide_final <- cbind(wide_plus, wide_filled_over)
+colnames(wide_final)[1] <- "iso2"
+
+write.csv(wide_final,"Consolidatedstat.2003-2020-white-europe.csv", row.names=FALSE)
 
 # Join the stats df and ag df
 #constat <- join(ag, dfstats,
