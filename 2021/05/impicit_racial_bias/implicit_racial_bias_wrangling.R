@@ -1123,7 +1123,7 @@ df <- do.call(rbind, lapply(file_names, function(x) cbind(read.csv(x), name=strs
 df$name <- as.numeric(gsub("\\D", "", df$name))
 #colnames(df) <- c("Overall_IAT_D_score", "Country_of_Citizenship", "Country_of_Residence", "Ethnicity_Hispanic_or_Not", "Year")
 colnames(df)[5] <- "year"
+df$ethnicityomb[df$ethnicityomb == "Not Hispanic or Latino"] <-  "White-Not of Hispanic Origin"
 
+#write.csv(df, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
 saveRDS(df, "Race.IAT.2003-2020.rds")
-
-write.csv(df, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
