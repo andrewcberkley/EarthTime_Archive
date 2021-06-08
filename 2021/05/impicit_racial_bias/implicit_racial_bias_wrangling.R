@@ -8,28 +8,28 @@ library(dplyr)
 ## Loop for..
 ## 1) Iteratively get all the raw statistical file from 'raw' folder 
 ## 2) Generate csv file and put under 'cleansed' folder for further processing
-#fileNames <- Sys.glob(paste("implicit_bias_project_implicit_harvard_university/race_iat_public/*.", "sav", sep = ""))
-#fileNumbers <- seq(fileNames)
-#memory.limit(size=407070)
-#setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_datea_race_iat_public/'))
-#for (fileNumber in fileNumbers)
-#{
-#  shortFileName <- tail(strsplit(fileNames[fileNumber],"/")[[1]],1)
-#  csvFileName <-  paste("cleaned_datea_race_iat_public/", sub(paste("\\.", "sav", sep = ""), "", shortFileName),".", "csv", sep = "")
-#  dataset1 = read.spss(fileNames[fileNumber], to.data.frame=TRUE)
+fileNames <- Sys.glob(paste("implicit_bias_project_implicit_harvard_university/race_iat_public/*.", "sav", sep = ""))
+fileNumbers <- seq(fileNames)
+memory.limit(size=407070)
+setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_datea_race_iat_public/'))
+for (fileNumber in fileNumbers)
+{
+  shortFileName <- tail(strsplit(fileNames[fileNumber],"/")[[1]],1)
+  csvFileName <-  paste(sub(paste("\\.", "sav", sep = ""), "", shortFileName),".", "csv", sep = "")
+  dataset1 = read.spss(fileNames[fileNumber], to.data.frame=TRUE)
 
-#  if (fileNames == "Race IAT.public.2002-2003.sav|Race IAT.public.2004.sav") {
-#    df <- dataset1[,c("D_biep.White_Good_all","country","ethnic")]
-#    colnames(df)[which(names(df) == "raceomb")] <- "ethnic"
-#    } else if (fileNames == "Race IAT.public.2005.sav|Race IAT.public.2006.sav")  {
-#      df <- dataset1[,c("D_biep.White_Good_all","countrycit","countryres","ethnic")] 
-#      } else if (fileNames == "Race IAT.public.2017.sav|Race IAT.public.2018.sav|Race IAT.public.2019.sav|Race IAT.public.2020.sav")  {
-#        df <- dataset1[,c("D_biep.White_Good_all","countrycit_num","countryres_num","ethnic")] 
-#        }else {
-#          df <- dataset1[,c("D_biep.White_Good_all","countrycit","countryres","ethnicityomb")]
-#        }
-#  write.csv(df, csvFileName)
-#}
+  if (fileNames == "Race IAT.public.2002-2003.sav|Race IAT.public.2004.sav") {
+    df <- dataset1[,c("D_biep.White_Good_all","country","ethnic")]
+    colnames(df)[which(names(df) == "raceomb")] <- "ethnic"
+    } else if (fileNames == "Race IAT.public.2005.sav|Race IAT.public.2006.sav")  {
+      df <- dataset1[,c("D_biep.White_Good_all","countrycit","countryres","ethnic")] 
+      } else if (fileNames == "Race IAT.public.2017.sav|Race IAT.public.2018.sav|Race IAT.public.2019.sav|Race IAT.public.2020.sav")  {
+        df <- dataset1[,c("D_biep.White_Good_all","countrycit_num","countryres_num","ethnic")] 
+        }else {
+          df <- dataset1[,c("D_biep.White_Good_all","countrycit","countryres","ethnicityomb")]
+        }
+  write.csv(df, csvFileName, row.names = FALSE)
+}
 
 ##race = White:6, ethnicity = White:5
 ###### cleaning the csv files for unwanted entries in countrycit ######
@@ -1112,3 +1112,10 @@ for (i in new_format_years) {
   IAT_modern_format_2017_and_later(i)
 }
 
+###### Combining ######
+# This code is for merging the csv file ABERK style that will be easily wrangled into EarthTime
+setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_data_race_iat_public/'))
+files <- list.files(path = file.path(getwd()), pattern = "*.csv")
+DF <-  read.csv(files[1])
+for (f in files[-1]) DF <- rbind(DF, read.csv(f))   
+write.csv(DF, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
