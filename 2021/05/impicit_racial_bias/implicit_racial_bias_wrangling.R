@@ -5,12 +5,13 @@ library(memisc)
 library(plyr)
 library(dplyr)
 library(data.table)
+library(tidyverse)
 
 memory.limit(size=407070)
 
-## Loop for..
-## 1) Iteratively get all the raw statistical file from 'raw' folder 
-## 2) Generate csv file and put under 'cleansed' folder for further processing
+#Loop for..
+#1) Iteratively get all the raw statistical file from 'raw' folder 
+#2) Generate csv file and put under 'cleansed' folder for further processing
 fileNames <- Sys.glob(paste("implicit_bias_project_implicit_harvard_university/race_iat_public/*.", "sav", sep = ""))
 fileNumbers <- seq(fileNames)
 memory.limit(size=407070)
@@ -34,8 +35,8 @@ for (fileNumber in fileNumbers)
   write.csv(df, csvFileName, row.names = FALSE)
 }
 
-##race = White:6, ethnicity = White:5
-###### cleaning the csv files for unwanted entries in countrycit ######
+#race = White:6, ethnicity = White:5
+#cleaning the csv files for unwanted entries in countrycit ######
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_data_race_iat_public/'))
 
 fileNames <- list.files(path = file.path(getwd()), pattern = "*.csv")
@@ -56,8 +57,8 @@ for (fileNumber in fileNumbers)
   write.csv(df3, xx, row.names=FALSE, quote=FALSE)
 }
 
-###### Additional processing for 2015 files and later ######
-## Separating 2015 files and later to new format and old format files ##
+#Additional processing for 2015/2016 files and later
+#Separating 2015/2016 files and later to new format and old format files
 IAT_2015_format_exception<- function(year){
 df <- read.csv(paste0("Race IAT.public.",year,".csv"))
 df2 <- df[grepl(pattern="[[:digit:]]", df$countrycit)|grepl(pattern="[[:digit:]]", df$countryres), ]
@@ -69,8 +70,7 @@ write.csv(dfalp, file.path(paste0("RaceIAT_public_",year,"_alpha.csv")), row.nam
 fn <- file.path(paste0("Race IAT.public.",year,".csv"))
 if (file.exists(fn)) file.remove(fn)
 
-###### Merging or mapping the files ######
-## Processing the new format files
+#Merging or mapping the files and processing the new format files
 datafile_year=paste0("RaceIAT_public_",year,"_digit.csv")
 df1 <- read.delim(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/original_european_map_of_implicit_racial_bias/data/Mapper.txt'))
 df11 <- read.delim(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/original_european_map_of_implicit_racial_bias/data/Ethnic.txt'))
@@ -78,7 +78,7 @@ dfdig <- read.csv(datafile_year, header=TRUE)
 (map <- setNames(df1$countrycitcode, df1$countrycit))
 if (file.exists(fn)) file.remove(datafile_year)
 dfdig[c("countrycit", "countryres")] <- lapply(dfdig[c("countrycit", "countryres")],function(x) map[as.character(x)])
-##race = White:6, ethnicity = White:5
+#race = White:6, ethnicity = White:5
 (map1 <- setNames(df11$ethniccode, df11$ethnic))
 dfdig[c("ethnicityomb")] <- lapply(dfdig[c("ethnicityomb")],function(x) map1[as.character(x)])
 fn<-file.path(datafile_year)
@@ -1115,8 +1115,8 @@ for (i in new_format_years) {
   IAT_modern_format_2017_and_later(i)
 }
 
-###### Combining ######
-# This code is for merging the csv file ABERK style that will be easily wrangled into EarthTime
+#Combining
+#This code is for merging the csv file ABERK style that will be easily wrangled into EarthTime
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/cleaned_data_race_iat_public/'))
 file_names <- dir(getwd())
 df <- do.call(rbind, lapply(file_names, function(x) cbind(read.csv(x), name=strsplit(x,'\\.')[[1]][1])))
@@ -1128,8 +1128,8 @@ df$ethnicityomb[df$ethnicityomb == "Not Hispanic or Latino"] <-  "White-Not of H
 #write.csv(df, "Race.IAT.2003-2020.csv", row.names=FALSE, quote=FALSE)
 saveRDS(df, "Race.IAT.2003-2020.rds")
 
-###### filter the data by white respondants only ######
-# Make more sense, allowing better comparison x-country
+#filter the data by white respondants only
+#Make more sense, allowing better comparison x-country
 
 df <- readRDS("Race.IAT.2003-2020.rds")
 #df2 <- df[grep("White-Not of Hispanic Origin|Black", df$raceomb), ]
@@ -1137,34 +1137,39 @@ dfwhite <- df[which(df$ethnicityomb == "White-Not of Hispanic Origin"|df$ethnici
 #write.csv(dfwhite, "Race.IAT.2003-2020-white.csv" row.names=FALSE, quote=FALSE)
 saveRDS(dfwhite, "Race.IAT.2003-2020-white.rds")
 
-###### Filter the Europe Data ######
+#Filter the Europe Data
 df <- readRDS("Race.IAT.2003-2020-white.rds")
 dfeurope <- df[grep("AL|AD|AT|BY|BE|BA|BG|HR|CZ|DK|EE|FI|FR|DE|GR|HU|IS|IE|IT|LV|LI|LT|LU|MT|MD|MC|ME|MK|AN|NL|NO|PL|PT|RO|RU|SM|RS|SK|SI|ES|SE|CH|UA|GB", df$countrycit), ]
 #write.csv(dfeurope, file.path(dataloc,"Race.IAT.2004-2015-white-europe.csv"), row.names=FALSE, quote=FALSE)
 saveRDS(dfeurope, "Race.IAT.2003-2020-white-europe.rds")
 
-###### Finding the stats ######
+#Finding the stats
 df <- readRDS("Race.IAT.2003-2020-white-europe.rds")
 dfstats <- dplyr::count(df,countrycit)
 #write.csv(dfstats, file.path(dataloc,"Race.IAT.2004-2015-white-europe-stats.csv"), row.names=FALSE, quote=FALSE)
+saveRDS(dfstats, "Race.IAT.2003-2020-white-europe-stats.rds")
 
-###### Finding aggregate in Europe ######
-gtd <- read.csv(file.path(dataloc,"Race.IAT.2004-2015-white-europe.csv"), header=TRUE)
-#dfagg <- aggregate(D_biep.White_Good_all~countrycit,gtd,mean)
+#Finding aggregate in Europe
+gtd <- readRDS("Race.IAT.2003-2020-white-europe.rds")
+#gtd2 <- na.omit(gtd)
+#df_agg <- aggregate(D_biep.White_Good_all~countrycit, gtd2, FUN=mean, na.rm=TRUE)
 #write.csv(dfagg, file.path(dataloc,"Race.IAT.2004-2015-white-europe-aggregate.csv"), row.names=FALSE, quote=FALSE)
 
 # Create a DF with mean IAT and SD for respective country
-ag <- aggregate(D_biep.White_Good_all~countrycit, gtd, function(x) c(mean = mean(x), sd = sd(x)))
+#ag <- aggregate(D_biep.White_Good_all~countrycit, gtd, function(x) c(mean = mean(x), sd = sd(x)))
+ag <- gtd %>%
+  group_by(year, countrycit) %>%
+  summarise(mean(D_biep.White_Good_all, na.rm = TRUE))
+write.csv(ag,"Consolidatedstat.2003-2020-white-europe.csv", row.names=FALSE)
 
 # Join the stats df and ag df
-constat <- join(ag, dfstats,
-                type = "inner")
+#constat <- join(ag, dfstats,
+#                type = "inner")
 
 # Calculate the standard error field
-constat$err <- constat$D_biep.White_Good_all[,c("sd")]/sqrt(constat$n)
+#constat$err <- constat$D_biep.White_Good_all[,c("sd")]/sqrt(constat$n)
 
 # Taking out countries with n< 100
-#constat <- constat[-c(42,27,23,3,29,1,25), ] #hardcoding exceptions is terrible practice!
-constat <- constat[!(constat$n<100),]
+#constat <- constat[!(constat$n<100),]
 # Write the consolidated file with Mean IAT score, country code, SD, SE and sample size (Good file to get Idea of data points)
-write.csv(constat, file.path(dataloc,"Consolidatedstat.2004-2015-white-europe.csv"), row.names=FALSE, quote=FALSE)
+#write.csv(constat,"Consolidatedstat.2003-2020-white-europe.csv", row.names=FALSE)
