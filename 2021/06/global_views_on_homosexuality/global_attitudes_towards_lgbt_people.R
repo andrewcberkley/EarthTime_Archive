@@ -21,6 +21,6 @@ library(shiny)
 
 #In Japan, where conservative ideas about gender identity and sexual orientation have long dominated, 68% of Japanese now think gay people should be fully accepted by society.That's an increase of 14 percentage points from 2013.
 
-df <- extract_tables("PG_2020.06.25_Global-Views-Homosexuality_TOPLINE.pdf", pages = c(3:5))
+pewTables <- extract_tables("PG_2020.06.25_Global-Views-Homosexuality_TOPLINE.pdf", pages = c(3:5))
 
-df
+df <- do.call(rbind, pewTables)
