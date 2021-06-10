@@ -38,3 +38,19 @@ wide_df <- should_be_accepted_df %>%
   mutate(idx = row_number()) %>%
   spread(Year, Homosexuality.should.be.accepted.by.society) %>%
   select(-idx)
+
+wide_df['2003']<-NA
+wide_df['2004']<-NA
+wide_df['2005']<-NA
+wide_df['2006']<-NA
+wide_df['2008']<-NA
+wide_df['2009']<-NA
+wide_df['2010']<-NA
+wide_df['2012']<-NA
+wide_df['2014']<-NA
+wide_df['2015']<-NA
+wide_df['2016']<-NA
+wide_df['2017']<-NA
+wide_df['2018']<-NA
+
+wide_df <- wide_df[,c(1,2,7:10,3,11:13,4,14,5,15:19,6)]
