@@ -22,5 +22,19 @@ library(shiny)
 #In Japan, where conservative ideas about gender identity and sexual orientation have long dominated, 68% of Japanese now think gay people should be fully accepted by society.That's an increase of 14 percentage points from 2013.
 
 pewTables <- extract_tables("PG_2020.06.25_Global-Views-Homosexuality_TOPLINE.pdf", pages = c(3:5))
+df <- as.data.frame(do.call(rbind, pewTables))
 
-df <- do.call(rbind, pewTables)
+rm(pewTables)
+rm(df)
+
+#Q31. And which one of these comes closer to your opinion?
+#Homosexuality should be accepted by society OR Homosexuality should not be accepted by society
+Q31 <- read.csv("Q31.csv")
+
+should_be_accepted_df <- Q31[,c(1:3)]
+
+wide_df <- should_be_accepted_df %>%
+  group_by(Country, Year) %>%
+  mutate(idx = row_number()) %>%
+  spread(Year, Homosexuality.should.be.accepted.by.society) %>%
+  select(-idx)
