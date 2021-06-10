@@ -40,20 +40,6 @@ wide_df <- should_be_accepted_df %>%
   spread(Year, Homosexuality.should.be.accepted.by.society) %>%
   select(-idx)
 
-#wide_df['2003']<-NA
-#wide_df['2004']<-NA
-#wide_df['2005']<-NA
-#wide_df['2006']<-NA
-#wide_df['2008']<-NA
-#wide_df['2009']<-NA
-#wide_df['2010']<-NA
-#wide_df['2012']<-NA
-#wide_df['2014']<-NA
-#wide_df['2015']<-NA
-#wide_df['2016']<-NA
-#wide_df['2017']<-NA
-#wide_df['2018']<-NA
-
 pew_response_linear_interpolate0 <- function(y1, y2, side) {
   if (side==0) {return(y1)}
   else {return(y2)}
