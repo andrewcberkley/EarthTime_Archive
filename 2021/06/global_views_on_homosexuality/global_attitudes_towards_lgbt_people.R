@@ -14,6 +14,7 @@ library(tabulizer)
 #https://stackoverflow.com/questions/29522088/rjava-install-error-java-home-cannot-be-determined-from-the-registry
 library(tabulizer)
 library(shiny)
+library(tidyverse)
 #https://www.gzeromedia.com/the-graphic-truth-global-attitudes-towards-lgbt-people
 #https://www.pewresearch.org/global/2020/06/25/global-divide-on-homosexuality-persists/
 #https://www.pewresearch.org/global/wp-content/uploads/sites/2/2020/06/PG_2020.06.25_Global-Views-Homosexuality_TOPLINE.pdf
@@ -53,14 +54,14 @@ wide_df <- should_be_accepted_df %>%
 #wide_df['2017']<-NA
 #wide_df['2018']<-NA
 
-#wide_df <- wide_df[,c(1,2,7:10,3,11:13,4,14,5,15:19,6)]
+wide_df <- wide_df[,c(1,2,7:10,3,11:13,4,14,5,15:19,6)]
 
-temp_linear_interpolate0 <- function(y1, y2, side) {
+response_linear_interpolate0 <- function(y1, y2, side) {
   if (side==0) {return(y1)}
   else {return(y2)}
 }
 
-temp_linear_interpolate1 <- function(x1, x2, y1, y2, val) {
+response_linear_interpolate1 <- function(x1, x2, y1, y2, val) {
   slope <- (y2-y1)/(x2-x1)
   return(y1+(val-x1)*slope)
 }
@@ -73,7 +74,7 @@ list_edges <- rbind(
   cbind(2011, 2013),
   cbind(2013, 2019))
 
-get_interpolated_temperatures <- function(my.df, type) {
+get_interpolated_responses <- function(my.df, type) {
   
   k <- 2
   
@@ -91,10 +92,10 @@ get_interpolated_temperatures <- function(my.df, type) {
           y2 <- as.numeric(x[k+1])
           if (type==0) {
             if (is.na(y1) | is.na(y2)) {return(NA)}
-            else {return(temp_linear_interpolate0(y1, y2, 0))}
+            else {return(response_linear_interpolate0(y1, y2, 0))}
           } else if (type==1) {
             if (is.na(y1) | is.na(y2)) {return(NA)}
-            else {return(temp_linear_interpolate1(x1, x2, y1, y2, x1+j))}
+            else {return(response_linear_interpolate1(x1, x2, y1, y2, x1+j))}
           }
         }))
       colnames(my.df)[ncol(my.df)] <- as.character(x1+j)
@@ -107,4 +108,6 @@ get_interpolated_temperatures <- function(my.df, type) {
 }
 
 #Takes around five minutes to interpolate
-fifty_percent_probability_filled_temperatures <- get_interpolated_temperatures(fifty_percent_probability, 1)
+wide_df_interpolated <- get_interpolated_responses(wide_df, 1)
+
+final_df <- wide_df_interpolated[,c(1,2,7:10,3,11:13,4,14,5,15:19,6)]
