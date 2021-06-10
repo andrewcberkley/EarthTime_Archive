@@ -39,18 +39,72 @@ wide_df <- should_be_accepted_df %>%
   spread(Year, Homosexuality.should.be.accepted.by.society) %>%
   select(-idx)
 
-wide_df['2003']<-NA
-wide_df['2004']<-NA
-wide_df['2005']<-NA
-wide_df['2006']<-NA
-wide_df['2008']<-NA
-wide_df['2009']<-NA
-wide_df['2010']<-NA
-wide_df['2012']<-NA
-wide_df['2014']<-NA
-wide_df['2015']<-NA
-wide_df['2016']<-NA
-wide_df['2017']<-NA
-wide_df['2018']<-NA
+#wide_df['2003']<-NA
+#wide_df['2004']<-NA
+#wide_df['2005']<-NA
+#wide_df['2006']<-NA
+#wide_df['2008']<-NA
+#wide_df['2009']<-NA
+#wide_df['2010']<-NA
+#wide_df['2012']<-NA
+#wide_df['2014']<-NA
+#wide_df['2015']<-NA
+#wide_df['2016']<-NA
+#wide_df['2017']<-NA
+#wide_df['2018']<-NA
 
-wide_df <- wide_df[,c(1,2,7:10,3,11:13,4,14,5,15:19,6)]
+#wide_df <- wide_df[,c(1,2,7:10,3,11:13,4,14,5,15:19,6)]
+
+temp_linear_interpolate0 <- function(y1, y2, side) {
+  if (side==0) {return(y1)}
+  else {return(y2)}
+}
+
+temp_linear_interpolate1 <- function(x1, x2, y1, y2, val) {
+  slope <- (y2-y1)/(x2-x1)
+  return(y1+(val-x1)*slope)
+}
+
+c_names <- c("Country", 2002:2019)
+
+list_edges <- rbind(
+  cbind(2002, 2007),
+  cbind(2007, 2011),
+  cbind(2011, 2013),
+  cbind(2013, 2019))
+
+get_interpolated_temperatures <- function(my.df, type) {
+  
+  k <- 2
+  
+  for (i in 1:nrow(list_edges)) {
+    
+    x1 <- list_edges[i,1]
+    x2 <- list_edges[i,2]
+    
+    for (j in 1:(x2-x1-1)) {
+      
+      my.df <- cbind(my.df, apply(
+        my.df, 1, 
+        function(x) {
+          y1 <- as.numeric(x[k])
+          y2 <- as.numeric(x[k+1])
+          if (type==0) {
+            if (is.na(y1) | is.na(y2)) {return(NA)}
+            else {return(temp_linear_interpolate0(y1, y2, 0))}
+          } else if (type==1) {
+            if (is.na(y1) | is.na(y2)) {return(NA)}
+            else {return(temp_linear_interpolate1(x1, x2, y1, y2, x1+j))}
+          }
+        }))
+      colnames(my.df)[ncol(my.df)] <- as.character(x1+j)
+    }
+    
+    k <- k+1
+  }
+  
+  return(my.df)
+}
+
+#Takes around five minutes to interpolate
+fifty_percent_probability_filled_temperatures <- get_interpolated_temperatures(fifty_percent_probability, 1)
