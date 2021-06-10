@@ -54,14 +54,12 @@ wide_df <- should_be_accepted_df %>%
 #wide_df['2017']<-NA
 #wide_df['2018']<-NA
 
-wide_df <- wide_df[,c(1,2,7:10,3,11:13,4,14,5,15:19,6)]
-
-response_linear_interpolate0 <- function(y1, y2, side) {
+pew_response_linear_interpolate0 <- function(y1, y2, side) {
   if (side==0) {return(y1)}
   else {return(y2)}
 }
 
-response_linear_interpolate1 <- function(x1, x2, y1, y2, val) {
+pew_response_linear_interpolate1 <- function(x1, x2, y1, y2, val) {
   slope <- (y2-y1)/(x2-x1)
   return(y1+(val-x1)*slope)
 }
@@ -74,7 +72,7 @@ list_edges <- rbind(
   cbind(2011, 2013),
   cbind(2013, 2019))
 
-get_interpolated_responses <- function(my.df, type) {
+get_interpolated_pew_responses <- function(my.df, type) {
   
   k <- 2
   
@@ -92,10 +90,10 @@ get_interpolated_responses <- function(my.df, type) {
           y2 <- as.numeric(x[k+1])
           if (type==0) {
             if (is.na(y1) | is.na(y2)) {return(NA)}
-            else {return(response_linear_interpolate0(y1, y2, 0))}
+            else {return(pew_response_linear_interpolate0(y1, y2, 0))}
           } else if (type==1) {
             if (is.na(y1) | is.na(y2)) {return(NA)}
-            else {return(response_linear_interpolate1(x1, x2, y1, y2, x1+j))}
+            else {return(pew_response_linear_interpolate1(x1, x2, y1, y2, x1+j))}
           }
         }))
       colnames(my.df)[ncol(my.df)] <- as.character(x1+j)
@@ -108,6 +106,6 @@ get_interpolated_responses <- function(my.df, type) {
 }
 
 #Takes around five minutes to interpolate
-wide_df_interpolated <- get_interpolated_responses(wide_df, 1)
+wide_df_interpolated <- get_interpolated_pew_responses(wide_df, 1)
 
 final_df <- wide_df_interpolated[,c(1,2,7:10,3,11:13,4,14,5,15:19,6)]
