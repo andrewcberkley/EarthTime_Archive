@@ -94,4 +94,4 @@ get_interpolated_pew_responses <- function(my.df, type) {
 #Takes around five minutes to interpolate
 wide_df_interpolated <- get_interpolated_pew_responses(wide_df, 1)
 
-final_df <- wide_df_interpolated[,c(1,2,7:10,3,11:13,4,14,5,15:19,6)]
+final_df <- wide_df_interpolated[,c_names]
