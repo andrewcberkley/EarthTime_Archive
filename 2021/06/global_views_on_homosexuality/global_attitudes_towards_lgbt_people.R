@@ -91,7 +91,10 @@ get_interpolated_pew_responses <- function(my.df, type) {
   return(my.df)
 }
 
-#Takes around five minutes to interpolate
 wide_df_interpolated <- get_interpolated_pew_responses(wide_df, 1)
 
-final_df <- wide_df_interpolated[,c_names]
+wide_df_interpolated <- wide_df_interpolated[,c_names]
+
+long_df <- gather(wide_df_interpolated, Year, Responses, "2002":"2019", factor_key = TRUE)
+
+long_df <- long_df[order(long_df$Country),]
