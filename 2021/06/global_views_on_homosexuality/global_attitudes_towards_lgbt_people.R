@@ -15,6 +15,7 @@ library(tabulizer)
 library(tabulizer)
 library(shiny)
 library(tidyverse)
+library(zoo)
 #https://www.gzeromedia.com/the-graphic-truth-global-attitudes-towards-lgbt-people
 #https://www.pewresearch.org/global/2020/06/25/global-divide-on-homosexuality-persists/
 #https://www.pewresearch.org/global/wp-content/uploads/sites/2/2020/06/PG_2020.06.25_Global-Views-Homosexuality_TOPLINE.pdf
@@ -97,4 +98,20 @@ wide_df_interpolated <- wide_df_interpolated[,c_names]
 
 long_df <- gather(wide_df_interpolated, Year, Responses, "2002":"2019", factor_key = TRUE)
 
-long_df <- long_df[order(long_df$Country),]
+long_df_alpha <- long_df[order(long_df$Country),]
+
+long_df_interploated <- long_df_alpha %>%
+  group_by(Country) %>%
+  mutate(ValueInterp = na.approx(Responses, na.rm=FALSE))
+
+long_df_interploated_v2 <- long_df_interploated[,-3]
+
+final_df <- long_df_interploated_v2 %>%
+  group_by(Country, Year) %>%
+  mutate(idx = row_number()) %>%
+  spread(Year, ValueInterp) %>%
+  select(-idx)
+
+options(digits=2)
+
+write.csv(final_df, "homosexuality_should_be_accepted_by_society.csv", row.names = FALSE, na = "")
