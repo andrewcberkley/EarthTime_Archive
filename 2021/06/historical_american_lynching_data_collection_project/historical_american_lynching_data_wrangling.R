@@ -12,6 +12,9 @@ df$Race[df$Race == "Unk"] <-  "Unknown"
 HAL <- df[,c(1,2,6,7,8,10)]
 HAL <- HAL[!grepl("Indeterminant", HAL$County),]
 HAL <- HAL[!grepl("Undetermined", HAL$County),]
+#HAL$Mo <- sprintf("%02d", as.numeric(HAL$Mo)) #Full Date
+#HAL$Day <- sprintf("%02d", as.numeric(HAL$Day)) #Full Date
+#HAL$Date <- paste0(HAL$Year,"-",HAL$Mo,"-",HAL$Day) #Full Date
 rm(df)
 
 as.data.frame(table(HAL$Race))
@@ -31,6 +34,7 @@ HAL$Longitude <- us_county_centroids[match(HAL$Coordinates, us_county_centroids$
 rm(us_county_centroids)
 
 HAL_final <- HAL[,c(8,9,2,4)]
+#HAL_final <- HAL[,c(11,12,9,6)] #Full Date
 
 HAL_final_black <- HAL_final[HAL_final$Race == 'Black',]
 write.csv(HAL_final_black, "HAL_final_black.csv", na = "", row.names = FALSE)
@@ -44,61 +48,4 @@ use_python("C:/ProgramData/Anaconda3/", required = TRUE)
 #py_config()
 #py_install("pandas")
 
-repl_python()
-
-import array
-import csv
-import math
-import os
-import time
-
-from datetime import timedelta, date, datetime
-
-
-def FormatDateStr(date_str, format_str):
-  return time.mktime(time.strptime(date_str, format_str))
-
-def LngLatToWebMercator(lnglat):
-  (lng, lat) = lnglat
-x = (lng + 180.0) * 256.0 / 360.0
-y = 128.0 - math.log(math.tan((lat + 90.0) * math.pi / 360.0)) * 128.0 / math.pi
-return [x, y]
-
-
-def PackColor(color):
-  return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
-
-# #The below is for **SPECIFIC** races
-#Which color for which ethnicity?
-#https://blog.datawrapper.de/ethnicitycolors/
-
-#WaPo map 2018 color scheme below for reference
-
-# white = red {255, 0, 0}
-# black = blue {0, 0, 255}
-# asian/pacific islander = green {0, 255, 0}
-# hispanic = yellow {255, 255, 0}
-# native = orange {255, 153, 51}
-# unknown/other = purple {255, 0, 255}
-
-#Black
-raw_data = []
-with open("HAL_final_black.csv") as f:
-  reader = csv.DictReader(f, delimiter=",")
-for row in reader:
-  raw_data.append(row)
-
-len(raw_data)
-
-raw_data[0]
-#format x,y,packed_color,epoch_0,epoch_1
-points = []
-for row in raw_data:
-  x,y = LngLatToWebMercator([float(row['longitude']), float(row['latitude'])])
-packedColor = PackColor([0.6, 0.4, 0.8])
-epoch_0 = FormatDateStr(row['Year'], '%Y')
-epoch_1 = epoch_0 + 60*60*24*28
-points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
-#If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
-
+source_python('HAL_aberk_python_support_functions_for_dotmap.py')
