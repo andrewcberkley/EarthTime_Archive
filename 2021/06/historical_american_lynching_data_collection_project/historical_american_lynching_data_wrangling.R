@@ -40,9 +40,9 @@ HAL_final_other <- subset(HAL_final , Race == 'Unknown'|race == 'Other')
 write.csv(HAL_final_white, "HAL_final_other.csv", na = "", row.names = FALSE)
 
 library(reticulate)
-use_python("C:/Program Files/Anaconda3/", required = TRUE)
-#py_config()
-#py_install("pandas")
+use_python("C:/ProgramData/Anaconda3/", required = TRUE)
+py_config()
+py_install("pandas")
 
 repl_python()
 
@@ -63,34 +63,11 @@ return [x, y]
 def PackColor(color):
   return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
 
-raw_data = []
-with open("full_fatal_force_final_14122020.csv") as f:
-  reader = csv.DictReader(f, delimiter=",")
-for row in reader:
-  raw_data.append(row)
-
-len(raw_data)
-
-raw_data[0]
-
-
-#format x,y,packed_color,epoch_0,epoch_1
-points = []
-for row in raw_data:
-  x,y = LngLatToWebMercator([float(row['longitude']), float(row['latitude'])])
-packedColor = PackColor([0.6, 0.4, 0.8])
-epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
-epoch_1 = epoch_0 + 60*60*24*28
-points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_v1_14122020.bin', 'wb'))
-#If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
-
 # #The below is for **SPECIFIC** races
-
 #Which color for which ethnicity?
 #https://blog.datawrapper.de/ethnicitycolors/
 
-#WaPo map ’18 color scheme used below
+#WaPo map 2018 color scheme below for reference
 
 # white = red {255, 0, 0}
 # black = blue {0, 0, 255}
@@ -99,53 +76,24 @@ array.array('f', points).tofile(open('full_fatal_force_v1_14122020.bin', 'wb'))
 # native = orange {255, 153, 51}
 # unknown/other = purple {255, 0, 255}
 
-#white
+#Black
 raw_data = []
-with open("full_fatal_force_white_14122020.csv") as f:
+with open("HAL_final_black.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
 for row in reader:
   raw_data.append(row)
-len(raw_data)
-raw_data[0]
-points = []
-for row in raw_data:
-  x,y = LngLatToWebMercator([float(row['longitude']), float(row['latitude'])])
-packedColor = PackColor([255, 0, 0])
-epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
-epoch_1 = epoch_0 + 60*60*24*28
-points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_white_14122020.bin', 'wb'))
 
-#black
-raw_data = []
-with open("full_fatal_force_black_14122020.csv") as f:
-  reader = csv.DictReader(f, delimiter=",")
-for row in reader:
-  raw_data.append(row)
 len(raw_data)
-raw_data[0]
-points = []
-for row in raw_data:
-  x,y = LngLatToWebMercator([float(row['longitude']), float(row['latitude'])])
-packedColor = PackColor([0, 0, 255])
-epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
-epoch_1 = epoch_0 + 60*60*24*28
-points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_black_14122020.bin', 'wb'))
 
-#asian/pacific islander
-raw_data = []
-with open("full_fatal_force_asian_pacific_islander_14122020.csv") as f:
-  reader = csv.DictReader(f, delimiter=",")
-for row in reader:
-  raw_data.append(row)
-len(raw_data)
 raw_data[0]
+#format x,y,packed_color,epoch_0,epoch_1
 points = []
 for row in raw_data:
   x,y = LngLatToWebMercator([float(row['longitude']), float(row['latitude'])])
-packedColor = PackColor([0, 255, 0])
-epoch_0 = FormatDateStr(row['date'], '%Y-%m-%d')
+packedColor = PackColor([0.6, 0.4, 0.8])
+epoch_0 = FormatDateStr(row['Year'], '%Y')
 epoch_1 = epoch_0 + 60*60*24*28
 points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('full_fatal_force_asian_pacific_islander_14122020.bin', 'wb'))
+array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
+#If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
+
