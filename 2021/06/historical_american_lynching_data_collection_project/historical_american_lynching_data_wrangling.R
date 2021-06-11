@@ -36,17 +36,22 @@ HAL_final_black <- HAL_final[HAL_final$Race == 'Black',]
 write.csv(HAL_final_black, "HAL_final_black.csv", na = "", row.names = FALSE)
 HAL_final_white <- HAL_final[HAL_final$Race == 'White',]
 write.csv(HAL_final_white, "HAL_final_white.csv", na = "", row.names = FALSE)
-HAL_final_other <- subset(HAL_final , Race == 'Unknown'|race == 'Other')
-write.csv(HAL_final_white, "HAL_final_other.csv", na = "", row.names = FALSE)
+HAL_final_other <- subset(HAL_final , Race == 'Unknown'|Race == 'Other')
+write.csv(HAL_final_other, "HAL_final_other.csv", na = "", row.names = FALSE)
 
 library(reticulate)
 use_python("C:/ProgramData/Anaconda3/", required = TRUE)
-py_config()
-py_install("pandas")
+#py_config()
+#py_install("pandas")
 
 repl_python()
 
-import array, csv, math, os, time
+import array
+import csv
+import math
+import os
+import time
+
 from datetime import timedelta, date, datetime
 
 
