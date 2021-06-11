@@ -48,4 +48,4 @@ use_python("C:/ProgramData/Anaconda3/", required = TRUE)
 #py_config()
 #py_install("pandas")
 
-source_python('HAL_aberk_python_support_functions_for_dotmap.py')
+source_python('aberk_support_functions_for_HAL_dotmap.py')
