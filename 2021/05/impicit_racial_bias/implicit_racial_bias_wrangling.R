@@ -1229,8 +1229,8 @@ wide_final$iso2[wide_final$iso2 == "UA"] <-  "UKR"
 wide_final$iso2[wide_final$iso2 == "GB"] <-  "GBR"
 
 colnames(wide_final)[1] <- "iso3"
-
-write.csv(wide_final,"Consolidatedstat.2003-2020-white-europe.csv", row.names=FALSE)
+setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/'))
+write.csv(wide_final,"mean_iat_scores_europe_white_participants_2003-2020.csv", row.names=FALSE, na = "")
 
 # Join the stats df and ag df
 #constat <- join(ag, dfstats,
@@ -1243,3 +1243,7 @@ write.csv(wide_final,"Consolidatedstat.2003-2020-white-europe.csv", row.names=FA
 #constat <- constat[!(constat$n<100),]
 # Write the consolidated file with Mean IAT score, country code, SD, SE and sample size (Good file to get Idea of data points)
 #write.csv(constat,"Consolidatedstat.2003-2020-white-europe.csv", row.names=FALSE)
+
+#Of course after I finish wrangling this data I discover there's an R package for it... oh well! It was a fun exercise!
+
+#https://cran.r-project.org/web/packages/IATscores/index.html
