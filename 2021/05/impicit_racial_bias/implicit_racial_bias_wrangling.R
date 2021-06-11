@@ -1229,7 +1229,9 @@ wide_final$iso2[wide_final$iso2 == "UA"] <-  "UKR"
 wide_final$iso2[wide_final$iso2 == "GB"] <-  "GBR"
 
 colnames(wide_final)[1] <- "iso3"
+
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/impicit_racial_bias/'))
+
 write.csv(wide_final,"mean_iat_scores_europe_white_participants_2003-2020.csv", row.names=FALSE, na = "")
 
 # Join the stats df and ag df
