@@ -119,6 +119,6 @@ colnames(iso3)[1] <- "Country"
 final_df$Country <- trimws(final_df$Country)
 final_df$iso3 <- iso3[match(final_df$Country, iso3$Country), 2]
 
-
+final_df <- final_df[, c(20,2:19)]
 
 write.csv(final_df, "homosexuality_should_be_accepted_by_society.csv", row.names = FALSE, na = "")
