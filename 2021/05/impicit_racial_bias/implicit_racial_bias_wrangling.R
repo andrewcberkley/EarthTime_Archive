@@ -1164,12 +1164,12 @@ rownames(gtd3) <- NULL
 # Create a DF with mean IAT and SD for respective country
 #ag <- aggregate(D_biep.White_Good_all~countrycit, gtd, function(x) c(mean = mean(x), sd = sd(x)))
 gtd3$D_biep.White_Good_all <- as.numeric(as.character(gtd3$D_biep.White_Good_all))
-ag <- gtd2 %>%
-  group_by(countrycit, year) %>%
-  summarise(mean("D_biep.White_Good_all", na.rm=TRUE))
+#ag <- gtd2 %>%
+#  group_by(countrycit, year) %>%
+#  summarise(mean("D_biep.White_Good_all", na.rm=TRUE))
 
 ag <- gtd3 %>% group_by(countrycit, year) %>% 
-  summarise(D_biep.White_Good_all = mean(D_biep.White_Good_all)) %>%
+  summarise(D_biep.White_Good_all = weighted.mean(D_biep.White_Good_all)) %>%
   mutate(idx = row_number()) %>%
   spread(year, D_biep.White_Good_all)%>%
   select(-idx)
