@@ -114,4 +114,11 @@ final_df <- long_df_interploated_v2 %>%
 
 options(digits=2)
 
+iso3 <- read.csv("ISO_Country_Codes.csv")
+colnames(iso3)[1] <- "Country"
+final_df$Country <- trimws(final_df$Country)
+final_df$iso3 <- iso3[match(final_df$Country, iso3$Country), 2]
+
+
+
 write.csv(final_df, "homosexuality_should_be_accepted_by_society.csv", row.names = FALSE, na = "")
