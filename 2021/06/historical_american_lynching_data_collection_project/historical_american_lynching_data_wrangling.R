@@ -19,6 +19,7 @@ rm(df)
 
 as.data.frame(table(HAL$Race))
 as.data.frame(table(HAL$State))
+as.data.frame(table(HAL$County))
 as.data.frame(table(HAL$Sex))
 as.data.frame(table(HAL$Year))
 
