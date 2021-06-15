@@ -2,48 +2,13 @@
 import array, csv, math, os, time, datetime
 from datetime import timedelta, date, datetime
 import calendar
-#from datetime import datetime as dt
-#import datetime as dt
-#from datetime import timedelta, datetime
-#datetime = datetime.datetime(1601,1,1)
-#utctime.isoformat()
-#OverflowError: mktime argument out of range ???
-#https://bytes.com/topic/python/answers/632812-overflowerror-mktime-argument-out-range
-#datetime.date(1882, 1, 1)
-# import datetime
-# currentdate = "01/01/1882"
-# day,month,year = currentdate.split('/')
-# today = datetime.date(int(year),int(month),int(day))
-#https://stackoverflow.com/questions/5619489/troubleshooting-descriptor-date-requires-a-datetime-datetime-object-but-rec
 
-#The old Python hates the past / how to use strftime on the dates before 1900
-#https://ozymaxx.github.io/blog/2018/05/29/python-strftime/
+#Windows 10: OverflowError: mktime argument out of range
+#https://github.com/neo4j/neo4j-python-driver/issues/302
 
-#Python time module won't handle year before 1900
-#https://stackoverflow.com/questions/6571562/python-time-module-wont-handle-year-before-1900
-#from datetime import datetime
-
-# mDt = datetime("1900,1,1")
-# dt = datetime.strptime("20-10-1899", "%d-%m-%Y")
-# resultString = datetime(dt.year + (mDt - dt).days/365 + 1, dt.month, dt.day).strftime('%B %d, %Y').replace('1900', str(dt.year))
-
-# months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
-# dt = datetime.strptime('20-02-1880', "%d-%m-%Y")
-# print( "{0:} {1:}, {2:}".format(months[dt.month-1], dt.day, dt.year))
-
-# a = dt.datetime(1322, 10, 10)
-# # %Y%m%d
-# ''.join(map(lambda x: '{:02}'.format(getattr(a, x)), ('year', 'month', 'day')))
-# # %Y-%m-%d
-# '-'.join(map(lambda x: '{:02}'.format(getattr(a, x)), ('year', 'month', 'day')))
-# # %Y%m%d%H%M%S
-# ''.join(map(lambda x: '{:02}'.format(getattr(a, x)), ('year', 'month', 'day', 'hour', 'minute', 'second')))
-
-# from datetime import datetime
-# epoch = datetime(1970, 1, 1)
-# t = datetime(1856, 3, 2)
-# diff = t-epoch
-# print (diff.days * 24 * 3600 + diff.seconds)
+#Python: Reliably convert a 8601 string to timestamp
+#https://stackoverflow.com/questions/12378102/python-reliably-convert-a-8601-string-to-timestamp
+#Luckily, Python provides an alternative to mktime() that is what the C library should have provided: calendar.timegm(). With this function, I can rewrite your function like this:
 
 # parsed = parse_date(timestamp)
 # timetuple = parsed.timetuple()
@@ -83,27 +48,5 @@ for row in raw_data:
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
 array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
-# # #If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
-# # #Error in py_run_file_impl(file, local, convert) : OverflowError: mktime argument out of range
-
-# # #Windows 10: OverflowError: mktime argument out of range
-# # #https://github.com/neo4j/neo4j-python-driver/issues/302
-
-# # from datetime import datetime
-
-# # timestamp = -1
-# # date_time = datetime.fromtimestamp(timestamp)
-
-# # print("Date time object:", date_time)
-
-# # d = date_time.strftime("%m/%d/%Y, %H:%M:%S")
-# # print("Output 2:", d) 
-
-# # d = date_time.strftime("%d %b, %Y")
-# # print("Output 3:", d)
-
-# # d = date_time.strftime("%d %B, %Y")
-# # print("Output 4:", d)
-
-# # d = date_time.strftime("%I%p")
-# # print("Output 5:", d)
+#If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
+#Error in py_run_file_impl(file, local, convert) : OverflowError: mktime argument out of range
