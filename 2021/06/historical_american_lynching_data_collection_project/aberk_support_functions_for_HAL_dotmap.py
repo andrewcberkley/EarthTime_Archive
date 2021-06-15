@@ -6,6 +6,9 @@ import calendar
 #Windows 10: OverflowError: mktime argument out of range
 #https://github.com/neo4j/neo4j-python-driver/issues/302
 
+#Year 2000 (Y2K) issues: Python depends on the platform’s C library, which generally doesn’t have year 2000 issues, since all dates and times are represented internally as seconds since the epoch. Functions accepting a struct_time (see below) generally require a 4-digit year. For backward compatibility, 2-digit years are supported if the module variable accept2dyear is a non-zero integer; this variable is initialized to 1 unless the environment variable PYTHONY2K is set to a non-empty string, in which case it is initialized to 0. Thus, you can set PYTHONY2K to a non-empty string in the environment to require 4-digit years for all year input. When 2-digit years are accepted, they are converted according to the POSIX or X/Open standard: values 69-99 are mapped to 1969-1999, and values 0–68 are mapped to 2000–2068. Values 100–1899 are always illegal.
+#https://docs.python.org/2/library/time.html#time-y2kissues
+
 #Python: Reliably convert a 8601 string to timestamp
 #https://stackoverflow.com/questions/12378102/python-reliably-convert-a-8601-string-to-timestamp
 #Luckily, Python provides an alternative to mktime() that is what the C library should have provided: calendar.timegm(). With this function, I can rewrite your function like this:
@@ -27,6 +30,17 @@ def LngLatToWebMercator(lnglat):
 
 def PackColor(color):
     return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
+
+#WaPo map color scheme used below
+
+# white = red {255, 0, 0}
+# black = blue {0, 0, 255}
+# asian/pacific islander = green {0, 255, 0}
+# hispanic = yellow {255, 255, 0}
+# native = orange {255, 153, 51}
+# unknown/other = purple {255, 0, 255}
+
+#Black Lynchings
 
 raw_data = []
 with open("HAL_final_black.csv") as f:
@@ -50,3 +64,48 @@ for row in raw_data:
 array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
 #If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
 #Error in py_run_file_impl(file, local, convert) : OverflowError: mktime argument out of range
+
+###White Lynchings
+
+raw_data = []
+with open("HAL_final_white.csv") as f:
+  reader = csv.DictReader(f, delimiter=",")
+  for row in reader:
+    raw_data.append(row)
+
+len(raw_data)
+
+raw_data[0]
+
+#Other Race Lynchings
+
+#format x,y,packed_color,epoch_0,epoch_1
+points = []
+for row in raw_data:
+  x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
+  packedColor = PackColor([0.6, 0.4, 0.8])
+  epoch_0 = FormatDateStr(row['Year'], '%Y')
+  epoch_1 = epoch_0 + 60*60*24*28
+  points += [x,y,packedColor,epoch_0,epoch_1]
+array.array('f', points).tofile(open('HAL_final_white.bin', 'wb'))
+
+raw_data = []
+with open("HAL_final_other.csv") as f:
+  reader = csv.DictReader(f, delimiter=",")
+  for row in reader:
+    raw_data.append(row)
+
+len(raw_data)
+
+raw_data[0]
+
+
+#format x,y,packed_color,epoch_0,epoch_1
+points = []
+for row in raw_data:
+  x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
+  packedColor = PackColor([0.6, 0.4, 0.8])
+  epoch_0 = FormatDateStr(row['Year'], '%Y')
+  epoch_1 = epoch_0 + 60*60*24*28
+  points += [x,y,packedColor,epoch_0,epoch_1]
+array.array('f', points).tofile(open('HAL_final_other.bin', 'wb'))
