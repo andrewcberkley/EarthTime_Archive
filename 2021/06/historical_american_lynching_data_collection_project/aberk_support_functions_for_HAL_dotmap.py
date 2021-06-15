@@ -1,6 +1,8 @@
-import array, csv, math, os, time
-#import array, csv, math, os, time, datetime
-#from datetime import timedelta, date, datetime
+#import array, csv, math, os, time
+import array, csv, math, os, time, datetime
+from datetime import timedelta, date, datetime
+import calendar
+#from datetime import datetime as dt
 #import datetime as dt
 #from datetime import timedelta, datetime
 #datetime = datetime.datetime(1601,1,1)
@@ -21,8 +23,8 @@ import array, csv, math, os, time
 #https://stackoverflow.com/questions/6571562/python-time-module-wont-handle-year-before-1900
 #from datetime import datetime
 
-# mDt = datetime(1900,1,1)
-# dt = datetime.strptime('20-02-1899', "%d-%m-%Y")
+# mDt = datetime("1900,1,1")
+# dt = datetime.strptime("20-10-1899", "%d-%m-%Y")
 # resultString = datetime(dt.year + (mDt - dt).days/365 + 1, dt.month, dt.day).strftime('%B %d, %Y').replace('1900', str(dt.year))
 
 # months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
@@ -43,60 +45,65 @@ import array, csv, math, os, time
 # diff = t-epoch
 # print (diff.days * 24 * 3600 + diff.seconds)
 
-# def FormatDateStr(date_str, format_str):
-#     return time.mktime(time.strptime(date_str, format_str))
+# parsed = parse_date(timestamp)
+# timetuple = parsed.timetuple()
+# return calendar.timegm(timetuple)
 
-# def LngLatToWebMercator(lnglat):
-#     (lng, lat) = lnglat
-#     x = (lng + 180.0) * 256.0 / 360.0
-#     y = 128.0 - math.log(math.tan((lat + 90.0) * math.pi / 360.0)) * 128.0 / math.pi
-#     return [x, y]
+def FormatDateStr(date_str, format_str):
+#    return time.mktime(time.strptime(date_str, format_str))
+    return calendar.timegm(time.strptime(date_str, format_str))
 
-
-# def PackColor(color):
-#     return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
-
-# raw_data = []
-# with open("HAL_final_black.csv") as f:
-#   reader = csv.DictReader(f, delimiter=",")
-#   for row in reader:
-#     raw_data.append(row)
-
-# len(raw_data)
-
-# raw_data[0]
+def LngLatToWebMercator(lnglat):
+    (lng, lat) = lnglat
+    x = (lng + 180.0) * 256.0 / 360.0
+    y = 128.0 - math.log(math.tan((lat + 90.0) * math.pi / 360.0)) * 128.0 / math.pi
+    return [x, y]
 
 
-# #format x,y,packed_color,epoch_0,epoch_1
-# points = []
-# for row in raw_data:
-#   x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
-#   packedColor = PackColor([0.6, 0.4, 0.8])
-#   epoch_0 = FormatDateStr(row['Year'], '%Y')
-#   epoch_1 = epoch_0 + 60*60*24*28
-#   points += [x,y,packedColor,epoch_0,epoch_1]
-# array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
-# #If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
-# #Error in py_run_file_impl(file, local, convert) : OverflowError: mktime argument out of range
+def PackColor(color):
+    return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
 
-# #Windows 10: OverflowError: mktime argument out of range
-# #https://github.com/neo4j/neo4j-python-driver/issues/302
+raw_data = []
+with open("HAL_final_black.csv") as f:
+  reader = csv.DictReader(f, delimiter=",")
+  for row in reader:
+    raw_data.append(row)
 
-from datetime import datetime
+len(raw_data)
 
-timestamp = -1
-date_time = datetime.fromtimestamp(timestamp)
+raw_data[0]
 
-print("Date time object:", date_time)
 
-d = date_time.strftime("%m/%d/%Y, %H:%M:%S")
-print("Output 2:", d) 
+#format x,y,packed_color,epoch_0,epoch_1
+points = []
+for row in raw_data:
+  x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
+  packedColor = PackColor([0.6, 0.4, 0.8])
+  epoch_0 = FormatDateStr(row['Year'], '%Y')
+  epoch_1 = epoch_0 + 60*60*24*28
+  points += [x,y,packedColor,epoch_0,epoch_1]
+array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
+# # #If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
+# # #Error in py_run_file_impl(file, local, convert) : OverflowError: mktime argument out of range
 
-d = date_time.strftime("%d %b, %Y")
-print("Output 3:", d)
+# # #Windows 10: OverflowError: mktime argument out of range
+# # #https://github.com/neo4j/neo4j-python-driver/issues/302
 
-d = date_time.strftime("%d %B, %Y")
-print("Output 4:", d)
+# # from datetime import datetime
 
-d = date_time.strftime("%I%p")
-print("Output 5:", d)
+# # timestamp = -1
+# # date_time = datetime.fromtimestamp(timestamp)
+
+# # print("Date time object:", date_time)
+
+# # d = date_time.strftime("%m/%d/%Y, %H:%M:%S")
+# # print("Output 2:", d) 
+
+# # d = date_time.strftime("%d %b, %Y")
+# # print("Output 3:", d)
+
+# # d = date_time.strftime("%d %B, %Y")
+# # print("Output 4:", d)
+
+# # d = date_time.strftime("%I%p")
+# # print("Output 5:", d)
