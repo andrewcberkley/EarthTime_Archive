@@ -1,6 +1,6 @@
 setwd(file.path(Sys.getenv('my_dir'),'2021/06/historical_american_lynching_data_collection_project'))
 
-df <- readxl::read_xls("HAL.XLS")
+suppressWarnings(df <- readxl::read_xls("HAL.XLS"))
 us_county_centroids <- read.csv("us_county_centroids.csv")
 us_county_centroids <- us_county_centroids[,c(2:5)]
 
