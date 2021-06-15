@@ -32,8 +32,54 @@ def PackColor(color):
     return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
 
 #Black Lynchings
+raw_data = []
+with open("HAL_final_black.csv") as f:
+  reader = csv.DictReader(f, delimiter=",")
+  for row in reader:
+    raw_data.append(row)
+
+len(raw_data)
+
+raw_data[0]
+
+
+#format x,y,packed_color,epoch_0,epoch_1
+points = []
+for row in raw_data:
+  x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
+  packedColor = PackColor([255, 153, 51])
+  epoch_0 = FormatDateStr(row['Date'], '%Y-%m-%d')
+  epoch_1 = epoch_0 + 60*60*24*28
+  points += [x,y,packedColor,epoch_0,epoch_1]
+array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
+#If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
+#Error in py_run_file_impl(file, local, convert) : OverflowError: mktime argument out of range
+
+# #White Lynchings
 # raw_data = []
-# with open("HAL_final_black.csv") as f:
+# with open("HAL_final_white.csv") as f:
+#   reader = csv.DictReader(f, delimiter=",")
+#   for row in reader:
+#     raw_data.append(row)
+
+# len(raw_data)
+
+# raw_data[0]
+
+# #format x,y,packed_color,epoch_0,epoch_1
+# points = []
+# for row in raw_data:
+#   x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
+#   packedColor = PackColor([0, 0, 255])
+#   epoch_0 = FormatDateStr(row['Year'], '%Y')
+#   epoch_1 = epoch_0 + 60*60*24*28
+#   points += [x,y,packedColor,epoch_0,epoch_1]
+# array.array('f', points).tofile(open('HAL_final_white.bin', 'wb'))
+
+# #Other/Unknown Race Lynchings
+
+# raw_data = []
+# with open("HAL_final_other.csv") as f:
 #   reader = csv.DictReader(f, delimiter=",")
 #   for row in reader:
 #     raw_data.append(row)
@@ -47,54 +93,8 @@ def PackColor(color):
 # points = []
 # for row in raw_data:
 #   x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
-#   packedColor = PackColor([255, 153, 51])
+#   packedColor = PackColor([0, 255, 0])
 #   epoch_0 = FormatDateStr(row['Year'], '%Y')
 #   epoch_1 = epoch_0 + 60*60*24*28
 #   points += [x,y,packedColor,epoch_0,epoch_1]
-# array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
-# #If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
-# #Error in py_run_file_impl(file, local, convert) : OverflowError: mktime argument out of range
-
-#White Lynchings
-raw_data = []
-with open("HAL_final_white.csv") as f:
-  reader = csv.DictReader(f, delimiter=",")
-  for row in reader:
-    raw_data.append(row)
-
-len(raw_data)
-
-raw_data[0]
-
-#format x,y,packed_color,epoch_0,epoch_1
-points = []
-for row in raw_data:
-  x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
-  packedColor = PackColor([0, 0, 255])
-  epoch_0 = FormatDateStr(row['Year'], '%Y')
-  epoch_1 = epoch_0 + 60*60*24*28
-  points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('HAL_final_white.bin', 'wb'))
-
-#Other/Unknown Race Lynchings
-
-raw_data = []
-with open("HAL_final_other.csv") as f:
-  reader = csv.DictReader(f, delimiter=",")
-  for row in reader:
-    raw_data.append(row)
-
-len(raw_data)
-
-raw_data[0]
-
-
-#format x,y,packed_color,epoch_0,epoch_1
-points = []
-for row in raw_data:
-  x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
-  packedColor = PackColor([0, 255, 0])
-  epoch_0 = FormatDateStr(row['Year'], '%Y')
-  epoch_1 = epoch_0 + 60*60*24*28
-  points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('HAL_final_other.bin', 'wb'))
+# array.array('f', points).tofile(open('HAL_final_other.bin', 'wb'))
