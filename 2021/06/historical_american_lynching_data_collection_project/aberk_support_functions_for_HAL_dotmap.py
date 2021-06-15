@@ -31,17 +31,7 @@ def LngLatToWebMercator(lnglat):
 def PackColor(color):
     return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
 
-#WaPo map color scheme used below
-
-# white = red {255, 0, 0}
-# black = blue {0, 0, 255}
-# asian/pacific islander = green {0, 255, 0}
-# hispanic = yellow {255, 255, 0}
-# native = orange {255, 153, 51}
-# unknown/other = purple {255, 0, 255}
-
 #Black Lynchings
-
 raw_data = []
 with open("HAL_final_black.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
@@ -65,8 +55,7 @@ array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
 #If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
 #Error in py_run_file_impl(file, local, convert) : OverflowError: mktime argument out of range
 
-###White Lynchings
-
+#White Lynchings
 raw_data = []
 with open("HAL_final_white.csv") as f:
   reader = csv.DictReader(f, delimiter=",")
@@ -77,8 +66,6 @@ len(raw_data)
 
 raw_data[0]
 
-#Other Race Lynchings
-
 #format x,y,packed_color,epoch_0,epoch_1
 points = []
 for row in raw_data:
@@ -88,6 +75,8 @@ for row in raw_data:
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
 array.array('f', points).tofile(open('HAL_final_white.bin', 'wb'))
+
+#Other/Unknown Race Lynchings
 
 raw_data = []
 with open("HAL_final_other.csv") as f:
