@@ -13,8 +13,8 @@ df$Race[df$Race == "Unk"] <-  "Unknown"
 HAL <- df[,c(1:4,6,7,8,10)] #Full Date
 HAL <- HAL[!grepl("Indeterminant", HAL$County),]
 HAL <- HAL[!grepl("Undetermined", HAL$County),]
-HAL$Mo <- sprintf("%02d", as.numeric(HAL$Mo)) #Full Date
-HAL$Day <- sprintf("%02d", as.numeric(HAL$Day)) #Full Date
+suppressWarnings(HAL$Mo <- sprintf("%02d", as.numeric(HAL$Mo))) #Full Date
+suppressWarnings(HAL$Day <- sprintf("%02d", as.numeric(HAL$Day))) #Full Date
 #HAL$Date <- paste0(HAL$Year,"-",HAL$Mo,"-",HAL$Day) #Full Date
 HAL$Date <- paste0(HAL$Year,"-",HAL$Mo) #Month and Year
 HAL <- HAL[!grepl("NA", HAL$Day),]
@@ -39,11 +39,6 @@ rm(us_county_centroids)
 
 #HAL_final <- HAL[,c(8,9,2,4)] #Just Year
 HAL_final <- HAL[,c(11,12,9,6)] #Full Date
-#HAL_final <- HAL_final[!grepl("1896-02-29", HAL_final$Date),]
-#HAL_final$Latitude <- as.numeric(HAL_final$Latitude)
-#HAL_final$Longitude <- as.numeric(HAL_final$Longitude)
-#HAL_final$Year <- as.numeric(HAL_final$Year)
-#HAL_final$Race <- as.character(HAL_final$Race)
 
 HAL_final_black <- HAL_final[HAL_final$Race == 'Black',]
 write.csv(HAL_final_black, "HAL_final_black.csv", na = "", row.names = FALSE)
