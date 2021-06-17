@@ -22,7 +22,7 @@ rm(df)
 
 #as.data.frame(table(HAL$Race))
 #as.data.frame(table(HAL$State))
-#as.data.frame(table(HAL$County))
+state_frequency <- as.data.frame(table(HAL$State))
 #as.data.frame(table(HAL$Sex))
 #as.data.frame(table(HAL$Year))
 
@@ -38,10 +38,7 @@ HAL$Longitude <- us_county_centroids[match(HAL$Coordinates, us_county_centroids$
 rm(us_county_centroids)
 
 #HAL_final <- HAL[,c(8,9,2,4)] #Just Year
-HAL_final <- HAL[,c(11,12,9,6)] #Full Date
-
-#HAL_final <- HAL_final[grepl("1882-02-13", HAL_final$Date),]
-HAL_final$Scale <- 10000
+HAL_final <- HAL[,c(11,12,9,6,7)] #Full Date
 
 HAL_final_black <- HAL_final[HAL_final$Race == 'Black',]
 write.csv(HAL_final_black, "HAL_final_black.csv", na = "", row.names = FALSE)
@@ -49,6 +46,11 @@ HAL_final_white <- HAL_final[HAL_final$Race == 'White',]
 write.csv(HAL_final_white, "HAL_final_white.csv", na = "", row.names = FALSE)
 HAL_final_other <- subset(HAL_final , Race == 'Unknown'|Race == 'Other')
 write.csv(HAL_final_other, "HAL_final_other.csv", na = "", row.names = FALSE)
+
+HAL_final_male <- HAL_final[HAL_final$Sex == 'Male',]
+write.csv(HAL_final_white, "HAL_final_male.csv", na = "", row.names = FALSE)
+HAL_final_female <- subset(HAL_final, Sex == 'Female'|Sex == 'Unknown')
+write.csv(HAL_final_female, "HAL_final_female.csv", na = "", row.names = FALSE)
 
 library(reticulate)
 use_python("C:/ProgramData/Anaconda3/", required = TRUE)
