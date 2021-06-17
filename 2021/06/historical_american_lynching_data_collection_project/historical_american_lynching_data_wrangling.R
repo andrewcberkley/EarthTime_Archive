@@ -40,6 +40,9 @@ rm(us_county_centroids)
 #HAL_final <- HAL[,c(8,9,2,4)] #Just Year
 HAL_final <- HAL[,c(11,12,9,6)] #Full Date
 
+#HAL_final <- HAL_final[grepl("1882-02-13", HAL_final$Date),]
+HAL_final$Scale <- 10000
+
 HAL_final_black <- HAL_final[HAL_final$Race == 'Black',]
 write.csv(HAL_final_black, "HAL_final_black.csv", na = "", row.names = FALSE)
 HAL_final_white <- HAL_final[HAL_final$Race == 'White',]
@@ -54,3 +57,5 @@ use_python("C:/ProgramData/Anaconda3/", required = TRUE)
 
 source_python('aberk_support_functions_for_HAL_dotmap.py')
 #https://docs.python.org/2/library/time.html#time-y2kissues
+
+#py_last_error()
