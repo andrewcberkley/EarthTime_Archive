@@ -47,7 +47,7 @@ raw_data[0]
 points = []
 for row in raw_data:
   x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
-  packedColor = PackColor([255, 153, 51])
+  packedColor = PackColor([255, 255, 0])
   epoch_0 = FormatDateStr(row['Date'], '%Y-%m-%d')
   epoch_1 = epoch_0 + 60*60*24*28
   points += [x,y,packedColor,epoch_0,epoch_1]
