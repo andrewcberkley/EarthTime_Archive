@@ -15,7 +15,9 @@ HAL <- HAL[!grepl("Indeterminant", HAL$County),]
 HAL <- HAL[!grepl("Undetermined", HAL$County),]
 HAL$Mo <- sprintf("%02d", as.numeric(HAL$Mo)) #Full Date
 HAL$Day <- sprintf("%02d", as.numeric(HAL$Day)) #Full Date
-HAL$Date <- paste0(HAL$Year,"-",HAL$Mo,"-",HAL$Day) #Full Date
+#HAL$Date <- paste0(HAL$Year,"-",HAL$Mo,"-",HAL$Day) #Full Date
+HAL$Date <- paste0(HAL$Year,"-",HAL$Mo) #Month and Year
+HAL <- HAL[!grepl("NA", HAL$Day),]
 rm(df)
 
 #as.data.frame(table(HAL$Race))
@@ -37,7 +39,6 @@ rm(us_county_centroids)
 
 #HAL_final <- HAL[,c(8,9,2,4)] #Just Year
 HAL_final <- HAL[,c(11,12,9,6)] #Full Date
-HAL_final <- HAL_final[!grepl("NA", HAL_final$Date),]
 #HAL_final <- HAL_final[!grepl("1896-02-29", HAL_final$Date),]
 #HAL_final$Latitude <- as.numeric(HAL_final$Latitude)
 #HAL_final$Longitude <- as.numeric(HAL_final$Longitude)
