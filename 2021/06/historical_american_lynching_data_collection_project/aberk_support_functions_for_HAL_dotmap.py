@@ -1,7 +1,7 @@
 #import array, csv, math, os, time
-import array, csv, math, os, time, datetime
-from datetime import timedelta, date, datetime
-import calendar
+# import array, csv, math, os, time, datetime
+# from datetime import timedelta, date, datetime
+# import calendar
 
 #Windows 10: OverflowError: mktime argument out of range
 #https://github.com/neo4j/neo4j-python-driver/issues/302
@@ -17,41 +17,41 @@ import calendar
 # timetuple = parsed.timetuple()
 # return calendar.timegm(timetuple)
 
-def FormatDateStr(date_str, format_str):
-#    return time.mktime(time.strptime(date_str, format_str))
-    return calendar.timegm(time.strptime(date_str, format_str))
+# def FormatDateStr(date_str, format_str):
+# #    return time.mktime(time.strptime(date_str, format_str))
+#     return calendar.timegm(time.strptime(date_str, format_str))
 
-def LngLatToWebMercator(lnglat):
-    (lng, lat) = lnglat
-    x = (lng + 180.0) * 256.0 / 360.0
-    y = 128.0 - math.log(math.tan((lat + 90.0) * math.pi / 360.0)) * 128.0 / math.pi
-    return [x, y]
-
-
-def PackColor(color):
-    return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
-
-#Black Lynchings
-raw_data = []
-with open("HAL_final_black.csv") as f:
-  reader = csv.DictReader(f, delimiter=",")
-  for row in reader:
-    raw_data.append(row)
-
-len(raw_data)
-
-raw_data[0]
+# def LngLatToWebMercator(lnglat):
+#     (lng, lat) = lnglat
+#     x = (lng + 180.0) * 256.0 / 360.0
+#     y = 128.0 - math.log(math.tan((lat + 90.0) * math.pi / 360.0)) * 128.0 / math.pi
+#     return [x, y]
 
 
-#format x,y,packed_color,epoch_0,epoch_1
-points = []
-for row in raw_data:
-  x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
-  packedColor = PackColor([255, 255, 0])
-  epoch_0 = FormatDateStr(row['Date'], '%Y-%m')
-  epoch_1 = epoch_0 + 60*60*24*28
-  points += [x,y,packedColor,epoch_0,epoch_1]
-array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
+# def PackColor(color):
+#     return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
+
+# #Black Lynchings
+# raw_data = []
+# with open("HAL_final_black.csv") as f:
+#   reader = csv.DictReader(f, delimiter=",")
+#   for row in reader:
+#     raw_data.append(row)
+
+# len(raw_data)
+
+# raw_data[0]
+
+
+# #format x,y,packed_color,epoch_0,epoch_1
+# points = []
+# for row in raw_data:
+#   x,y = LngLatToWebMercator([float(row['Longitude']), float(row['Latitude'])])
+#   packedColor = PackColor([255, 255, 0])
+#   epoch_0 = FormatDateStr(row['Date'], '%Y-%m')
+#   epoch_1 = epoch_0 + 60*60*24*28
+#   points += [x,y,packedColor,epoch_0,epoch_1]
+# array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
 #If Python is throwing a "ValueError: could not convert string to float:" error, make sure that *all* NaNs are removed from "date", "latitude", and/or "longitude" columns
 #Error in py_run_file_impl(file, local, convert) : OverflowError: mktime argument out of range
 
@@ -98,3 +98,51 @@ array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
 #   epoch_1 = epoch_0 + 60*60*24*28
 #   points += [x,y,packedColor,epoch_0,epoch_1]
 # array.array('f', points).tofile(open('HAL_final_other.bin', 'wb'))
+
+import array, calendar, csv, math, time
+
+def LonLatToPixelXY(lonlat):
+  (lon, lat) = lonlat
+  x = (lon + 180.0) * 256.0 / 360.0
+  y = 128.0 - math.log(math.tan((lat + 90.0) * math.pi / 360.0)) * 128.0 / math.pi
+  return [x, y]
+
+def FormatEpoch(datestr, formatstr):
+  return calendar.timegm(time.strptime(datestr, formatstr))
+#FormatEpoch("%s-%s-%s" % (year0, month0, day0), '%Y-%m-%d')
+
+def PackColor(color):    
+  return color[0] + color[1] * 256.0 + color[2] * 256.0 * 256.0;
+
+def hex2rgb(h):
+  return tuple(int(h.strip("#")[i:i+2], 16) for i in (0, 2 ,4))
+
+raw_data = []
+#with open("fires_20_years_v2_cmu_formatting.csv", encoding="utf8") as f:
+#with open("fires_20_years_v2_scaled_cmu_formatting.csv", encoding="utf8") as f:
+with open("HAL_final_black.csv", encoding="utf8") as f:
+#with open("fires_20_years_v2_scaled_by_10000_cmu_formatting.csv", encoding="utf8") as f:
+  reader = csv.DictReader(f, delimiter=",")
+  for row in reader:
+    raw_data.append(row)
+
+len(raw_data)
+
+raw_data[0]
+
+# rev 1
+# x,y,size_value,epoch
+# show all points in same color. Initial date at full size. after n days begin to fade dot until a year as elapsed...
+# don't distinguish between events with 0 or > 0 number of events
+#This is for **ALL** events
+points = []
+for row in raw_data:
+  x,y = LonLatToPixelXY([float(row['Longitude']), float(row['Latitude'])])
+  points.append(x)
+  points.append(y)
+  points.append(math.sqrt(float(row['Count']) + 1.0))
+  points.append(PackColor([0.85,0.15,0.05]))    
+  points.append(FormatEpoch(row["Date"], '%Y-%m'))
+#array.array('f', points).tofile(open('two_decades_of_australian_fires.bin', 'wb'))
+#array.array('f', points).tofile(open('two_decades_of_australian_fires_scaled.bin', 'wb'))
+array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
