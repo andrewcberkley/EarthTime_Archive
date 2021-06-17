@@ -137,6 +137,58 @@ for row in raw_data:
   points.append(x)
   points.append(y)
   #points.append(math.sqrt(float(row['Scale']) + 1.0))
-  points.append(PackColor([0.85,0.15,0.05]))    
+  points.append(PackColor([255,0,0]))    
   points.append(FormatEpoch(row["Date"], '%Y-%m'))
 array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
+
+#Male
+raw_data = []
+with open("HAL_final_male.csv", encoding="utf8") as f:
+  reader = csv.DictReader(f, delimiter=",")
+  for row in reader:
+    raw_data.append(row)
+
+len(raw_data)
+
+raw_data[0]
+
+# rev 1
+# x,y,size_value,epoch
+# show all points in same color. Initial date at full size. after n days begin to fade dot until a year as elapsed...
+# don't distinguish between events with 0 or > 0 number of events
+#This is for **ALL** events
+points = []
+for row in raw_data:
+  x,y = LonLatToPixelXY([float(row['Longitude']), float(row['Latitude'])])
+  points.append(x)
+  points.append(y)
+  #points.append(math.sqrt(float(row['Scale']) + 1.0))
+  points.append(PackColor([255,153,51]))    
+  points.append(FormatEpoch(row["Date"], '%Y-%m'))
+array.array('f', points).tofile(open('HAL_final_male.bin', 'wb'))
+
+#Female
+raw_data = []
+with open("HAL_final_female.csv", encoding="utf8") as f:
+  reader = csv.DictReader(f, delimiter=",")
+  for row in reader:
+    raw_data.append(row)
+
+len(raw_data)
+
+raw_data[0]
+
+# rev 1
+# x,y,size_value,epoch
+# show all points in same color. Initial date at full size. after n days begin to fade dot until a year as elapsed...
+# don't distinguish between events with 0 or > 0 number of events
+#This is for **ALL** events
+points = []
+for row in raw_data:
+  x,y = LonLatToPixelXY([float(row['Longitude']), float(row['Latitude'])])
+  points.append(x)
+  points.append(y)
+  #points.append(math.sqrt(float(row['Scale']) + 1.0))
+  points.append(PackColor([0, 255, 0]))    
+  points.append(FormatEpoch(row["Date"], '%Y-%m'))
+array.array('f', points).tofile(open('HAL_final_female.bin', 'wb'))
