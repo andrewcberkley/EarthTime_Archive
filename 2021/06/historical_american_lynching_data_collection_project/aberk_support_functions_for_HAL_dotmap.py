@@ -163,7 +163,7 @@ for row in raw_data:
   points.append(x)
   points.append(y)
   #points.append(math.sqrt(float(row['Scale']) + 1.0))
-  points.append(PackColor([255,153,51]))    
+  points.append(PackColor([0, 0, 255]))    
   points.append(FormatEpoch(row["Date"], '%Y-%m'))
 array.array('f', points).tofile(open('HAL_final_white.bin', 'wb'))
 
