@@ -143,7 +143,7 @@ array.array('f', points).tofile(open('HAL_final_black.bin', 'wb'))
 
 #Male
 raw_data = []
-with open("HAL_final_male.csv", encoding="utf8") as f:
+with open("HAL_final_white.csv", encoding="utf8") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -165,11 +165,11 @@ for row in raw_data:
   #points.append(math.sqrt(float(row['Scale']) + 1.0))
   points.append(PackColor([255,153,51]))    
   points.append(FormatEpoch(row["Date"], '%Y-%m'))
-array.array('f', points).tofile(open('HAL_final_male.bin', 'wb'))
+array.array('f', points).tofile(open('HAL_final_white.bin', 'wb'))
 
 #Female
 raw_data = []
-with open("HAL_final_female.csv", encoding="utf8") as f:
+with open("HAL_final_other.csv", encoding="utf8") as f:
   reader = csv.DictReader(f, delimiter=",")
   for row in reader:
     raw_data.append(row)
@@ -191,4 +191,4 @@ for row in raw_data:
   #points.append(math.sqrt(float(row['Scale']) + 1.0))
   points.append(PackColor([0, 255, 0]))    
   points.append(FormatEpoch(row["Date"], '%Y-%m'))
-array.array('f', points).tofile(open('HAL_final_female.bin', 'wb'))
+array.array('f', points).tofile(open('HAL_final_other.bin', 'wb'))
