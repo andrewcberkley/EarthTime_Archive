@@ -10,3 +10,5 @@ county_data <- read.csv("equal_justice_initiative_lynching_in_america-confrontin
 #colnames(county_data)[3] <- "1930"
 
 as.data.frame(table(county_data$State))
+
+write.csv(county_data, "documented_african_american_racial_terror_lynching_victims_per_county_1877-1950.csv", na = "", row.names = FALSE)
