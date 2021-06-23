@@ -23,6 +23,6 @@ suppressWarnings(county_data$FIPS <- sprintf("%05d", as.numeric(county_data$FIPS
 final_df <- county_data[,c(5,3)]
 colnames(final_df)[2] <- "1950"
 
-final_df$FIPS <- sapply(final_df$FIPS , function(x) paste0("'", x))
+final_df$FIPS <- sapply(final_df$FIPS , function(x) paste0("'", x)) #Leading zeros stability
 
 write.csv(final_df, "documented_african_american_racial_terror_lynching_victims_per_county_1877-1950.csv", na = "", row.names = FALSE)
