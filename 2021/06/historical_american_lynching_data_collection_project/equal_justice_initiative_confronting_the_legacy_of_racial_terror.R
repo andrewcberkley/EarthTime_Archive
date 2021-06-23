@@ -20,4 +20,7 @@ county_data$FIPS <- fips[match(county_data$county_state, fips$county_state), 1]
 
 suppressWarnings(county_data$FIPS <- sprintf("%05d", as.numeric(county_data$FIPS)))
 
+final_df <- county_data[,c(5,3)]
+colnames(final_df)[2] <- "1950"
+
 write.csv(county_data, "documented_african_american_racial_terror_lynching_victims_per_county_1877-1950.csv", na = "", row.names = FALSE)
