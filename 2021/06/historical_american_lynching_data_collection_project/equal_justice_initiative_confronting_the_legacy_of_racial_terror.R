@@ -13,12 +13,11 @@ as.data.frame(table(county_data$State))
 
 fips <- read.csv(file.path(Sys.getenv('my_dir'),'2019/04/USA_Housing/usa_fips_all.csv'))
 
-county_data$State <- trimws(county_data$State)
-fips$State.or.equivalent <- trimws(fips$State.or.equivalent)
-
 county_data$county_state <- paste0(county_data$County,"-", county_data$State)
-fips$county_state <- paste0(fips$County.or.equivalent,"-", fips$State.or.equivalent)
+fips$county_state <- paste0(fips$County.or.equivalent,"-", fips$Stateor.equivalent)
 
 county_data$FIPS <- fips[match(county_data$county_state, fips$county_state), 1]
+
+suppressWarnings(county_data$FIPS <- sprintf("%05d", as.numeric(county_data$FIPS)))
 
 write.csv(county_data, "documented_african_american_racial_terror_lynching_victims_per_county_1877-1950.csv", na = "", row.names = FALSE)
