@@ -224,6 +224,8 @@ df2$Date_Exposure <- as.numeric(df2$Date_Exposure)
 #Remove rows without latitude or longitude coordinates
 df3 <- completeFun(df2, "lat")
 
+df_johl_selection <- df3[,c(1:3,5:7,9:10,17:18)]
+
 #Group
 Radicalization_Islamist <- df3[grep("Yes",df3$Radicalization_Islamist),]
 Radicalization_Far_Right <- df3[grep("Yes",df3$Radicalization_Far_Right),]
