@@ -47,3 +47,5 @@ def multiple_variables(csv_name, longitude_name, latitude_name, rgb_color_scheme
 #Low-Income=#7224DB
 #Middle-Income=#DB7224
 #High-Income=#24DB72
+
+multiple_variables("far_right.csv", "long", "lat", "30,203,225", "Date_Exposure", "%Y", "far_right.bin")
