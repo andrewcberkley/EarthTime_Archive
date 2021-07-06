@@ -261,3 +261,10 @@ coalesce_by_column <- function(df) {
 final_df <- clean_df %>% 
   group_by(Loc_Plot_State1, Loc_Plot_City1, lat, long) %>% 
   summarise_all(coalesce_by_column)
+
+library(reticulate)
+use_python("C:/ProgramData/Anaconda3/", required = TRUE)
+#py_config()
+#py_install("pandas")
+
+source_python('aberk_support_functions_for_HAL_dotmap.py')
