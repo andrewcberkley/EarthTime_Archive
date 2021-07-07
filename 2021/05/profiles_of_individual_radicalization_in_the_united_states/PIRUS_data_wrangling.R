@@ -194,9 +194,9 @@ df2$Employment_Status[df2$Employment_Status==-99] <- "Unknown"
 
 #Social_Stratum_Adulthood
 #Description: In what social stratum did this individual fall in adulthood?
-df2$Social_Stratum_Adulthood[df2$Social_Stratum_Adulthood==1] <- "Low (e.g. receives welfare, lives close to the poverty line, regularly unemployed or at best works a blue collar job, lives in subsidized housing)"
-df2$Social_Stratum_Adulthood[df2$Social_Stratum_Adulthood==2] <- "Middle (e.g. does not receive welfare, lives in lower-middle or middle class neighborhood, has steady professional employment, owns or holds a mortgage on a house, has college degree)"
-df2$Social_Stratum_Adulthood[df2$Social_Stratum_Adulthood==3] <- "High (e.g. works a high-income, white-collar job, lives and owns a house in a middle or upper class neighborhood, can afford luxury items, has college degree or is self-employed as a successful entrepreneur)"
+#df2$Social_Stratum_Adulthood[df2$Social_Stratum_Adulthood==1] <- "Low (e.g. receives welfare, lives close to the poverty line, regularly unemployed or at best works a blue collar job, lives in subsidized housing)"
+#df2$Social_Stratum_Adulthood[df2$Social_Stratum_Adulthood==2] <- "Middle (e.g. does not receive welfare, lives in lower-middle or middle class neighborhood, has steady professional employment, owns or holds a mortgage on a house, has college degree)"
+#df2$Social_Stratum_Adulthood[df2$Social_Stratum_Adulthood==3] <- "High (e.g. works a high-income, white-collar job, lives and owns a house in a middle or upper class neighborhood, can afford luxury items, has college degree or is self-employed as a successful entrepreneur)"
 df2$Social_Stratum_Adulthood[df2$Social_Stratum_Adulthood==-99] <- "Unknown"
 df2$Social_Stratum_Adulthood[df2$Social_Stratum_Adulthood==-88] <- "Not Applicable (if exposure occurred before the individual turned 18 years old)"
 
@@ -238,19 +238,30 @@ Radicalization_Islamist <- df3[grep("Yes",df3$Radicalization_Islamist),]
 Radicalization_Far_Right <- df3[grep("Yes",df3$Radicalization_Far_Right),]
 Radicalization_Far_Left <- df3[grep("Yes",df3$Radicalization_Far_Left),]
 
-Low_Social_Stratum <- df3[grep("Low (e.g. receives welfare, lives close to the poverty line, regularly unemployed or at best works a blue collar job, lives in subsidized housing)",df3$Social_Stratum_Adulthood),]
-Middle_Social_Stratum <- df3[grep("Middle (e.g. does not receive welfare, lives in lower-middle or middle class neighborhood, has steady professional employment, owns or holds a mortgage on a house, has college degree)",df3$Social_Stratum_Adulthood),]
-High_Social_Stratum <- df3[grep("High (e.g. works a high-income, white-collar job, lives and owns a house in a middle or upper class neighborhood, can afford luxury items, has college degree or is self-employed as a successful entrepreneur)",df3$Social_Stratum_Adulthood),]
+Low_Social_Stratum <- df3[grep(1,df3$Social_Stratum_Adulthood),]
+Middle_Social_Stratum <- df3[grep(2,df3$Social_Stratum_Adulthood),]
+High_Social_Stratum <- df3[grep(3,df3$Social_Stratum_Adulthood),]
 
 Internet_Radicals <- df3[grep("1|2",df3$Internet_Radicalization),]
 
 Facebook_Radicals <- df3[grep("Facebook",df3$Social_Media_Platform1),]
 
-l.df <- lapply(ls(), function(x) if (class(get(x)) == "data.frame") get(x))
+#How can I make a list of all dataframes that are in my global environment?
+#https://stackoverflow.com/questions/25509879/how-can-i-make-a-list-of-all-dataframes-that-are-in-my-global-environment
+dfs <- Filter(function(x) is(x, "data.frame"), mget(ls()))
 
+#How can I remove an element from a list?
+#https://stackoverflow.com/questions/652136/how-can-i-remove-an-element-from-a-list
+l <- within(dfs, rm(df3)) 
 
+rm(list=ls()[ls()!= "l"])
 
-write.csv(df3, "far_right.csv", row.names = FALSE, na = "")
+for (i in seq_along(l)) {
+  try({
+    filename = paste0(names(l)[i], ".csv")
+    write.csv(l[[i]], filename, na = "", row.names = FALSE)
+  })
+}
 
 library(reticulate)
 #suppressWarnings(use_python("C:/ProgramData/Anaconda3/", required = TRUE))
