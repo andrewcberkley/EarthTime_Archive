@@ -15,9 +15,9 @@ def PackColor(color):
 def hex2rgb(h):
   return tuple(int(h.strip("#")[i:i+2], 16) for i in (0, 2 ,4))
 
-def multiple_variables(csv_name, longitude_name, latitude_name, event_name, rgb_color_scheme, date_name, date_format, bin_name):
+def multiple_variables(file_name, rgb_color_scheme):
   raw_data = []
-  with open(csv_name, encoding="utf8") as f:
+  with open(file_name+".csv", encoding="utf8") as f:
     reader = csv.DictReader(f, delimiter=",")
     for row in reader:
       raw_data.append(row)
@@ -32,13 +32,13 @@ def multiple_variables(csv_name, longitude_name, latitude_name, event_name, rgb_
 #This is for **ALL** events
   points = []
   for row in raw_data:
-    x,y = LonLatToPixelXY([float(row[longitude_name]), float(row[latitude_name])])
+    x,y = LonLatToPixelXY([float(row["long"]), float(row["lat"])])
     points.append(x)
     points.append(y)
-    points.append(math.sqrt(float(row[event_name]) + 1.0))
+    points.append(math.sqrt(float(row["Dummy_Number"]) + 1.0))
     points.append(PackColor(rgb_color_scheme))    
-    points.append(FormatEpoch(row[date_name], date_format))
-  array.array('f', points).tofile(open(bin_name, 'wb'))
+    points.append(FormatEpoch(row["Date_Exposure"], "%Y-%m-%d"))
+  array.array('f', points).tofile(open(file_name+".bin", 'wb'))
 
 #Far-Right=#1ECBE1
 #Far-Left=#E11ECB
@@ -48,13 +48,13 @@ def multiple_variables(csv_name, longitude_name, latitude_name, event_name, rgb_
 #Middle-Income=#DB7224
 #High-Income=#24DB72
 
-multiple_variables("Radicalization_Far_Right.csv", "long", "lat", "Dummy_Number",[30, 203, 225], "Date_Exposure", "%Y-%m-%d", "Radicalization_Far_Right.bin")
-multiple_variables("Radicalization_Far_Left.csv", "long", "lat", "Dummy_Number",[225, 30, 203], "Date_Exposure", "%Y-%m-%d", "Radicalization_Far_Left.bin")
-multiple_variables("Radicalization_Islamist.csv", "long", "lat", "Dummy_Number",[203, 225, 30], "Date_Exposure", "%Y-%m-%d", "Radicalization_Islamist.bin")
+multiple_variables("Radicalization_Far_Right", [30, 203, 225])
+multiple_variables("Radicalization_Far_Left", [225, 30, 203])
+multiple_variables("Radicalization_Islamist", [203, 225, 30])
 
-multiple_variables("Low_Social_Stratum.csv", "long", "lat", "Dummy_Number",[114, 36, 219], "Date_Exposure", "%Y-%m-%d", "Low_Social_Stratum.bin")
-multiple_variables("Middle_Social_Stratum.csv", "long", "lat", "Dummy_Number",[219, 114, 36], "Date_Exposure", "%Y-%m-%d", "Middle_Social_Stratum.bin")
-multiple_variables("High_Social_Stratum.csv", "long", "lat", "Dummy_Number",[36, 219, 114], "Date_Exposure", "%Y-%m-%d", "High_Social_Stratum.bin")
+multiple_variables("Low_Social_Stratum", [114, 36, 219])
+multiple_variables("Middle_Social_Stratum", [219, 114, 36])
+multiple_variables("High_Social_Stratum",[36, 219, 114])
 
-multiple_variables("Internet_Radicals.csv", "long", "lat", "Dummy_Number",[253,254,255], "Date_Exposure", "%Y-%m-%d", "Internet_Radicals.bin")
-multiple_variables("Facebook_Radicals.csv", "long", "lat", "Dummy_Number",[253,254,255], "Date_Exposure", "%Y-%m-%d", "Facebook_Radicals.bin")
+multiple_variables("Internet_Radicals", [253,254,255])
+multiple_variables("Facebook_Radicals", [253,254,255])
