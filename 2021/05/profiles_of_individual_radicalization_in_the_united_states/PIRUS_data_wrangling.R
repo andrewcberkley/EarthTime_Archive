@@ -106,8 +106,8 @@ df2$Plot_Target1[df2$Plot_Target1==-88] <- "Not Applicable (i.e., no plot)"
 #Internet_Radicalization
 #Description: What role did the internet play in the individual's radicalization?
 df2$Internet_Radicalization[df2$Internet_Radicalization==0] <- "No known role of the internet in individual's radicalization"
-df2$Internet_Radicalization[df2$Internet_Radicalization==1] <- "Internet played a role but was not the primary means of radicalization (e.g. internet resources were used to reaffirm or advance pre-existing radical beliefs)"
-df2$Internet_Radicalization[df2$Internet_Radicalization==2] <- "Internet was the primary means of radicalization for the individual (e.g. initial exposure to ideology and subsequent radicalization occurred online"
+#df2$Internet_Radicalization[df2$Internet_Radicalization==1] <- "Internet played a role but was not the primary means of radicalization (e.g. internet resources were used to reaffirm or advance pre-existing radical beliefs)"
+#df2$Internet_Radicalization[df2$Internet_Radicalization==2] <- "Internet was the primary means of radicalization for the individual (e.g. initial exposure to ideology and subsequent radicalization occurred online"
 df2$Internet_Radicalization[df2$Internet_Radicalization==-99] <- "Unknown"
 df2$Internet_Radicalization[df2$Internet_Radicalization==-88] <- "Not Applicable (radicalization occurred before 1995)"
 
@@ -232,43 +232,23 @@ df2$Dummy_Number <- 1
 #Remove rows without latitude or longitude coordinates
 df3 <- completeFun(df2, "lat")
 
-#df_johl_selection <- df3[,c(1:3,5:7,9:11,17:18)]
-
-#Internet_Radicalization_Stats <- as.data.frame(table(df_johl_selection$Internet_Radicalization))
-#Social_Media_Stats <- as.data.frame(table(df_johl_selection$Social_Media))
-#Social_Media_Platform1_Stats <- as.data.frame(table(df_johl_selection$Social_Media_Platform1))
-#Social_Stratum_Adulthood_Stats <- as.data.frame(table(df_johl_selection$Social_Stratum_Adulthood))
-#Aspirations_Stats <- as.data.frame(table(df_johl_selection$Aspirations))
-
-
-
-
-#Group
+rm(list=ls()[ls()!= "df3"])
+#Groups
 Radicalization_Islamist <- df3[grep("Yes",df3$Radicalization_Islamist),]
 Radicalization_Far_Right <- df3[grep("Yes",df3$Radicalization_Far_Right),]
 Radicalization_Far_Left <- df3[grep("Yes",df3$Radicalization_Far_Left),]
 
-independent_variable <- function(df, variable_name){
-  df[,c(2,3,5:7,variable_name)]
-}
+Low_Social_Stratum <- df3[grep("Low (e.g. receives welfare, lives close to the poverty line, regularly unemployed or at best works a blue collar job, lives in subsidized housing)",df3$Social_Stratum_Adulthood),]
+Middle_Social_Stratum <- df3[grep("Middle (e.g. does not receive welfare, lives in lower-middle or middle class neighborhood, has steady professional employment, owns or holds a mortgage on a house, has college degree)",df3$Social_Stratum_Adulthood),]
+High_Social_Stratum <- df3[grep("High (e.g. works a high-income, white-collar job, lives and owns a house in a middle or upper class neighborhood, can afford luxury items, has college degree or is self-employed as a successful entrepreneur)",df3$Social_Stratum_Adulthood),]
 
-social_media_platform <- independent_variable(Radicalization_Far_Left, 11)
+Internet_Radicals <- df3[grep("1|2",df3$Internet_Radicalization),]
 
-clean_df <- social_media_platform %>%
-  group_by(Date_Exposure) %>%
-  mutate(idx = row_number()) %>%
-  spread(Date_Exposure, Social_Media_Platform1) %>%
-  select(-idx)
+Facebook_Radicals <- df3[grep("Facebook",df3$Social_Media_Platform1),]
 
-#Merge rows in a dataframe where the rows are disjoint and contain NAs
-#https://stackoverflow.com/questions/14268814/merge-rows-in-a-dataframe-where-the-rows-are-disjoint-and-contain-nas
-coalesce_by_column <- function(df) {
-  return(dplyr::coalesce(!!! as.list(df)))
-}
+l.df <- lapply(ls(), function(x) if (class(get(x)) == "data.frame") get(x))
 
-final_df <- clean_df %>% 
-  group_by(Loc_Plot_State1, Loc_Plot_City1, lat, long) %>% 
-  summarise_all(coalesce_by_column)
+
 
 write.csv(df3, "far_right.csv", row.names = FALSE, na = "")
 
