@@ -48,13 +48,13 @@ def multiple_variables(csv_name, longitude_name, latitude_name, event_name, rgb_
 #Middle-Income=#DB7224
 #High-Income=#24DB72
 
-multiple_variables("Radicalization_Far_Right.csv", "long", "lat", "Dummy_Number",[0.85,0.15,0.05], "Date_Exposure", "%Y-%m-%d", "Radicalization_Far_Right.bin")
-multiple_variables("Radicalization_Far_Left.csv", "long", "lat", "Dummy_Number",[0.85,0.15,0.05], "Date_Exposure", "%Y-%m-%d", "Radicalization_Far_Left.bin")
-multiple_variables("Radicalization_Islamist.csv", "long", "lat", "Dummy_Number",[0.85,0.15,0.05], "Date_Exposure", "%Y-%m-%d", "Radicalization_Islamist.bin")
+multiple_variables("Radicalization_Far_Right.csv", "long", "lat", "Dummy_Number",[30, 203, 225], "Date_Exposure", "%Y-%m-%d", "Radicalization_Far_Right.bin")
+multiple_variables("Radicalization_Far_Left.csv", "long", "lat", "Dummy_Number",[225, 30, 203], "Date_Exposure", "%Y-%m-%d", "Radicalization_Far_Left.bin")
+multiple_variables("Radicalization_Islamist.csv", "long", "lat", "Dummy_Number",[203, 225, 30], "Date_Exposure", "%Y-%m-%d", "Radicalization_Islamist.bin")
 
-multiple_variables("Low_Social_Stratum.csv", "long", "lat", "Dummy_Number",[0.85,0.15,0.05], "Date_Exposure", "%Y-%m-%d", "Low_Social_Stratum.bin")
-multiple_variables("Middle_Social_Stratum.csv", "long", "lat", "Dummy_Number",[0.85,0.15,0.05], "Date_Exposure", "%Y-%m-%d", "Middle_Social_Stratum.bin")
-multiple_variables("High_Social_Stratum.csv", "long", "lat", "Dummy_Number",[0.85,0.15,0.05], "Date_Exposure", "%Y-%m-%d", "High_Social_Stratum.bin")
+multiple_variables("Low_Social_Stratum.csv", "long", "lat", "Dummy_Number",[114, 36, 219], "Date_Exposure", "%Y-%m-%d", "Low_Social_Stratum.bin")
+multiple_variables("Middle_Social_Stratum.csv", "long", "lat", "Dummy_Number",[219, 114, 36], "Date_Exposure", "%Y-%m-%d", "Middle_Social_Stratum.bin")
+multiple_variables("High_Social_Stratum.csv", "long", "lat", "Dummy_Number",[36, 219, 114], "Date_Exposure", "%Y-%m-%d", "High_Social_Stratum.bin")
 
 multiple_variables("Internet_Radicals.csv", "long", "lat", "Dummy_Number",[253,254,255], "Date_Exposure", "%Y-%m-%d", "Internet_Radicals.bin")
 multiple_variables("Facebook_Radicals.csv", "long", "lat", "Dummy_Number",[253,254,255], "Date_Exposure", "%Y-%m-%d", "Facebook_Radicals.bin")
