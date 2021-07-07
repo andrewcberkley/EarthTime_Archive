@@ -15,7 +15,7 @@ def PackColor(color):
 def hex2rgb(h):
   return tuple(int(h.strip("#")[i:i+2], 16) for i in (0, 2 ,4))
 
-def multiple_variables(csv_name, longitude_name, latitude_name, rgb_color_scheme, date_name, date_format, bin_name):
+def multiple_variables(csv_name, longitude_name, latitude_name, event_name, rgb_color_scheme, date_name, date_format, bin_name):
   raw_data = []
   with open(csv_name, encoding="utf8") as f:
     reader = csv.DictReader(f, delimiter=",")
@@ -25,17 +25,17 @@ def multiple_variables(csv_name, longitude_name, latitude_name, rgb_color_scheme
   len(raw_data)
   raw_data[0]
 
-  # rev 1
-  # x,y,size_value,epoch
-  # show all points in same color. Initial date at full size. after n days begin to fade dot until a year as elapsed...
-  # don't distinguish between events with 0 or > 0 number of events
-  #This is for **ALL** events
+# rev 1
+# x,y,size_value,epoch
+# show all points in same color. Initial date at full size. after n days begin to fade dot until a year as elapsed...
+# don't distinguish between events with 0 or > 0 number of events
+#This is for **ALL** events
   points = []
   for row in raw_data:
     x,y = LonLatToPixelXY([float(row[longitude_name]), float(row[latitude_name])])
     points.append(x)
     points.append(y)
-    points.append(math.sqrt(float(row['Number']) + 1.0))
+    points.append(math.sqrt(float(row[event_name]) + 1.0))
     points.append(PackColor(rgb_color_scheme))    
     points.append(FormatEpoch(row[date_name], date_format))
   array.array('f', points).tofile(open(bin_name, 'wb'))
@@ -48,4 +48,4 @@ def multiple_variables(csv_name, longitude_name, latitude_name, rgb_color_scheme
 #Middle-Income=#DB7224
 #High-Income=#24DB72
 
-multiple_variables("far_right.csv", "long", "lat", [30,203,225], "Date_Exposure", "%Y-%m-%d", "far_right.bin")
+multiple_variables("far_right.csv", "long", "lat", "Dummy_Number",[0.85,0.15,0.05], "Date_Exposure", "%Y-%m-%d", "far_right.bin")
