@@ -10,7 +10,7 @@ completeFun <- function(data, desiredCols) {
   return(data[completeVec, ])
 }
 
-df <- readxl::read_excel("PIRUS_Public_May2020.xlsx")
+suppressWarnings(df <- readxl::read_excel("PIRUS_Public_May2020.xlsx"))
 lat_long <- read.csv("us-zip-code-latitude-and-longitude.csv", sep=";")
 
 #States Renamed
@@ -75,6 +75,8 @@ df$lat <- lat_long[match(df$city_state, lat_long$city_state), 4]
 df$long <- lat_long[match(df$city_state, lat_long$city_state), 5]
 
 df2 <- df[,c(1,2,3,7,147,148,6,22,36,38,40,45,52,53,54,101,107,108,127)]
+#df2$Date_Exposure <- df$Date_Exposure
+#df2$Date_Exposure <- gsub(" UTC", "", df2$Date_Exposure)
 
 #Plot_Target
 #Description: If the individual's first publically known extremist activity included a violent plot, enter the target type or intended target type of the plot. Select up to three target types. If unknown, list -99. If there is no violent plot or no specific plot target, list -88.
@@ -221,6 +223,12 @@ df2$Loc_Plot_City1[df2$Loc_Plot_City1 == -99] <- "Unknown"
 df2$Date_Exposure <- gsub("\\-.*","",df2$Date_Exposure)
 df2$Date_Exposure <- as.numeric(df2$Date_Exposure)
 
+#Filter Out Before 1971
+df2<- df2 %>%
+  filter(Date_Exposure >"1971")
+
+#df2$Number <- 144
+
 #Remove rows without latitude or longitude coordinates
 df3 <- completeFun(df2, "lat")
 
@@ -265,8 +273,9 @@ final_df <- clean_df %>%
 write.csv(Radicalization_Far_Right, "far_right.csv", row.names = FALSE, na = "")
 
 library(reticulate)
-use_python("C:/ProgramData/Anaconda3/", required = TRUE)
+#suppressWarnings(use_python("C:/ProgramData/Anaconda3/", required = TRUE))
 #py_config()
 #py_install("pandas")
 
 source_python('PIRUS_dotmap_creation.py')
+#py_last_error()
