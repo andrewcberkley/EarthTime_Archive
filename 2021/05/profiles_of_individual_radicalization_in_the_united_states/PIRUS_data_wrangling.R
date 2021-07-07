@@ -242,7 +242,8 @@ Low_Social_Stratum <- df3[grep(1,df3$Social_Stratum_Adulthood),]
 Middle_Social_Stratum <- df3[grep(2,df3$Social_Stratum_Adulthood),]
 High_Social_Stratum <- df3[grep(3,df3$Social_Stratum_Adulthood),]
 
-Internet_Radicals <- df3[grep("1|2",df3$Internet_Radicalization),]
+internetValues <- "^1$|^2$" #How to use grep()/gsub() to find exact match:https://stackoverflow.com/questions/26813667/how-to-use-grep-gsub-to-find-exact-match
+Internet_Radicals <- df3[grep(internetValues,df3$Internet_Radicalization),]
 
 Facebook_Radicals <- df3[grep("Facebook",df3$Social_Media_Platform1),]
 
