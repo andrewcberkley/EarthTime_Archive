@@ -1,7 +1,7 @@
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/profiles_of_individual_radicalization_in_the_united_states'))
 
-library(tidyverse)
-library(data.table)
+suppressPackageStartupMessages(library(tidyverse))
+suppressPackageStartupMessages(library(data.table))
 
 #Omit rows containing specific column of NA
 #https://stackoverflow.com/questions/11254524/omit-rows-containing-specific-column-of-na
