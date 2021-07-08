@@ -58,3 +58,4 @@ multiple_variables("High_Social_Stratum",[36, 219, 114])
 
 multiple_variables("Internet_Radicals", [253,254,255])
 multiple_variables("Facebook_Radicals", [253,254,255])
+multiple_variables("Media_Radicals", [253,254,255])
