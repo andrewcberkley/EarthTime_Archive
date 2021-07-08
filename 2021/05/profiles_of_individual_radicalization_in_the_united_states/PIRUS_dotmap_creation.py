@@ -40,21 +40,13 @@ def multiple_variables(file_name, rgb_color_scheme):
     points.append(FormatEpoch(row["Date_Exposure"], "%Y-%m-%d"))
   array.array('f', points).tofile(open(file_name+".bin", 'wb'))
 
-#Far-Right=#1ECBE1
-#Far-Left=#E11ECB
-#Radical Islamist=#CBE11E
-
-#Low-Income=#7224DB
-#Middle-Income=#DB7224
-#High-Income=#24DB72
-
-multiple_variables("Radicalization_Far_Right", [30, 203, 225])
-multiple_variables("Radicalization_Far_Left", [225, 30, 203])
+multiple_variables("Radicalization_Far_Right", [225, 30, 67])
+multiple_variables("Radicalization_Far_Left", [30, 203, 225])
 multiple_variables("Radicalization_Islamist", [203, 225, 30])
 
-multiple_variables("Low_Social_Stratum", [114, 36, 219])
-multiple_variables("Middle_Social_Stratum", [219, 114, 36])
-multiple_variables("High_Social_Stratum",[36, 219, 114])
+multiple_variables("Low_Social_Stratum", [30, 33, 225])
+multiple_variables("Middle_Social_Stratum", [245, 245, 244])
+multiple_variables("High_Social_Stratum",[203, 225, 30])
 
 multiple_variables("Internet_Radicals", [253,254,255])
 multiple_variables("Facebook_Radicals", [253,254,255])
