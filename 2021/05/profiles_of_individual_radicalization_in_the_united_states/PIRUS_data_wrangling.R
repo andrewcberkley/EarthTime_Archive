@@ -202,7 +202,7 @@ df2$Loc_Plot_City1[df2$Loc_Plot_City1 == -99] <- "Unknown"
 #df2<- df2 %>%
 #  filter(Date_Exposure >"1971-01-01")
 
-df2$Dummy_Number <- 1
+df2$Dummy_Number <- 10
 
 #Remove rows without latitude or longitude coordinates
 df3 <- completeFun(df2, "lat")
