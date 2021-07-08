@@ -199,8 +199,8 @@ df2$Loc_Plot_City1[df2$Loc_Plot_City1 == -99] <- "Unknown"
 #df2$Date_Exposure <- as.numeric(df2$Date_Exposure)
 
 #Filter Out Before 1971
-df2<- df2 %>%
-  filter(Date_Exposure >"1971-01-01")
+#df2<- df2 %>%
+#  filter(Date_Exposure >"1971-01-01")
 
 df2$Dummy_Number <- 1
 
