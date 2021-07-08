@@ -1,7 +1,9 @@
 setwd(file.path(Sys.getenv('my_dir'),'2021/05/profiles_of_individual_radicalization_in_the_united_states'))
 
-suppressPackageStartupMessages(library(tidyverse))
-suppressPackageStartupMessages(library(data.table))
+suppressPackageStartupMessages({
+  library(tidyverse)
+  library(data.table)
+  })
 
 #Omit rows containing specific column of NA
 #https://stackoverflow.com/questions/11254524/omit-rows-containing-specific-column-of-na
@@ -74,7 +76,7 @@ df$city_state <- paste0(df$Loc_Plot_City1," ",df$Loc_Plot_State1)
 df$lat <- lat_long[match(df$city_state, lat_long$city_state), 4]
 df$long <- lat_long[match(df$city_state, lat_long$city_state), 5]
 
-df2 <- df[,c(1,2,3,7,147,148,6,22,36,38,40,45,52,53,54,101,107,108,127)]
+df2 <- df[,c(1,2,3,7,147,148,6,22,36,37,38,40,45,52,53,54,101,107,108,127)]
 #df2$Date_Exposure <- df$Date_Exposure
 #df2$Date_Exposure <- gsub(" UTC", "", df2$Date_Exposure)
 
