@@ -77,33 +77,6 @@ df$lat <- lat_long[match(df$city_state, lat_long$city_state), 4]
 df$long <- lat_long[match(df$city_state, lat_long$city_state), 5]
 
 df2 <- df[,c(1,2,3,7,147,148,6,22,36,37,38,40,45,52,53,54,101,107,108,127)]
-#df2$Date_Exposure <- df$Date_Exposure
-#df2$Date_Exposure <- gsub(" UTC", "", df2$Date_Exposure)
-
-#Plot_Target
-#Description: If the individual's first publically known extremist activity included a violent plot, enter the target type or intended target type of the plot. Select up to three target types. If unknown, list -99. If there is no violent plot or no specific plot target, list -88.
-df2$Plot_Target1[df2$Plot_Target1==1] <- "Businesses"
-df2$Plot_Target1[df2$Plot_Target1==2] <- "Government (general)"
-df2$Plot_Target1[df2$Plot_Target1==3] <- "Police"
-df2$Plot_Target1[df2$Plot_Target1==4] <- "Military"
-df2$Plot_Target1[df2$Plot_Target1==5] <- "Abortion related"
-df2$Plot_Target1[df2$Plot_Target1==6] <- "Airports & aircraft"
-df2$Plot_Target1[df2$Plot_Target1==7] <- "Government (diplomatic)"
-df2$Plot_Target1[df2$Plot_Target1==8] <- "Educational institution"
-df2$Plot_Target1[df2$Plot_Target1==9] <- "Food or water supply"
-df2$Plot_Target1[df2$Plot_Target1==10] <- "Journalists & media"
-df2$Plot_Target1[df2$Plot_Target1==11] <- "Maritime (includes ports and maritime facilities)"
-df2$Plot_Target1[df2$Plot_Target1==12] <- "Non-governmental organization"
-df2$Plot_Target1[df2$Plot_Target1==13] <- "Other (e.g., ambulances, firefighters)"
-df2$Plot_Target1[df2$Plot_Target1==14] <- "Private citizens & property"
-df2$Plot_Target1[df2$Plot_Target1==15] <- "Religious figures/institutions"
-df2$Plot_Target1[df2$Plot_Target1==16] <- "Telecommunication"
-df2$Plot_Target1[df2$Plot_Target1==17] <- "Terrorists/non-state militia"
-df2$Plot_Target1[df2$Plot_Target1==18] <- "Tourists"
-df2$Plot_Target1[df2$Plot_Target1==19] <- "Transportation"
-df2$Plot_Target1[df2$Plot_Target1==20] <- "Utilities"
-df2$Plot_Target1[df2$Plot_Target1==-99] <- "Unknown"
-df2$Plot_Target1[df2$Plot_Target1==-88] <- "Not Applicable (i.e., no plot)"
 
 #Internet_Radicalization
 #Description: What role did the internet play in the individual's radicalization?
@@ -244,8 +217,10 @@ Low_Social_Stratum <- df3[grep(1,df3$Social_Stratum_Adulthood),]
 Middle_Social_Stratum <- df3[grep(2,df3$Social_Stratum_Adulthood),]
 High_Social_Stratum <- df3[grep(3,df3$Social_Stratum_Adulthood),]
 
-internetValues <- "^1$|^2$" #How to use grep()/gsub() to find exact match:https://stackoverflow.com/questions/26813667/how-to-use-grep-gsub-to-find-exact-match
-Internet_Radicals <- df3[grep(internetValues,df3$Internet_Radicalization),]
+rolesPlayed <- "^1$|^2$" #How to use grep()/gsub() to find exact match:https://stackoverflow.com/questions/26813667/how-to-use-grep-gsub-to-find-exact-match
+Internet_Radicals <- df3[grep(rolesPlayed,df3$Internet_Radicalization),]
+
+Media_Radicals <- df3[grep(rolesPlayed,df3$Media_Radicalization),]
 
 Facebook_Radicals <- df3[grep("Facebook",df3$Social_Media_Platform1),]
 
