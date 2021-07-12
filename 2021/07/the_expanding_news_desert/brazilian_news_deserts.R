@@ -6,3 +6,4 @@ setwd(file.path(Sys.getenv('my_dir'),'2021/07/the_expanding_news_desert'))
 library(newsatlasbr)
 
 #https://latamjournalismreview.org/news/digital-journalism-reduces-incidence-of-news-deserts-in-brazil/
+atlas_signin(email = atlas_da_noticia_user, password = atlas_da_noticia_password)
