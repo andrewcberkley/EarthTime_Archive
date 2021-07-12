@@ -14,5 +14,5 @@ setwd(file.path(Sys.getenv('my_dir'),'2021/07/the_expanding_news_desert'))
 #almost_deserts_dataset <- almost_deserts()
 #municipalities_with_media <- n_orgs_100k()
 
-#save(brazil, almost_deserts_dataset, almost_deserts_dataset, file = "brazil_news_deserts.RData")
-load("brazil_news_deserts")
+#save(brazil, almost_deserts_dataset, municipalities_with_media, file = "brazil_news_deserts.RData")
+load("brazil_news_deserts.RData")
