@@ -4,7 +4,6 @@ setwd(file.path(Sys.getenv('my_dir'),'2021/07/the_expanding_news_desert'))
 ##devtools::install_github("voltdatalab/newsatlasbr")
 
 #library(newsatlasbr)
-#library(geobr)
 
 ##https://latamjournalismreview.org/news/digital-journalism-reduces-incidence-of-news-deserts-in-brazil/
 ##https://www.atlas.jor.br/plataforma/api/pacote/
@@ -30,3 +29,19 @@ load("brazil_news_deserts.RData")
 ##IDHM: Human Development Index for the municipality (Census 2010).
 ##IDHM_R: Human Development Index - per capita income for the municipality (Census 2010).
 ##IDHM_E: Human Development Index - education for the municipality (Census 2010).
+
+library(geobr)
+mun <- read_municipality(code_muni="all", year=2020)
+
+#Pereira, R.H.M.; Gonçalves, C.N.; et. all (2019) geobr: Loads Shapefiles of Official Spatial Data Sets of Brazil. GitHub repository - https://github.com/ipeaGIT/geobr.
+
+download.file(mun, "brazil_municipalities.gpkg", mode = "wb")
+
+brazil_json <- geojsonio::geojson_list(mun)
+print(paste0("The file was originally ", object.size(brazil_json), units = "Mb"))
+
+brazil_small <- rmapshaper::ms_simplify(brazil_json, keep = 0.05)
+print(paste0("The file is now ", object.size(country_small), units = "Mb"))
+
+
+rgdal::writeOGR(mun, "brazil_municipalities.gpkg", layer=municipalities, driver="GPKG")
