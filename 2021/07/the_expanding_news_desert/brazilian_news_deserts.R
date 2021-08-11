@@ -32,4 +32,4 @@ load("brazil_news_deserts.RData")
 
 brazil_news_deserts <- municipalities_with_media[,c(5,1,2,3,4,8)]
 
-write.csv(brazil_news_deserts, "brazil_news_deserts.csv", row.names = FALSE, NA = "")
+write.csv(brazil_news_deserts, "brazil_news_deserts.csv", na = "", row.names = FALSE)
