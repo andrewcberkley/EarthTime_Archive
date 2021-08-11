@@ -34,6 +34,12 @@ brazil_news_deserts <- municipalities_with_media[,c(5,1,2,3,4,8)]
 
 colnames(brazil_news_deserts)[1] <- "GEOCODIGO"
 
-number_of_news_orgs <- brazil_news_deserts[1,5,5]
+number_of_news_orgs <- brazil_news_deserts[,c(1,5,5)]
+colnames(number_of_news_orgs) <- c("GEOCODIGO", "2020", "2021")
 
-write.csv(brazil_news_deserts, "brazil_news_deserts.csv", na = "", row.names = FALSE)
+number_of_news_orgs_per_100 <- brazil_news_deserts[,c(1,6,6)]
+colnames(number_of_news_orgs_per_100) <- c("GEOCODIGO", "2020", "2021")
+
+
+write.csv(number_of_news_orgs, "brazil_news_deserts_raw_numbers.csv", na = "", row.names = FALSE)
+write.csv(number_of_news_orgs_per_100, "brazil_news_deserts_per_100.csv", na = "", row.names = FALSE)
