@@ -42,4 +42,4 @@ colnames(number_of_news_orgs_per_100) <- c("GEOCODIGO", "2020", "2021")
 
 
 write.csv(number_of_news_orgs, "brazil_news_deserts_raw_numbers.csv", na = "", row.names = FALSE)
-write.csv(number_of_news_orgs_per_100, "brazil_news_deserts_per_100.csv", na = "", row.names = FALSE)
+write.csv(number_of_news_orgs_per_100, "brazil_news_deserts_per_100k.csv", na = "", row.names = FALSE)
