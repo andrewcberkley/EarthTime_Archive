@@ -4,7 +4,9 @@ suppressWarnings(ogis_migrant_deaths <- readxl::read_excel("ogis_migrant_deaths.
 
 clean_df <- ogis_migrant_deaths[,c(1,5,18,19)]
 clean_df$Dummy_Number <- 10
-write.csv(clean_df, "arizona_migrant_deaths.csv", row.names = FALSE, na = "")
+final_df <- na.omit(clean_df)
+
+write.csv(final_df, "arizona_migrant_deaths.csv", row.names = FALSE, na = "")
 
 library(reticulate)
 #suppressWarnings(use_python("C:/ProgramData/Anaconda3/", required = TRUE))
