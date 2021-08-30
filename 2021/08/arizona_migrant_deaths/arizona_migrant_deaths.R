@@ -1,8 +1,6 @@
 setwd(file.path(Sys.getenv('my_dir'),'2021/08/arizona_migrant_deaths/'))
 
-ogis_migrant_deaths <- read.csv("ogis_migrant_deaths.csv")
-
-
+suppressWarnings(ogis_migrant_deaths <- readxl::read_excel("ogis_migrant_deaths.xlsx"))
 
 library(reticulate)
 #suppressWarnings(use_python("C:/ProgramData/Anaconda3/", required = TRUE))
