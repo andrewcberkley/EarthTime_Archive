@@ -11,5 +11,5 @@ library(reticulate)
 #py_config()
 #py_install("pandas")
 
-source_python('arizona_migrant_deaths_dotmap_creation.py')
+source_python('arizona_migrant_deaths_dotmap.py')
 #py_last_error()
