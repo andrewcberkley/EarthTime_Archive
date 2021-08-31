@@ -3,6 +3,7 @@ setwd(file.path(Sys.getenv('my_dir'),'2021/08/arizona_migrant_deaths/'))
 suppressWarnings(ogis_migrant_deaths <- readxl::read_excel("ogis_migrant_deaths.xlsx"))
 
 clean_df <- ogis_migrant_deaths[,c(1,5,18,19)]
+clean_df$`Reporting Date` <- as.Date(clean_df$`Reporting Date`)
 clean_df$Dummy_Number <- 10
 final_df <- na.omit(clean_df)
 
