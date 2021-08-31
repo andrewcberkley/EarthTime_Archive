@@ -7,6 +7,8 @@ clean_df$`Reporting Date` <- as.Date(clean_df$`Reporting Date`)
 clean_df$Dummy_Number <- 10
 final_df <- na.omit(clean_df)
 
+final_df[1,5] <- 1
+
 write.csv(final_df, "arizona_migrant_deaths.csv", row.names = FALSE, na = "")
 
 library(reticulate)
