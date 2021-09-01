@@ -6,3 +6,6 @@ usa_news_desert <- usa_news_desert[,c(6,3,4,9,10)]
 as.data.frame(table(usa_news_desert$total))
 #In the United States, 200 counties do not have a local newspaper. Half of all counties--over 1,500--have only one newspaper, usually a weekly.
 #Color code by "0", "1", "2+" newspapers in a given county
+
+final_df <- usa_news_desert[,c(1,5,5)]
+colanames(final_df) <- c("FIPS", "2020", "2021")
