@@ -8,4 +8,7 @@ as.data.frame(table(usa_news_desert$total))
 #Color code by "0", "1", "2+" newspapers in a given county
 
 final_df <- usa_news_desert[,c(1,5,5)]
-colanames(final_df) <- c("FIPS", "2020", "2021")
+final_df <- na.omit(clean_df)
+colnames(final_df) <- c("FIPS", "2020", "2021")
+
+final_df$FIPS <- sprintf("%05d", as.numeric(final_df$FIPS))
