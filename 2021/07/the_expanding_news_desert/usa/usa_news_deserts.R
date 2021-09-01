@@ -8,7 +8,9 @@ as.data.frame(table(usa_news_desert$total))
 #Color code by "0", "1", "2+" newspapers in a given county
 
 final_df <- usa_news_desert[,c(1,5,5)]
-final_df <- na.omit(clean_df)
+final_df <- na.omit(final_df)
 colnames(final_df) <- c("FIPS", "2020", "2021")
 
 final_df$FIPS <- sprintf("%05d", as.numeric(final_df$FIPS))
+
+write.csv(final_df, "usa_news_deserts.csv", row.names = FALSE, NA = "")
