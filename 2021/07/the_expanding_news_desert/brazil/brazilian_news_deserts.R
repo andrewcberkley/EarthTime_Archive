@@ -38,7 +38,7 @@ all_brazil_municipalities <- read.csv("brazil_municipalities.csv", encoding="UTF
 all_brazil_municipalities$GEOCODIGO <- as.character(all_brazil_municipalities$GEOCODIGO)
 colnames(all_brazil_municipalities) <- c("GEOCODIGO", "municipio", "uf")
 
-full_joined_df <- dplyr::full_join(brazil_news_deserts, all_brazil_municipalities, by = "GEOCODIGO")
+full_joined_df <- dplyr::full_join(brazil_news_deserts, all_brazil_municipalities, by = c("GEOCODIGO", "municipio", "uf"))
 
 number_of_news_orgs <- brazil_news_deserts[,c(1,5,5)]
 colnames(number_of_news_orgs) <- c("GEOCODIGO", "2020", "2021")
