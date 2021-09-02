@@ -34,7 +34,7 @@ brazil_news_deserts <- municipalities_with_media[,c(5,1,2,3,4,8)]
 
 colnames(brazil_news_deserts)[1] <- "GEOCODIGO"
 
-all_brazil_municipalities <- read.csv("C:/Users/ABERK/Box/The_Definitive_ABERK_Data_Science_Folder/EarthTime_Archive/2021/07/the_expanding_news_desert/brazil/brazil_municipalities.csv", encoding="UTF-8")
+all_brazil_municipalities <- read.csv("brazil_municipalities.csv", encoding="UTF-8")
 
 number_of_news_orgs <- brazil_news_deserts[,c(1,5,5)]
 colnames(number_of_news_orgs) <- c("GEOCODIGO", "2020", "2021")
