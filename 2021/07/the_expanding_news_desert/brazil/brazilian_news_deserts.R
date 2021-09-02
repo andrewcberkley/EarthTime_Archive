@@ -40,10 +40,10 @@ colnames(all_brazil_municipalities) <- c("GEOCODIGO", "municipio", "uf")
 
 full_joined_df <- dplyr::full_join(brazil_news_deserts, all_brazil_municipalities, by = c("GEOCODIGO", "municipio", "uf"))
 
-number_of_news_orgs <- brazil_news_deserts[,c(1,5,5)]
+number_of_news_orgs <- full_joined_df[,c(1,5,5)]
 colnames(number_of_news_orgs) <- c("GEOCODIGO", "2020", "2021")
 
-number_of_news_orgs_per_100 <- brazil_news_deserts[,c(1,6,6)]
+number_of_news_orgs_per_100 <- full_joined_df[,c(1,6,6)]
 colnames(number_of_news_orgs_per_100) <- c("GEOCODIGO", "2020", "2021")
 
 
