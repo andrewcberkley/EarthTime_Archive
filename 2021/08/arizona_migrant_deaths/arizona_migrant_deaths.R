@@ -12,7 +12,7 @@ clean_df$`Reporting Date` <- as.Date(clean_df$`Reporting Date`)
 clean_df$Dummy_Number <- 10
 final_df <- na.omit(clean_df)
 
-as.data.frame(dplyr::arrange(dplyr::desc(table(ogis_migrant_deaths$`Cause of Death`))))
+as.data.frame(table(ogis_migrant_deaths$`Cause of Death`))
 
 write.csv(final_df, "arizona_migrant_deaths.csv", row.names = FALSE, na = "")
 
