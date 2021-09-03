@@ -14,3 +14,8 @@ colnames(final_df) <- c("FIPS", "2020", "2021")
 final_df$FIPS <- sprintf("%05d", as.numeric(final_df$FIPS))
 
 write.csv(final_df, "usa_news_deserts_choropleth.csv", row.names = FALSE, na = "")
+
+usa_newspaper_ownership <- read.csv("who_owns_your_newspaper_usc_hussman.csv")
+usa_newspaper_ownership <- usa_newspaper_ownership[,c(7,2,8:10)]
+
+as.data.frame(table(usa_newspaper_ownership$Parent.Type))
