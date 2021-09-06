@@ -13,6 +13,7 @@ clean_df$Dummy_Number <- 10
 final_df <- na.omit(clean_df)
 
 as.data.frame(table(ogis_migrant_deaths$`Cause of Death`))
+as.data.frame(table(ogis_migrant_deaths$`OME Determined COD`))
 
 write.csv(final_df, "arizona_migrant_deaths.csv", row.names = FALSE, na = "")
 
