@@ -22,16 +22,16 @@ owid_vaccinations$iso_code[owid_vaccinations$location == "Wales"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Cyprus"] <- "CYP"
 owid_vaccinations$iso_code[owid_vaccinations$location == "European Union"] <- "EU"
 
-total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,9)]
-daily_vaccinations_per_million <- owid_vaccinations[,c(2,3,12)]
-full_vaccination_percentage <- owid_vaccinations[,c(2,3,11)]
+total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,10)]
+daily_vaccinations_per_million <- owid_vaccinations[,c(2,3,14)]
+full_vaccination_percentage <- owid_vaccinations[,c(2,3,12)]
 
 owid_list <- list()
 
 owid_list[[1]] <- total_vaccinations_per_100 %>% 
   group_by(date) %>% 
   mutate(idx = row_number()) %>% 
-  spread(date, daily_vaccinations) %>% 
+  spread(date, total_vaccinations_per_100) %>% 
   select(-idx)
 
 owid_list[[2]]  <- daily_vaccinations_per_million %>% 
