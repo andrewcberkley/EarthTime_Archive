@@ -28,7 +28,11 @@ full_vaccination_percentage <- owid_vaccinations[,c(2,3,11)]
 
 owid_list <- list()
 
-owid_list[[1]] <- total_vaccinations_per_100 %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, total_vaccinations_per_hundred) %>% select(-idx)
+owid_list[[1]] <- total_vaccinations_per_100 %>% 
+  group_by(date) %>% 
+  mutate(idx = row_number()) %>% 
+  spread(date, total_vaccinations_per_hundred) %>% 
+  select(-idx)
 
 owid_list[[2]]  <- daily_vaccinations_per_million %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, daily_vaccinations_per_million) %>% select(-idx)
 
