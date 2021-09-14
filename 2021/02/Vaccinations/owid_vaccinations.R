@@ -31,10 +31,14 @@ owid_list <- list()
 owid_list[[1]] <- total_vaccinations_per_100 %>% 
   group_by(date) %>% 
   mutate(idx = row_number()) %>% 
-  spread(date, total_vaccinations_per_hundred) %>% 
+  spread(date, daily_vaccinations) %>% 
   select(-idx)
 
-owid_list[[2]]  <- daily_vaccinations_per_million %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, daily_vaccinations_per_million) %>% select(-idx)
+owid_list[[2]]  <- daily_vaccinations_per_million %>% 
+  group_by(date) %>% 
+  mutate(idx = row_number()) %>% 
+  spread(date, daily_vaccinations_per_million) %>% 
+  select(-idx)
 
 owid_list[[3]]  <- full_vaccination_percentage %>% group_by(date) %>% mutate(idx = row_number()) %>% spread(date, people_fully_vaccinated_per_hundred) %>% select(-idx)
 
