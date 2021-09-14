@@ -18,6 +18,8 @@ owid_vaccinations <- owid_vaccinations[!grepl("OWID_", owid_vaccinations$iso_cod
 
 row.names.keep <- c("AFG", "AGO", "AIA", "ALB", "AND", "ARE", "ARG", "ATG", "AUS", "AUT", "AZE", "BEL", "BGD", "BGR", "BHR", "BHS", "BLR", "BLZ", "BMU", "BOL", "BRA", "BRB", "BRN", "BTN", "CAN", "CHE", "CHL", "CHN", "CIV", "COL", "CPV", "CRI", "CYM", "CYP", "CZE", "DEU", "DMA", "DNK", "DOM", "DZA", "ECU", "EGY", "ESP", "EST", "EU", "FIN", "FLK", "FRA", "FRO", "GAB", "GBR", "GEO", "GGY", "GHA", "GIB", "GIN", "GMB", "GNQ", "GRC", "GRD", "GRL", "GTM", "GUY", "HKG", "HND", "HRV", "HUN", "IDN", "IMN", "IND", "IRL", "IRN", "IRQ", "ISL", "ISR", "ITA", "JAM", "JEY", "JOR", "JPN", "KAZ", "KEN", "KHM", "KNA", "KOR", "KWT", "LAO", "LBN", "LCA", "LIE", "LKA", "LTU", "LUX", "LVA", "MAC", "MAR", "MCO", "MDA", "MDV", "MEX", "MKD", "MLI", "MLT", "MMR", "MNE", "MNG", "MOZ", "MRT", "MSR", "MUS","MWI", "MYS", "NAM", "NGA", "NLD", "NOR", "NPL", "NZL", "OMN", "PAK", "PAN", "PER", "PHL", "POL", "PRT", "PRY", "PSE", "QAT", "ROU", "RUS", "RWA", "SAU", "SEN", "SGP", "SHN", "SLE", "SLV", "SMR", "SRB", "STP", "SUR", "SVK", "SVN", "SWE", "SYC", "TCA", "TGO", "THA", "TTO", "TUN", "TUR", "TWN", "UGA", "UKR", "URY", "USA", "VCT", "VEN", "VNM", "ZAF", "ZWE")
 
+owid_vaccinations <- owid_vaccinations[owid_vaccinations$iso_code %in% row.names.keep, ]
+
 owid_vaccinations$iso_code[owid_vaccinations$location == "England"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Ireland"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Scotland"] <- "GBR"
