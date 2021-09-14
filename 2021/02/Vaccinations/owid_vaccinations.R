@@ -14,6 +14,8 @@ owid_vaccinations <- read.csv("https://raw.githubusercontent.com/owid/covid-19-d
 
 #vaccinations_attitudes <- read.csv("https://github.com/YouGov-Data/covid-19-tracker/tree/master/data", stringsAsFactors = FALSE)
 
+row_names_df_to_remove<-c("OWID_AFR","OWID_ASI","OWID_EUR","OWID_HIC","OWID_KOS", "OWID_LIC", "OWID_LMC", "OWID_NAM", "OWID_OCE", "OWID_SAM", "OWID_UMC", "OWID_WRL")
+owid_vaccinations[!(row.names(owid_vaccinations) %in% row_names_df_to_remove),]
 
 owid_vaccinations$iso_code[owid_vaccinations$location == "England"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Ireland"] <- "GBR"
