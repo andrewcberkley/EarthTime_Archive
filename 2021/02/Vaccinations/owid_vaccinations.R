@@ -31,7 +31,7 @@ owid_list <- list()
 owid_list[[1]] <- total_vaccinations_per_100 %>% 
   group_by(date) %>% 
   mutate(idx = row_number()) %>% 
-  spread(date, total_vaccinations_per_100) %>% 
+  spread(date, total_vaccinations_per_hundred) %>% 
   select(-idx)
 
 owid_list[[2]]  <- daily_vaccinations_per_million %>% 
