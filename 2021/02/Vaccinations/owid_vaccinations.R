@@ -14,18 +14,16 @@ owid_vaccinations <- read.csv("https://raw.githubusercontent.com/owid/covid-19-d
 
 #vaccinations_attitudes <- read.csv("https://github.com/YouGov-Data/covid-19-tracker/tree/master/data", stringsAsFactors = FALSE)
 
-owid_vaccinations <- owid_vaccinations[!grepl("OWID_", owid_vaccinations$iso_code),]
-
-row.names.keep <- c("AFG", "AGO", "AIA", "ALB", "AND", "ARE", "ARG", "ATG", "AUS", "AUT", "AZE", "BEL", "BGD", "BGR", "BHR", "BHS", "BLR", "BLZ", "BMU", "BOL", "BRA", "BRB", "BRN", "BTN", "CAN", "CHE", "CHL", "CHN", "CIV", "COL", "CPV", "CRI", "CYM", "CYP", "CZE", "DEU", "DMA", "DNK", "DOM", "DZA", "ECU", "EGY", "ESP", "EST", "EU", "FIN", "FLK", "FRA", "FRO", "GAB", "GBR", "GEO", "GGY", "GHA", "GIB", "GIN", "GMB", "GNQ", "GRC", "GRD", "GRL", "GTM", "GUY", "HKG", "HND", "HRV", "HUN", "IDN", "IMN", "IND", "IRL", "IRN", "IRQ", "ISL", "ISR", "ITA", "JAM", "JEY", "JOR", "JPN", "KAZ", "KEN", "KHM", "KNA", "KOR", "KWT", "LAO", "LBN", "LCA", "LIE", "LKA", "LTU", "LUX", "LVA", "MAC", "MAR", "MCO", "MDA", "MDV", "MEX", "MKD", "MLI", "MLT", "MMR", "MNE", "MNG", "MOZ", "MRT", "MSR", "MUS","MWI", "MYS", "NAM", "NGA", "NLD", "NOR", "NPL", "NZL", "OMN", "PAK", "PAN", "PER", "PHL", "POL", "PRT", "PRY", "PSE", "QAT", "ROU", "RUS", "RWA", "SAU", "SEN", "SGP", "SHN", "SLE", "SLV", "SMR", "SRB", "STP", "SUR", "SVK", "SVN", "SWE", "SYC", "TCA", "TGO", "THA", "TTO", "TUN", "TUR", "TWN", "UGA", "UKR", "URY", "USA", "VCT", "VEN", "VNM", "ZAF", "ZWE")
-
-owid_vaccinations <- owid_vaccinations[owid_vaccinations$iso_code %in% row.names.keep, ]
-
 owid_vaccinations$iso_code[owid_vaccinations$location == "England"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Ireland"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Scotland"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Wales"] <- "GBR"
 owid_vaccinations$iso_code[owid_vaccinations$location == "Northern Cyprus"] <- "CYP"
 owid_vaccinations$iso_code[owid_vaccinations$location == "European Union"] <- "EU"
+
+row.names.keep <- c("AFG", "ALB", "DZA", "AND", "AGO", "AIA", "ATG", "ARG", "ARM", "ABW", "AUS", "AUT", "AZE", "BHS", "BHR", "BGD", "BRB", "BLR", "BEL", "BLZ", "BEN", "BMU", "BTN", "BOL", "BES", "BIH", "BWA", "BRA", "VGB", "BRN", "BGR", "BFA", "MMR", "BDI", "CPV", "KHM", "CMR", "CAN", "CYM", "CAF", "TCD", "GBR", "CHL", "CHN", "COL", "COG", "COD", "CRI", "CIV", "HRV", "CUB", "CUW", "CYP", "CZE", "DNK", "DJI", "DMA", "DOM", "ECU", "EGY", "SLV", "GNQ", "ERI", "EST", "SWZ", "ETH", "FRO", "FJI", "FIN", "FRA", "GUF", "PYF", "GAB", "GMB", "GEO", "DEU", "GHA", "GIB", "GRC", "GRL", "GRD", "GLP", "GTM", "GIN", "GNB", "GUY", "HTI", "VAT", "HND", "HKG", "HUN", "ISL", "IND", "IDN", "IRN", "IRQ", "IRL", "IMN", "ISR", "ITA", "JAM", "JPN", "JOR", "KAZ", "KEN", "KOR", "XKS", "KWT", "KGZ", "LAO", "LVA", "LBN", "LBR", "LBY", "LIE", "LTU", "LUX", "MAC", "MDG", "MWI", "MYS", "MDV", "MLI", "MLT", "MTQ", "MRT", "MUS", "MYT", "MEX", "MDA", "MCO", "MNG", "MNE", "MSR", "MAR", "MOZ", "NAM", "NPL", "NLD", "NCL", "NZL", "NIC", "NER", "NGA", "MKD", "NOR", "OMN", "PAK", "PAN", "PNG", "PRY", "PER", "PHL", "POL", "PRT", "QAT", "REU", "ROU", "RUS", "RWA", "BLM", "KNA", "LCA", "SPM", "VCT", "SMR", "STP", "SAU", "SEN", "SRB", "SYC", "SLE", "SGP", "SXM", "SVK", "SVN", "SOM", "ZAF", "SSD", "ESP", "LKA", "MAF", "SDN", "SUR", "SWE", "CHE", "SYR", "TWN", "TZA", "THA", "TLS", "TGO", "TTO", "TUN", "TUR", "TCA", "UGA", "UKR", "ARE", "GBR", "URY", "USA", "UZB", "VEN", "VNM", "PSE", "YEM", "ZMB", "ZWE") #As of 13 September 2021, OWID added excess unidentifiable ISO codes causes a breaking point in the EarthTime chloropleth build, so keeping the countries we know that work
+
+owid_vaccinations <- owid_vaccinations[!owid_vaccinations$iso_code %in% row.names.keep, ]
 
 total_vaccinations_per_100 <- owid_vaccinations[,c(2,3,10)]
 daily_vaccinations_per_million <- owid_vaccinations[,c(2,3,14)]
