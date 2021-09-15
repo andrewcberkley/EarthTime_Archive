@@ -25,8 +25,5 @@ write.csv(female_deaths, "arizona_migrant_female_deaths.csv", row.names = FALSE,
 write.csv(deaths_from_exposure, "arizona_migrant_deaths_from_exposure.csv", row.names = FALSE, na = "")
 write.csv(skeletal_remains, "arizona_migrant_skeletal_remains.csv", row.names = FALSE, na = "")
 
-
-
-
 source_python('arizona_migrant_deaths_dotmap.py')
 #py_last_error()
