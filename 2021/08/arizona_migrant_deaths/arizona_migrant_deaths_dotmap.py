@@ -40,4 +40,7 @@ def multiple_variables(file_name, rgb_color_scheme):
     points.append(FormatEpoch(row["Reporting Date"], "%Y-%m-%d"))
   array.array('f', points).tofile(open(file_name+".bin", 'wb'))
 
-multiple_variables("arizona_migrant_deaths", [255,160,122])
+multiple_variables("arizona_migrant_all_deaths", [255,160,122])
+multiple_variables("arizona_migrant_female_deaths", [255,160,122])
+multiple_variables("arizona_migrant_deaths_from_exposure", [255,160,122])
+multiple_variables("arizona_migrant_skeletal_remains", [255,160,122])
