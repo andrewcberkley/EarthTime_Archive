@@ -18,7 +18,14 @@ as.data.frame(table(ogis_migrant_deaths$`OME Determined COD`))
 write.csv(final_df, "arizona_migrant_all_deaths.csv", row.names = FALSE, na = "")
 
 female_deaths <- clean_df[grep("female",clean_df$Sex),]
-cause_of_death <- clean_df[!grepl("Indeterminant", clean_df$`Cause of Death`),]
+deaths_from_exposure <- clean_df[grep("Exposure|Not Reported|Other injury",clean_df$`Cause of Death`),]
+skeletal_remains <- clean_df[grep("Skeletal Remains",clean_df$`Cause of Death`),]
+
+write.csv(female_deaths, "arizona_migrant_female_deaths.csv", row.names = FALSE, na = "")
+write.csv(deaths_from_exposure, "arizona_migrant_deaths_from_exposure.csv", row.names = FALSE, na = "")
+write.csv(skeletal_remains, "arizona_migrant_skeletal_remains.csv", row.names = FALSE, na = "")
+
+
 
 
 source_python('arizona_migrant_deaths_dotmap.py')
