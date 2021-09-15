@@ -5,7 +5,7 @@ library(reticulate)
 #py_config()
 #py_install("pandas")
 
-suppressWarnings(ogis_migrant_deaths <- readxl::read_excel("ogis_migrant_deaths.xlsx"))
+suppressWarnings(ogis_migrant_deaths <- readxl::read_excel("ogis_migrant_deaths_v2.xlsx"))
 
 clean_df <- ogis_migrant_deaths[,c(1,5,18,19)]
 clean_df$`Reporting Date` <- as.Date(clean_df$`Reporting Date`)
