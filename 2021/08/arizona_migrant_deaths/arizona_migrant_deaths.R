@@ -15,7 +15,11 @@ final_df <- na.omit(clean_df)
 as.data.frame(table(ogis_migrant_deaths$`Cause of Death`))
 as.data.frame(table(ogis_migrant_deaths$`OME Determined COD`))
 
-write.csv(final_df, "arizona_migrant_deaths.csv", row.names = FALSE, na = "")
+write.csv(final_df, "arizona_migrant_all_deaths.csv", row.names = FALSE, na = "")
+
+female_deaths <- clean_df[grep("female",clean_df$Sex),]
+cause_of_death <- clean_df[!grepl("Indeterminant", clean_df$`Cause of Death`),]
+
 
 source_python('arizona_migrant_deaths_dotmap.py')
 #py_last_error()
