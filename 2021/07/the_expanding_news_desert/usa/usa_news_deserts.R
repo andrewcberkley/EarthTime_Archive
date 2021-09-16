@@ -20,3 +20,4 @@ usa_newspaper_ownership <- usa_newspaper_ownership[,c(7,2,8:10)]
 
 as.data.frame(table(usa_newspaper_ownership$Parent.Type))
 sum(is.na(usa_newspaper_ownership$Total.Circulation))
+colnames(usa_newspaper_ownership) <- c("Newspaper", "Type", "Latitude", "Longitude", "Total_Circulation")
