@@ -43,6 +43,9 @@ full_joined_df <- dplyr::full_join(brazil_news_deserts, all_brazil_municipalitie
 full_joined_df$qtd_veiculos[is.na(full_joined_df$qtd_veiculos)] <- 0
 full_joined_df$veiculos_por_100k_hab[is.na(full_joined_df$veiculos_por_100k_hab)] <- 0
 
+full_joined_df$qtd_veiculos <- as.numeric(full_joined_df$qtd_veiculos)
+full_joined_df$veiculos_por_100k_hab <- as.numeric(full_joined_df$veiculos_por_100k_hab)
+
 number_of_news_orgs <- full_joined_df[,c(1,5,5)]
 colnames(number_of_news_orgs) <- c("GEOCODIGO", "2020", "2021")
 
