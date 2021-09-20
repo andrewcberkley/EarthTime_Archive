@@ -22,4 +22,12 @@ as.data.frame(table(usa_newspaper_ownership$Parent.Type))
 sum(is.na(usa_newspaper_ownership$Total.Circulation))
 colnames(usa_newspaper_ownership) <- c("Newspaper", "Type", "Latitude", "Longitude", "Total_Circulation")
 
+typeList <- split(usa_newspaper_ownership, usa_newspaper_ownership$Type)
+for (i in seq_along(typeList)) {
+  try({
+    filename = paste0(names(typeList)[i], ".csv")
+    write.csv(typeList[[i]], filename, na = "", row.names = FALSE)
+  })
+}
+
 vanishing_newspapers <- read.csv("the_vanishing_daily_newspaper_2004_2016_unc_hussman.csv")
