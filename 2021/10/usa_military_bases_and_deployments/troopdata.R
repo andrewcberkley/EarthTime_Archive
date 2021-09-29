@@ -1,0 +1,1 @@
+setwd(file.path(Sys.getenv('my_dir'),'2021/10/usa_military_bases_and_deployments'))
