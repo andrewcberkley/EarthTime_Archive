@@ -5,3 +5,5 @@ casualties <- read.csv("odp_noticas.csv")
 contributions_gender <- read.csv("odp_contributionsbygender.csv")
 
 as.data.frame(table(contributions_gender$Contributing_Country))
+
+ipi_data <- read.csv("international_peace_institute_peacekeeping_database.csv")
