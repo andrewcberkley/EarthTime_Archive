@@ -8,6 +8,6 @@ library(troopdata)
 #Vine, David. 2015. "Base nation: How U.S. military bases abroad harm America and the World." Metropolitan Books, Washington, D.C.
 #Michael A. Allen, Michael E. Flynn, and Carla Martinez Machain. 2020. "Outside the wire: US military deployments and public opinion in host states." American Political Science Review. 114(2): 326-341.
 
-troopdata <- get_troopdata(host = NA, branch = TRUE, 1950,2020)
+troopdata <- get_troopdata(host = NA, branch = TRUE, 1950,2020) #Branch data only available for 2006 forward.
 basedata <- get_basedata()
 builddata <- get_builddata(host = NA, 2008,2019)
