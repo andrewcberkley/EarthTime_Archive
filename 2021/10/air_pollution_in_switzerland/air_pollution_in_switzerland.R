@@ -2,6 +2,7 @@ setwd(file.path(Sys.getenv('my_dir'),'2021/10/air_pollution_in_switzerland'))
 
 library(reshape2)
 library(data.table)
+library(dplyr)
 
 df1 <- read.csv("PM2.5.csv", header=FALSE)
 df2 <- data.frame(do.call('rbind', strsplit(as.character(df1$V1),';',fixed=TRUE)))
@@ -23,4 +24,19 @@ station_location <- data.table(name = c("Bern-Bollwerk","Lausanne-César-Roux","L
 long_df$Lat <- NA
 long_df$Long <- NA
 
-long_df[,"Lat"] <- station_location[match(long_df[,"Station"], station_location[,"name"]), "StationLat"]
+long_df <- as.data.frame(long_df)
+station_location <- as.data.frame(station_location)
+
+long_df[,"Lat"] <- station_location[match(long_df[,"Station"], station_location[,"name"]), "stationLat"]
+long_df[,"Long"] <- station_location[match(long_df[,"Station"], station_location[,"name"]), "stationLong"]
+
+rm(list=setdiff(ls(), "long_df"))
+
+good <- long_df %>% filter( between(Value, 0, 50) )
+moderate <- long_df %>% filter( between(Value, 51, 100) )
+unhealthy_for_sensiitve_groups <- long_df %>% filter( between(Value, 101, 150) )
+unhealthy <- long_df %>% filter( between(Value, 151, 200) )
+very_unhealthy <- long_df %>% filter( between(Value, 201, 300) )
+hazardous <- long_df %>% filter( between(Value, 301, 500) )
+
+rm(long_df)
