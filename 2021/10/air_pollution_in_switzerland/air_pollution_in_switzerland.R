@@ -42,3 +42,15 @@ hazardous <- long_df %>% filter( between(Value, 41, 500) ) #Maroon/Burgundy
 
 rm(long_df)
 
+files <- mget(ls())
+
+for (i in 1:length(files)){
+  write.csv(files[[i]], paste("swiss_pm25_pollution_", names(files[i]), ".csv", sep = ""), na = "", row.names = FALSE)
+}
+
+library(reticulate)
+use_python("C:/ProgramData/Anaconda3/", required = TRUE)
+#py_config()
+#py_install("pandas")
+
+source_python('swiss_pm25_pollution_dotmap.py')
