@@ -37,7 +37,7 @@ def multiple_variables(file_name, rgb_color_scheme):
     points.append(y)
     points.append(math.sqrt(float(row["Value"]) + 1.0))
     points.append(PackColor(rgb_color_scheme))    
-    points.append(FormatEpoch(row["Date"], "%d-%m-%Y"))
+    points.append(FormatEpoch(row["Date"], "%d/%m/%Y"))
   array.array('f', points).tofile(open(file_name+".bin", 'wb'))
 
 multiple_variables("swiss_pm25_pollution_good", [0,128,0])
