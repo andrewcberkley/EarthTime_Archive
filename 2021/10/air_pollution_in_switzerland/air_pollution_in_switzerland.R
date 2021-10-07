@@ -35,7 +35,7 @@ rm(list=setdiff(ls(), "long_df"))
 #WHO Air Quality Values of PM2.5 Concentration (μg/m3) according to the Swiss Tropical and Public Health Institute
 good <- long_df %>% filter( between(Value, 0, 10) ) #Green
 moderate <- long_df %>% filter( between(Value, 11, 15) ) #Yellow
-unhealthy_for_sensiitve_groups <- long_df %>% filter( between(Value, 16, 25) ) #Orange
+unhealthy_for_sensitve_groups <- long_df %>% filter( between(Value, 16, 25) ) #Orange
 unhealthy <- long_df %>% filter( between(Value, 26, 35) ) #Red
 very_unhealthy <- long_df %>% filter( between(Value, 36, 40) ) #Purple
 hazardous <- long_df %>% filter( between(Value, 41, 500) ) #Maroon/Burgundy
