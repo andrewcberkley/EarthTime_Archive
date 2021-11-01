@@ -1,22 +1,19 @@
-#setwd(file.path(Sys.getenv('my_dir')))
-#setwd("C:/Users/ABERK/Box/Internal_ Strategic Intelligence/EarthTime/")
+setwd(file.path(Sys.getenv('my_dir')))
 
 library(DBI)
 
-Rwefsigapi::set_si_db_credentials("aberk", "password")
-#con <- Rwefsigapi::open_si_db_connection("DBI", "earthtime")
+Rwefsigapi::set_si_db_credentials("username", "password")
 
 con <- DBI::dbConnect(
   RPostgres::Postgres(),
   dbname = "earthtime",
   host = "192.168.166.56",
   port = 5432,
-  user = "aberk",
+  user = "username",
   password = "password"
 )
 
-#df_stories <- dplyr::tibble(openxlsx::readWorkbook("Insight_Areas_with_EarthTime_Stories.xlsx", sheet = 1)) #Error: Failed to fetch row: ERROR:  type "c" does not exist at character 63
-df_stories <- readxl::read_excel("C:/Users/ABERK/Box/Internal_ Strategic Intelligence/EarthTime/Insight_Areas_with_EarthTime_Stories.xlsx", sheet = 1, col_names = TRUE)
+df_stories <- readxl::read_excel("Insight_Areas_with_EarthTime_Stories.xlsx", sheet = 1, col_names = TRUE)
 
 DBI::dbWriteTable(con, "list-stories", df_stories, overwrite = TRUE)
 #DBI::(dbReadTable(con, "list-stories"))
